@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <a href="./">Register</a>
     <title>Login</title>
     <style>
         .message {
@@ -13,10 +12,10 @@
     </style>
 </head>
 <body>
+    <a href="./">Register</a>
     <h1>Login</h1>
     <button id="loginButton">Login with Fingerprint</button>
     <div id="message" class="message"></div>
-    <div id="credentialIdDisplay"></div> <!-- Added div to display credential ID -->
 
     <script>
         function bufferToBase64(buffer) {
@@ -30,72 +29,82 @@
 
         document.getElementById('loginButton').addEventListener('click', async () => {
             const messageDiv = document.getElementById('message');
-            const credentialIdDisplay = document.getElementById('credentialIdDisplay');
             messageDiv.textContent = '';
-            credentialIdDisplay.textContent = '';
 
-            try {
-                // Fetch the challenge and credentials from the server
-                const challengeResponse = await fetch('generate_challenge.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const challengeData = await challengeResponse.json();
-                if (!challengeData.success) {
-                    messageDiv.textContent = challengeData.message;
-                    return;
-                }
-
-                const { challenge, credentials } = challengeData;
-                const allowCredentials = credentials.map(cred => ({
-                    type: "public-key",
-                    id: Uint8Array.from(atob(cred), c => c.charCodeAt(0))
-                }));
-
-                const publicKey = {
-                    challenge: Uint8Array.from(atob(challenge), c => c.charCodeAt(0)),
-                    allowCredentials,
-                    timeout: 60000
-                };
-
-                const assertion = await navigator.credentials.get({ publicKey });
-
-                // Display the credential ID
-                const credentialId = bufferToBase64(assertion.rawId);
-                credentialIdDisplay.textContent = 'Credential ID: ' + credentialId;
-
-                const response = await fetch('login_fingerprint.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        credential: {
-                            id: credentialId,
-                            rawId: credentialId,
-                            response: {
-                                authenticatorData: bufferToBase64(assertion.response.authenticatorData),
-                                clientDataJSON: bufferToBase64(assertion.response.clientDataJSON),
-                                signature: bufferToBase64(assertion.response.signature)
-                            },
-                            type: assertion.type
-                        }
-                    })
-                });
-
-                const result = await response.json();
-                if (result.success) {
-                    messageDiv.textContent = 'Login successful. Welcome, ' + result.student_id;
-                } else {
-                    messageDiv.textContent = result.message;
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                messageDiv.textContent = 'Login failed. Please try again.';
+            if (!navigator.geolocation) {
+                messageDiv.textContent = 'Geolocation is not supported by your browser.';
+                return;
             }
+
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const { latitude, longitude } = position.coords;
+
+                try {
+                    // Fetch the challenge and credentials from the server
+                    const challengeResponse = await fetch('generate_challenge.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    const challengeData = await challengeResponse.json();
+                    if (!challengeData.success) {
+                        messageDiv.textContent = challengeData.message;
+                        return;
+                    }
+
+                    const { challenge, credentials } = challengeData;
+                    const allowCredentials = credentials.map(cred => ({
+                        type: "public-key",
+                        id: Uint8Array.from(atob(cred), c => c.charCodeAt(0))
+                    }));
+
+                    const publicKey = {
+                        challenge: Uint8Array.from(atob(challenge), c => c.charCodeAt(0)),
+                        allowCredentials,
+                        timeout: 60000
+                    };
+
+                    const assertion = await navigator.credentials.get({ publicKey });
+
+                    // Display the credential ID
+                    const credentialId = bufferToBase64(assertion.rawId);
+
+                    const response = await fetch('login_fingerprint.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            credential: {
+                                id: credentialId,
+                                rawId: credentialId,
+                                response: {
+                                    authenticatorData: bufferToBase64(assertion.response.authenticatorData),
+                                    clientDataJSON: bufferToBase64(assertion.response.clientDataJSON),
+                                    signature: bufferToBase64(assertion.response.signature)
+                                },
+                                type: assertion.type
+                            },
+                            longitude,
+                            latitude
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        window.location.href = 'home.php';
+                    } else {
+                        messageDiv.textContent = result.message;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    messageDiv.textContent = 'Login failed. Please try again.';
+                }
+            }, () => {
+                messageDiv.textContent = 'Unable to retrieve your location. Please enable GPS and try again.';
+            });
         });
     </script>
 </body>

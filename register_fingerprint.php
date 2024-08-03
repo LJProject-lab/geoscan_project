@@ -4,9 +4,15 @@ require 'config.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 $student_id = $data['student_id'] ?? null;
+$pin = $data['pin'] ?? null;
+$firstname = $data['firstname'] ?? null;
+$lastname = $data['lastname'] ?? null;
+$email = $data['email'] ?? null;
+$phone = $data['phone'] ?? null;
+$address = $data['address'] ?? null;
 $credential = $data['credential'] ?? null;
 
-if (!$student_id || !$credential) {
+if (!$student_id || !$pin || !$firstname || !$lastname || !$email || !$phone || !$address || !$credential) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Invalid input data.']);
     exit;
@@ -22,12 +28,30 @@ if (!$credential_id || !$attestation_object || !$client_data_json) {
     exit;
 }
 
-// Store the credential
 try {
-    $sql = "INSERT INTO users (student_id, credential_id, attestation_object, client_data_json) VALUES (:student_id, :credential_id, :attestation_object, :client_data_json)";
+    // Check if the student_id already exists
+    $check_sql = "SELECT COUNT(*) FROM tbl_users WHERE student_id = :student_id";
+    $stmt = $pdo->prepare($check_sql);
+    $stmt->execute([':student_id' => $student_id]);
+    $count = $stmt->fetchColumn();
+
+    if ($count > 0) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Student ID already exists.']);
+        exit;
+    }
+
+    // Store the credential
+    $sql = "INSERT INTO tbl_users (student_id, pin, firstname, lastname, email, phone, address, credential_id, attestation_object, client_data_json) VALUES (:student_id, :pin, :firstname, :lastname, :email, :phone, :address, :credential_id, :attestation_object, :client_data_json)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':student_id' => $student_id,
+        ':pin' => $pin,
+        ':firstname' => $firstname,
+        ':lastname' => $lastname,
+        ':email' => $email,
+        ':phone' => $phone,
+        ':address' => $address,
         ':credential_id' => $credential_id,
         ':attestation_object' => $attestation_object,
         ':client_data_json' => $client_data_json
@@ -39,5 +63,4 @@ try {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Server error: ' . $e->getMessage()]);
 }
-
 ?>
