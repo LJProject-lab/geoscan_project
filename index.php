@@ -16,7 +16,26 @@
     <h1>Register</h1>
     <form id="registerForm">
         <label for="student_id">Student ID:</label>
-        <input type="text" id="student_id" name="student_id" required>
+        <input type="text" id="student_id" name="student_id" required><br>
+
+        <label for="pin">Pin:</label>
+        <input type="text" id="pin" name="pin" required><br>
+
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" required><br>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required><br>
+
         <button type="submit">Register</button>
     </form>
     <div id="message" class="message"></div>
@@ -35,6 +54,12 @@
             event.preventDefault();
 
             const student_id = document.getElementById('student_id').value;
+            const pin = document.getElementById('pin').value;
+            const firstname = document.getElementById('firstname').value;
+            const lastname = document.getElementById('lastname').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
             const messageDiv = document.getElementById('message');
 
             // Clear previous messages
@@ -84,6 +109,12 @@
                     },
                     body: JSON.stringify({
                         student_id: student_id,
+                        pin: pin,
+                        firstname: firstname,
+                        lastname: lastname,
+                        email: email,
+                        phone: phone,
+                        address: address,
                         credential: {
                             id: bufferToBase64(credential.rawId),
                             rawId: bufferToBase64(credential.rawId),

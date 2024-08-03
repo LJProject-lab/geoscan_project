@@ -7,7 +7,7 @@ $challenge = base64_encode(random_bytes(32));
 
 try {
     // Fetch all stored credentials
-    $stmt = $pdo->query("SELECT credential_id FROM users");
+    $stmt = $pdo->query("SELECT credential_id FROM tbl_users");
     $credentials = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     header('Content-Type: application/json');
