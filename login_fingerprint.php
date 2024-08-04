@@ -32,7 +32,7 @@ try {
 
     if ($user) {
         // Check if the user has already timed in today
-        $check_sql = "SELECT * FROM tbl_timelogs WHERE student_id = :student_id AND DATE(time_in) = CURDATE()";
+        $check_sql = "SELECT * FROM tbl_timelogs WHERE student_id = :student_id AND DATE(timestamp) = CURDATE()";
         $check_stmt = $pdo->prepare($check_sql);
         $check_stmt->execute([':student_id' => $user['student_id']]);
         $existing_log = $check_stmt->fetch(PDO::FETCH_ASSOC);
@@ -42,7 +42,7 @@ try {
             echo json_encode(['success' => false, 'message' => 'You already timed in today.']);
         } else {
             // Insert log into tbl_timelogs
-            $log_sql = "INSERT INTO tbl_timelogs (student_id, longitude, latitude, time_in) VALUES (:student_id, :longitude, :latitude, NOW())";
+            $log_sql = "INSERT INTO tbl_timelogs (student_id, longitude, latitude, timestamp) VALUES (:student_id, :longitude, :latitude, NOW())";
             $log_stmt = $pdo->prepare($log_sql);
             $log_stmt->execute([
                 ':student_id' => $user['student_id'],

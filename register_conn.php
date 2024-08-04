@@ -14,21 +14,21 @@ try {
         // Get form data
         $student_id = $_POST['student_id'];
         $pin = $_POST['pin'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
         $email = $_POST['email'];
         $phone = $_POST['phone'];
         $address = $_POST['address'];
 
         // Prepare an insert statement
-        $sql = "INSERT INTO students (student_id, pin, first_name, last_name, email, phone, address) VALUES (:student_id, :pin, :first_name, :last_name, :email, :phone, :address)";
+        $sql = "INSERT INTO tbl_users (student_id, pin, firstname, lastname, email, phone, address) VALUES (:student_id, :pin, :firstname, :lastname, :email, :phone, :address)";
         $stmt = $pdo->prepare($sql);
 
         // Bind parameters
         $stmt->bindParam(':student_id', $student_id);
         $stmt->bindParam(':pin', $pin);
-        $stmt->bindParam(':first_name', $first_name);
-        $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':firstname', $firstname);
+        $stmt->bindParam(':lastname', $lastname);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':address', $address);

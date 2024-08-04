@@ -4,18 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time In/Out Recording</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> <!-- Add your Google Maps API key here -->
     <script>
         function getLocationAndPicture() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
+                navigator.geolocation.getCurrentPosition(showPosition, showError, {enableHighAccuracy: true});
             } else {
                 alert("Geolocation is not supported by this browser.");
             }
         }
 
         function showPosition(position) {
-            document.getElementById("location").value = "Latitude: " + position.coords.latitude + 
-            " Longitude: " + position.coords.longitude;
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Update latitude and longitude fields
+            document.getElementById("latitude").value = latitude;
+            document.getElementById("longitude").value = longitude;
+
+            // Reverse geocode to get a human-readable address
+            var geocoder = new google.maps.Geocoder();
+            var latLng = new google.maps.LatLng(latitude, longitude);
+            
+            geocoder.geocode({'latLng': latLng}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        document.getElementById("address").value = results[0].formatted_address;
+                    } else {
+                        alert("No results found");
+                    }
+                } else {
+                    alert("Geocoder failed due to: " + status);
+                }
+            });
         }
 
         function showError(error) {
@@ -48,8 +69,23 @@
 
             document.getElementById("captureButton").onclick = function() {
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                var dataURL = canvas.toDataURL("image/png");
-                document.getElementById("photo").value = dataURL;
+                canvas.toBlob(function(blob) {
+                    var formData = new FormData();
+                    formData.append('photo', blob, 'photo.png');
+
+                    fetch('upload_photo.php', {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => response.json()).then(data => {
+                        if (data.success) {
+                            document.getElementById("photo").value = data.fileName;
+                        } else {
+                            alert("Failed to upload photo.");
+                        }
+                    }).catch(error => {
+                        alert("Error: " + error.message);
+                    });
+                }, 'image/png');
             };
         }
     </script>
@@ -69,8 +105,9 @@
             <option value="time_out">Time Out</option>
         </select><br><br>
 
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" readonly required><br><br>
+        <input type="text" id="latitude" name="latitude" readonly required hidden>
+
+        <input type="text" id="longitude" name="longitude" readonly required hidden><br><br>
 
         <input type="hidden" id="photo" name="photo">
         <video id="videoElement" width="320" height="240" autoplay></video>

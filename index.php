@@ -69,7 +69,7 @@
         <h1>Welcome</h1>
         <div class="center-section">
             <button onclick="location.href='time_scan.php'">Scan Time In</button>
-            <button onclick="location.href='time_pin.php'">4 Pin Time In</button>
+            <button onclick="location.href='time_record.php'">4 Pin Time In</button>
         </div>
         <div class="description">
             <h2>Scan Time In</h2>
