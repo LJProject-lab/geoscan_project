@@ -1,3 +1,13 @@
+<?php
+session_start();
+require 'config.php';
+
+// Redirect to login if student_id session is not active
+if (isset($_SESSION['student_id'])) {
+    header('Location: home.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

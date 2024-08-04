@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['student_id'])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 ?>
@@ -19,6 +19,7 @@ if (!isset($_SESSION['student_id'])) {
     <p>Your Email: <?php echo htmlspecialchars($_SESSION['email']); ?></p>
     <p>Your Phone: <?php echo htmlspecialchars($_SESSION['phone']); ?></p>
     <p>Your Address: <?php echo htmlspecialchars($_SESSION['address']); ?></p>
-    <a href="logout.php">Logout</a>
+    <a href="logout.php">Logout</a><br>
+    <a href="register_v2.php">Add Fingerprint Auth</a>
 </body>
 </html>
