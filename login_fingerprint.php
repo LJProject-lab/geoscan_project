@@ -1,6 +1,5 @@
 <?php
 require 'config.php';
-session_start();
 
 $data = json_decode(file_get_contents('php://input'), true);
 $credential = $data['credential'] ?? null;
@@ -50,14 +49,6 @@ try {
                 ':longitude' => $longitude,
                 ':latitude' => $latitude
             ]);
-
-            // Set session variables
-            $_SESSION['student_id'] = $user['student_id'];
-            $_SESSION['firstname'] = $user['firstname'];
-            $_SESSION['lastname'] = $user['lastname'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['phone'] = $user['phone'];
-            $_SESSION['address'] = $user['address'];
 
             header('Content-Type: application/json');
             echo json_encode(['success' => true]);
