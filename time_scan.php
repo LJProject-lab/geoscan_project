@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-        .message {
-            color: red;
-            font-weight: bold;
-        }
-        .success {
-            color: green;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <?php include 'includes/top_include.php' ?>
 </head>
+
 <body>
-    <a href="./">Register</a>
-    <h1>Login</h1>
-    <button id="loginButton">Login with Fingerprint</button>
+    <div class="header h1-header">
+        <h1>Tap to scan</h1>
+    </div>
+    <div class="icon">
+        <button class="button-main-scan" id="loginButton"
+            style="border-radius:100%; !important; height:200px; width:185px;"><i class="fa-solid fa-fingerprint fa-8x"
+                style="color:#fff !important;"></i></button>
+    </div>
+    <br>
+    <br>
+    <div class="buttons">
+        <button id="BackButton" type="button" class="button-secondary">Back</button>
+    </div>
     <div id="message" class="message"></div>
 
     <script>
@@ -40,7 +43,14 @@
                 return;
             }
 
-            navigator.geolocation.getCurrentPosition(async (position) => {
+            const getLocation = () => {
+                return new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                });
+            };
+
+            try {
+                const position = await getLocation();
                 const { latitude, longitude } = position.coords;
 
                 try {
@@ -103,12 +113,21 @@
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    messageDiv.textContent = 'Login failed. Please try again.';
+                    messageDiv.textContent = 'Scanned failed. Please try again.';
                 }
-            }, () => {
-                messageDiv.textContent = 'Unable to retrieve your location. Please enable GPS and try again.';
-            });
+            } catch (error) {
+                if (error.code === error.PERMISSION_DENIED) {
+                    messageDiv.textContent = 'Please enable your GPS location and try again.';
+                } else {
+                    messageDiv.textContent = 'Unable to retrieve your location. Please ensure GPS is enabled and try again.';
+                }
+            }
+        });
+
+        document.getElementById('BackButton').addEventListener('click', function () {
+            window.location.href = './';
         });
     </script>
 </body>
+
 </html>

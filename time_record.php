@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time In/Out Recording</title>
+    <?php include 'includes/top_include.php' ?>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> <!-- Add your Google Maps API key here -->
+    <link rel="stylesheet" href="assets/css/styles.css"> <!-- Make sure the path to main.css is correct -->
     <script>
         function getLocationAndPicture() {
             if (navigator.geolocation) {
@@ -91,31 +92,40 @@
     </script>
 </head>
 <body onload="getLocationAndPicture(); capturePhoto();">
-    <h2>Time In/Out Recording</h2>
-    <form action="time_record_conn.php" method="post">
-        <label for="student_id">Student ID:</label>
-        <input type="text" id="student_id" name="student_id" required><br><br>
+    <div class="container">
+        <div class="left-panel">
+            <video id="videoElement" width="320" height="240" autoplay></video>
+            <canvas id="canvasElement" width="320" height="240" style="display:none;"></canvas>
+            <br>
+            <button type="button" id="captureButton" class="button-secondary">Capture Photo</button>
+        </div>
+        <div class="right-panel">
+            <h2>Time In/Out Recording</h2>
+            <form action="time_record_conn.php" method="post">
+                <label for="student_id">Student ID:</label>
+                <input type="text" id="student_id" name="student_id" required><br><br>
 
-        <label for="pin">4-digit PIN:</label>
-        <input type="text" id="pin" name="pin" pattern="\d{4}" title="Please enter a 4-digit PIN" required><br><br>
+                <label for="pin">4-digit PIN:</label>
+                <input type="text" id="pin" name="pin" pattern="\d{4}" title="Please enter a 4-digit PIN" required><br><br>
 
-        <label for="type">Type:</label>
-        <select id="type" name="type" required>
-            <option value="time_in">Time In</option>
-            <option value="time_out">Time Out</option>
-        </select><br><br>
+                <label for="type">Type:</label>
+                <select id="type" name="type" required>
+                    <option value="time_in">Time In</option>
+                    <option value="time_out">Time Out</option>
+                </select>
 
-        <input type="text" id="latitude" name="latitude" readonly required hidden>
+                <input type="text" id="latitude" name="latitude" readonly required hidden>
 
-        <input type="text" id="longitude" name="longitude" readonly required hidden><br><br>
+                <input type="text" id="longitude" name="longitude" readonly required hidden><br><br>
 
-        <input type="hidden" id="photo" name="photo">
-        <video id="videoElement" width="320" height="240" autoplay></video>
-        <canvas id="canvasElement" width="320" height="240" style="display:none;"></canvas>
-        <br>
-        <button type="button" id="captureButton">Capture Photo</button><br><br>
-
-        <input type="submit" value="Submit">
-    </form>
+                <input type="hidden" id="photo" name="photo">
+                
+                <button type="submit" class="button">Submit</button>
+                <br>
+                <br>
+                <a href="./">Back</a>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

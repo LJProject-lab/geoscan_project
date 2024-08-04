@@ -40,7 +40,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coordinator - View Timelogs</title>
+    <?php include 'includes/top_include.php'; ?>
     <style>
         table {
             width: 100%;
@@ -99,6 +99,10 @@ try {
         <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($dateFilter); ?>">
         <button type="submit">Filter</button>
     </form>
+    <br>
+    <a href="register_v3.php">Register Student</a>
+    <br>
+    <br>
     <table>
         <thead>
             <tr>
