@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+<<<<<<< Updated upstream
     <a href="login.html">Login</a>
     <h1>Register</h1>
     <form id="registerForm">
@@ -139,5 +140,24 @@
             }
         });
     </script>
+=======
+    <div class="container">
+        <div class="top-section">
+            <a href="login.php">Login</a>
+            <a href="register_v3.php">Register</a>
+        </div>
+        <h1>Welcome</h1>
+        <div class="center-section">
+            <button onclick="location.href='time_scan.php'">Scan Time In</button>
+            <button onclick="location.href='time_record.php'">4 Pin Time In</button>
+        </div>
+        <div class="description">
+            <h2>Scan Time In</h2>
+            <p>The Scan Time In option allows you to time in by simply pressing a button. It automatically fetches your location and the current time.</p>
+            <h2>4 Pin Time In</h2>
+            <p>The 4 Pin option requires additional supporting evidence. You need to provide a picture and a 4-digit pin for time in.</p>
+        </div>
+    </div>
+>>>>>>> Stashed changes
 </body>
 </html>
