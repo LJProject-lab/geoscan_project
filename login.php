@@ -10,23 +10,36 @@ if (isset($_SESSION['student_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <?php include 'includes/top_include.php'; ?>
+    <link rel="stylesheet" href="assets/css/styles.css">
+
 </head>
+
 <body>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <label for="student_id">Student ID:</label>
-        <input type="text" id="student_id" name="student_id" required><br>
+    <div class="login-container">
+        <div class="login-container-header">
+            <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
+            <span>&nbsp;Internship Management System</span>
+        </div>
+        <h1>INTERN</h1>
+        <form id="loginForm">
+            <form id="loginForm">
+                <label for="student_id">Student ID:</label>
+                <input type="text" id="student_id" name="student_id" required><br>
 
-        <label for="pin">Pin:</label>
-        <input type="password" id="pin" name="pin" required><br>
-
-        <button type="submit">Login</button>
-    </form>
-    <div id="message" class="message"></div>
+                <label for="pin">Pin:</label>
+                <input type="password" id="pin" name="pin" required><br>
+                <button type="submit">Login</button>
+                <br>
+                <br>
+                <a href="./">Back</a>
+            </form>
+            <div id="message" class="message"></div>
+    </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', async (event) => {
@@ -59,4 +72,5 @@ if (isset($_SESSION['student_id'])) {
         });
     </script>
 </body>
+
 </html>

@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PNC</title>
-    
-    <link href="assets/img/pnc-logo.png" rel="icon">
+    <?php include 'includes/top_include.php' ?>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -28,7 +26,7 @@
 
       <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/pnc-logo.png" alt="">
-        <span>&nbsp;Internship Management</span>
+        <span>&nbsp;Internship Management System</span>
       </a>
 
       <nav id="navbar" class="navbar">

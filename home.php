@@ -11,7 +11,7 @@ if (!isset($_SESSION['student_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <?php include 'includes/top_include.php'; ?>
 </head>
 <body>
     <h1>Welcome, <?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?>!</h1>
@@ -20,6 +20,6 @@ if (!isset($_SESSION['student_id'])) {
     <p>Your Phone: <?php echo htmlspecialchars($_SESSION['phone']); ?></p>
     <p>Your Address: <?php echo htmlspecialchars($_SESSION['address']); ?></p>
     <a href="logout.php">Logout</a><br>
-    <a href="register_v2.php">Add Fingerprint Auth</a>
+    <a href="register_scan.php">Add Fingerprint Auth</a>
 </body>
 </html>
