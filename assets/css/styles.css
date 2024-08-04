@@ -1,0 +1,62 @@
+@import url('main.css');
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: var(--bg-color);
+}
+
+.header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 29px;
+    font-weight: bold;
+}
+
+.container {
+    text-align: center;
+    max-width: 600px;
+    padding: 20px;
+    background-color: var(--light-color);
+    border-radius: 10px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
+.icon {
+    margin-bottom: 20px;
+}
+
+.icon i {
+    width: 80px;
+    height: 80px;
+    font-size: 80px;
+}
+
+.description {
+    font-size: 16px;
+    color: var(--desc-color);
+    margin-bottom: 30px;
+}
+
+.buttons {
+    margin-bottom: 20px;
+}
+
+.enable {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.learn-more {
+    display: block;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-top: 20px;
+}
