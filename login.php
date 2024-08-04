@@ -20,6 +20,12 @@ if (isset($_SESSION['student_id'])) {
     <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 </head>
 
+<style>
+    body{
+        background-color: #f6f9ff;
+    }
+</style>
+
 <body>
         <div class="col-lg-3">
           <div class="card">
