@@ -15,29 +15,36 @@ try {
         $student_id = $_POST['student_id'];
         $pin = $_POST['pin'];
         $type = $_POST['type'];
-        $location = $_POST['location'];
+        $latitude = $_POST['latitude'];
+        $longitude = $_POST['longitude'];
         $photo = $_POST['photo'];
         $timestamp = date('Y-m-d H:i:s');
 
         // Verify student credentials
-        $sql = "SELECT * FROM students WHERE student_id = :student_id AND pin = :pin";
+        $sql = "SELECT * FROM tbl_users WHERE student_id = :student_id AND pin = :pin";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':student_id', $student_id);
         $stmt->bindParam(':pin', $pin);
         $stmt->execute();
 
         if ($stmt->rowCount() == 1) {
+
+            date_default_timezone_set('Asia/Manila');
+
+            $current_datetime = date('Y-m-d H:i:s');
+
             // Prepare an insert statement
-            $sql = "INSERT INTO time_records (student_id, pin, type, timestamp, location, photo) VALUES (:student_id, :pin, :type, :timestamp, :location, :photo)";
+            $sql = "INSERT INTO tbl_timelogs (student_id, pin, type, timestamp, latitude, longitude, photo) VALUES (:student_id, :pin, :type, :timestamp, :latitude, :longitude, :photo)";
             $stmt = $pdo->prepare($sql);
 
             // Bind parameters
             $stmt->bindParam(':student_id', $student_id);
             $stmt->bindParam(':pin', $pin);
             $stmt->bindParam(':type', $type);
-            $stmt->bindParam(':timestamp', $timestamp);
-            $stmt->bindParam(':location', $location);
-            $stmt->bindParam(':photo', $photo, PDO::PARAM_LOB);
+            $stmt->bindParam(':timestamp', $current_datetime);
+            $stmt->bindParam(':latitude', $latitude);
+            $stmt->bindParam(':longitude', $longitude);
+            $stmt->bindParam(':photo', $photo);
 
             // Execute the statement
             if ($stmt->execute()) {
