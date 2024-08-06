@@ -103,7 +103,7 @@ if (isset($_SESSION['student_id'])) {
 
                 const result = await response.json();
                 if (result.success) {
-                    window.location.href = 'home.php';
+                    window.location.href = 'intern/dashboard.php';
                 } else {
                     messageDiv.textContent = result.message;
                 }

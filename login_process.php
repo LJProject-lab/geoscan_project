@@ -19,7 +19,7 @@ try {
 
     if ($user) {
         // Compare plain text pin
-        if ($pin === $user['pin']) {
+        if (password_verify($pin, $user['pin'])) {
             $_SESSION['student_id'] = $user['student_id'];
             $_SESSION['firstname'] = $user['firstname'];
             $_SESSION['lastname'] = $user['lastname'];
