@@ -50,20 +50,7 @@
         <section id="register" class="services">
 
             <div class="container">
-<<<<<<< Updated upstream
             <br><br><br><br><br>
-=======
-                  <div class="d-flex justify-content-between align-items-center">
-                      <div class="d-flex align-items-center">
-                          <img src="assets/img/pnc-logo.png" alt="Logo" style="height: 45px;">
-                          <div class="ims"><a href="index.php" class="ims">&nbsp;IMS</a></div>
-                      </div>
-                      <a href="login.php">
-                        <button class="btn-main">Login</button>
-                      </a>
-              </div>
-            <br><br><br><br>
->>>>>>> Stashed changes
             <header class="section-header">
                 <h2>Time Record</h2>
                 <p>Time in/out using:</p>
