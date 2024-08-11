@@ -20,37 +20,18 @@
     <link href="assets/css/index.css" rel="stylesheet">
 </head>
 <body>
-
-<header id="header" class="header fixed-top">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-      <a href="index.php" class="logo d-flex align-items-center">
-        <img src="assets/img/pnc-logo.png" alt="">
-        <span>&nbsp;Internship Management System</span>
-      </a>
-
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="getstarted scrollto" href="login.php">Login</a></li>  
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
-    </div>
-  </header><!-- End Header -->
-    <!---
-    <div class="container">
-        <div class="top-section">
-            <a href="login.php">Login</a>
-            <a href="register_v3.php">Register</a>
-        </div>
-        <h1>Welcome</h1>
-    </div>
-    ---->
-
         <section id="register" class="services">
-
             <div class="container">
-            <br><br><br><br><br>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center">
+                          <img src="assets/img/pnc-logo.png" alt="Logo" style="height: 45px;">
+                          <div class="ims"><a href="index.php" class="ims">&nbsp;IMS</a></div>
+                      </div>
+                      <a href="login.php">
+                        <button class="btn-main">Login</button>
+                      </a>
+              </div>
+            <br><br><br><br>
             <header class="section-header">
                 <h2>Time Record</h2>
                 <p>Time in/out using:</p>
@@ -81,31 +62,15 @@
             </div>
 
         </section>
-        <!---- For Edit
-        <div class="center-section">
-            <button onclick="location.href='time_scan.php'">Scan Time In</button>
-            <button onclick="location.href='time_record.php'">4 Pin Time In</button>
-        </div>
-        <div class="description">
-            <h2>Scan Time In</h2>
-            <p>The Scan Time In option allows you to time in by simply pressing a button. It automatically fetches your location and the current time.</p>
-            <h2>4 Pin Time In</h2>
-            <p>The 4 Pin option requires additional supporting evidence. You need to provide a picture and a 4-digit pin for time in.</p>
-        </div>
-        ------->
         
-   
-
       <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
 
 </body>
 </html>

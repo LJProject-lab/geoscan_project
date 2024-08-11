@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include 'includes/top_include.php' ?>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> <!-- Add your Google Maps API key here -->
-    <link rel="stylesheet" href="assets/css/styles.css"> <!-- Make sure the path to main.css is correct -->
+    <link rel="stylesheet" href="assets/css/styles.css"> <!-- Make sure the path to styles.css is correct -->
     <script>
         function getLocationAndPicture() {
             if (navigator.geolocation) {

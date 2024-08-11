@@ -66,6 +66,16 @@ section {
   }
 }
 
+.ims a {
+  margin: 0 0 0 0;
+  padding: 0;
+  font-size: 32px;
+  line-height: 35px;
+  font-weight: 700;
+  font-family: century;
+  color: #198754;
+}
+
 /*--------------------------------------------------------------
 # Breadcrumbs
 --------------------------------------------------------------*/
@@ -215,7 +225,7 @@ section {
 }
 
 .navbar a,
-.navbar a:focus {
+#login a:focus {
   display: flex;
   align-items: center;
   justify-content: space-between;
