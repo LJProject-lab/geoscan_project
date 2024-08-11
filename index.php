@@ -28,7 +28,7 @@
                           <div class="ims"><a href="index.php" class="ims">&nbsp;IMS</a></div>
                       </div>
                       <a href="login.php">
-                        <button class="btn btn-success">Login</button>
+                        <button class="btn-main">Login</button>
                       </a>
               </div>
             <br><br><br><br>

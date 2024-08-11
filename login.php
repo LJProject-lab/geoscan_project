@@ -21,48 +21,51 @@ if (isset($_SESSION['student_id'])) {
 </head>
 
 <style>
-    body{
+    body {
         background-color: #f6f9ff;
     }
 </style>
 
 <body>
-        <div class="col-lg-3">
-          <div class="card">
+    <div class="col-lg-3">
+        <div class="card">
             <div class="card-body">
-            <div class="login-container-header">
-                <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-                <span>&nbsp;Internship Management System</span>
-            </div><br>
-            <div class="card-title">
-              <h5>INTERN</h5>
+                <div class="login-container-header">
+                    <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
+                    <span>&nbsp;Internship Management System</span>
+                </div><br>
+                <div class="card-title">
+                    <h5>INTERN</h5>
+                </div>
+                <!-- Vertical Form -->
+                <form id="loginForm" class="row g-3">
+                    <div class="col-12">
+                        <label for="inputNanme4" class="form-label">Student Id</label>
+                        <input type="text" class="form-control" id="student_id" name="student_id">
+                    </div>
+                    <div class="col-12">
+                        <label for="inputEmail4" class="form-label">Pin</label>
+                        <input type="password" class="form-control" id="pin" name="pin">
+                    </div><br><br><br><br>
+                    <div class="d-grid gap-2 mt-3">
+                        <button class="btn-main" type="submit"><i class="bx bx-door-open"></i>
+                            Login</button>
+                    </div>
+                    <div class="text-center">
+                        <a class="backbtn" href="./">Back</a>
+                    </div>
+                </form><!-- Vertical Form -->
+                <center>
+                    <div id="message" class="message"></div>
+                </center>
             </div>
-              <!-- Vertical Form -->
-              <form id="loginForm" class="row g-3">
-                <div class="col-12">
-                  <label for="inputNanme4" class="form-label">Student Id</label>
-                  <input type="text" class="form-control" id="student_id" name="student_id">
-                </div>
-                <div class="col-12">
-                  <label for="inputEmail4" class="form-label">Pin</label>
-                  <input type="password" class="form-control" id="pin" name="pin">
-                </div><br><br><br><br>
-                <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-success btn-lg" type="submit"><i class="bx bx-door-open"></i> Login</button>
-                </div>
-                <div class="text-center">
-                  <a class="backbtn" href="./">Back</a>
-                </div>
-              </form><!-- Vertical Form -->
-              <div id="message" class="message"></div>
-            </div>
-          </div>
+        </div>
 
 
 
 
 
-    <!-------- For edit
+        <!-------- For edit
     <div class="login-container">
         <div class="login-container-header">
             <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
@@ -83,36 +86,36 @@ if (isset($_SESSION['student_id'])) {
             <div id="message" class="message"></div>
     </div>
     -------->
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = '';
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const messageDiv = document.getElementById('message');
+                messageDiv.textContent = '';
 
-            const student_id = document.getElementById('student_id').value;
-            const pin = document.getElementById('pin').value;
+                const student_id = document.getElementById('student_id').value;
+                const pin = document.getElementById('pin').value;
 
-            try {
-                const response = await fetch('login_process.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ student_id, pin })
-                });
+                try {
+                    const response = await fetch('login_process.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ student_id, pin })
+                    });
 
-                const result = await response.json();
-                if (result.success) {
-                    window.location.href = 'intern/dashboard.php';
-                } else {
-                    messageDiv.textContent = result.message;
+                    const result = await response.json();
+                    if (result.success) {
+                        window.location.href = 'intern/dashboard.php';
+                    } else {
+                        messageDiv.textContent = result.message;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    messageDiv.textContent = 'Login failed. Please try again.';
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                messageDiv.textContent = 'Login failed. Please try again.';
-            }
-        });
-    </script>
+            });
+        </script>
 </body>
 
 </html>
