@@ -16,10 +16,53 @@ if (isset($_SESSION['student_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include 'includes/top_include.php'; ?>
     <link rel="stylesheet" href="assets/css/styles.css">
+<<<<<<< Updated upstream
 
+=======
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+>>>>>>> Stashed changes
 </head>
 
 <body>
+<<<<<<< Updated upstream
+=======
+        <div class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+            <div class="login-container-header">
+                <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
+                <span>&nbsp;Internship Management System</span>
+            </div><br>
+            <div class="card-title">
+              <h5>INTERN</h5>
+            </div>
+              <!-- Vertical Form -->
+              <form id="loginForm" class="row g-3">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">Student Id</label>
+                  <input type="text" class="form-control" id="student_id" name="student_id">
+                </div>
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Pin</label>
+                  <input type="password" class="form-control" id="pin" name="pin">
+                </div><br><br><br><br>
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn-main" type="submit"><i class="bx bx-door-open"></i> Login</button>
+                </div>
+                <div class="text-center">
+                  <a class="backbtn" href="./">Back</a>
+                </div>
+              </form><!-- Vertical Form -->
+             <center><div id="message" class="message"></div></center> 
+            </div>
+          </div>
+
+
+
+
+
+    <!-------- For edit
+>>>>>>> Stashed changes
     <div class="login-container">
         <div class="login-container-header">
             <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
