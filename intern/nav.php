@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['student_id'])) {
-    header("Location: ./login.php");
-    exit();
+  header("Location: ../login.php");
+  exit();
 }
 ?>
 
@@ -13,7 +13,7 @@ if (!isset($_SESSION['student_id'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Internship Management</title>
+  <title>IMS</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -23,7 +23,9 @@ if (!isset($_SESSION['student_id'])) {
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,14 +40,16 @@ if (!isset($_SESSION['student_id'])) {
   <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
+
 <body>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="#" class="logo d-flex align-items-center">
-        <img src="assets/img/pnc.png" alt="">
+      <a href="#" class="logo d-flex align-items-center" style="color: #198754; font-family: Century; font-weight:bold;">
+        <img src="assets/img/pnc-logo.png" alt="Logo" style="height: 45px;">
+        &nbsp;IMS
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -132,7 +136,8 @@ if (!isset($_SESSION['student_id'])) {
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/user.png" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo htmlspecialchars($_SESSION['firstname']); ?>&nbsp;</span>
+            <span
+              class="d-none d-md-block dropdown-toggle ps-2"><?php echo htmlspecialchars($_SESSION['firstname']); ?>&nbsp;</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -155,7 +160,7 @@ if (!isset($_SESSION['student_id'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="settings.php">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>

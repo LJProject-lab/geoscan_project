@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 07:12 PM
+-- Generation Time: Aug 17, 2024 at 09:25 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,7 +43,7 @@ CREATE TABLE `tbl_timelogs` (
 --
 
 INSERT INTO `tbl_timelogs` (`id`, `student_id`, `pin`, `type`, `timestamp`, `longitude`, `latitude`, `photo`) VALUES
-(1, '24-0001', '', 'time_in', '2024-08-03 16:20:30', 121.111573, 14.310186, '');
+(17, 'SY2024-1003', '', 'time_in', '2024-08-17 18:53:26', 121.030600, 14.406900, '');
 
 -- --------------------------------------------------------
 
@@ -70,8 +70,9 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`id`, `student_id`, `credential_id`, `attestation_object`, `client_data_json`, `pin`, `firstname`, `lastname`, `email`, `phone`, `address`) VALUES
-(1, '24-0001', 'AdXGVmW0fACHt5ojGcK9yb1YpKZL9BxxKxO0Qipi9RelZLfl1Jc521i9/pkE9zLN+klBVD1V9FpATf9kCoTGjl4=', 'o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVjFSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQHVxlZltHwAh7eaIxnCvcm9WKSmS/QccSsTtEIqYvUXpWS35dSXOdtYvf6ZBPcyzfpJQVQ9VfRaQE3/ZAqExo5epQECAyYgASFYIDF0USYD7w43cVDVx5UIihECn/tomKePAVvhgkpd+h3+IlggHcklqK+b+SfFKBUgWZTaVGGF3BOJbETS11WdA9HLmAw=', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiUU5jbGVXZ2lsU0w1YUdNN0l3TUw0M1QxSURUWEtqQmdKcFdSX1lhV1dLayIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '1234', 'Lorenz', 'Villalobos', 'Lorenz@gmail.com', '91234568261', 'Laguna'),
-(2, '24-0002', NULL, NULL, NULL, '4321', 'John', 'Doe', 'John@gmail.com', '98726152341', '816');
+(4, 'SY2024-1001', 'AU0mS/POYqn/ov3XmuzI1Tbn1PpOMl9ghT7GAFrxjB5DyUuaOaUUVd7iwVCZL9fL5C9njYcXOIc4HC4HXbLEB+8=', 'o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVjFSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQFNJkvzzmKp/6L915rsyNU259T6TjJfYIU+xgBa8YweQ8lLmjmlFFXe4sFQmS/Xy+QvZ42HFziHOBwuB12yxAfvpQECAyYgASFYIHrsbAdB8/XEB/BV8Zy9p6oj/hUsZSN3uaMX+DPlniJsIlgge9XJICBOYyls5BAd2a2pr48Q7Zm5DLjAhRJ2Z4k/FlQ=', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiWFduLVZ1MzFHb0N3NWNTY2JDSC1hWF9kRnRCLWI5NVFfVGZDclFhR3dMVSIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '1234', 'Jimmy', 'Camangon', 'jimmycamangon7@gmail.com', '09365220532', 'sa bahay mo'),
+(5, 'SY2024-1002', NULL, NULL, NULL, '1234', 'Jimmy', 'Camangon', 'jimmycamangon30@gmail.com', '09365220532', 'sa bahay mo'),
+(6, 'SY2024-1003', 'QJKr1O9Gdygpm7Q/j8zgZ6nSH30UeEujrStjGx3pQ40=', 'o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZzkBAGNzaWdZAQCcYKggZvt/dVs9TKNyHU56eyfOp9Lb/1jpBTDZQzR341rKb4biSZdb7+beSgiPCTeHTh/h+W5ysnhA7IDVWA8km7uyF6Nv27kdZp8dEeo6/3irHqt28m1DtWsgoCRrE2Gyo0KoqKZv1D70tf8AqCTN/G3MPchvz30sLPdQZY52X/VUvxbzQU6qcN4uASjasxNLm65IaFyY6KXP/RtUEEzLT+rJTgyMOaBnPAcC4ZIruySI0moQYBBCHBVSJfZCrlGD8oOBFQmh8bdbDKH5b0rweHNcggHOrW35emZk5EjWqmwOW1d8bVorHgq4RBP1/yTmtm6PCFQaT6OgXutDoXfuaGF1dGhEYXRhWQFnSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAGAosBex1EwCtLOvza/Ja7IAIECSq9TvRncoKZu0P4/M4Gep0h99FHhLo60rYxsd6UONpAEDAzkBACBZAQDnzWrVcGcbvKdvoqDiLeCkDcfXkHhzXhQibPjke3KEIvE0TbfIdd0iIpYAKzCGqe150z3iMoRwilS/Y3OeJyFqHrodoV5q4jBgQwnUV/niga9vlCLobCYB53c9Mc+SvqZR5DeQdsu8fFn/rBkO6q5TcuTTogUAjqtKzWR/q56riiu6Xubwb70Nq2hUYuCV7hcbJWGMwAfrwSzk7hhyY6GBUm/2RcOaprFmWc5a6uEUQKO1SxHhh2j4APrUY7mZGxQ8w5I8d/abOIg7ghdNX/RgoZ5sf7eyzD6hllm0EEpTvB36sOuZGSBbVcYnIUWfJ8lL8jcjPJRrqh4Lb3wO1nDJIUMBAAE=', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiamdGT3ZWOUFRalBQTkxKUDJSQjQ5UGlvT2dSd1hGcHpMNkphTmM3S1RXNCIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '$2y$10$YUphQbwvLSeUC832PI.nMOQTEl2CPsUqCXvdF6VJCp1dQ5943dQwi', 'Jimmy', 'Camangon', 'jimscams6@gmail.com', '09365220532', 'Test');
 
 --
 -- Indexes for dumped tables
@@ -97,13 +98,13 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_timelogs`
 --
 ALTER TABLE `tbl_timelogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

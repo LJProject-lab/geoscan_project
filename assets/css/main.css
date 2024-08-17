@@ -34,6 +34,10 @@ body {
   box-sizing: border-box;
 }
 
+a button {
+  border-radius: 5px;
+}
+
 /* Button Base Styles */
 button {
   padding: 10px 20px;

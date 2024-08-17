@@ -1,14 +1,5 @@
-/**
-* Template Name: NiceAdmin
-* Updated: Jan 09 2024 with Bootstrap v5.3.2
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
+@import url('../../../assets/css/main.css');
 :root {
   scroll-behavior: smooth;
 }
@@ -1230,4 +1221,42 @@ h6 {
   text-align: center;
   font-size: 13px;
   color: #012970;
+}
+
+/* SETTINGS */
+/* SETTINGS */
+.fingerprint {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-fingerprint img {
+  max-width: 250px;
+  width: 100%;
+}
+
+.right-fingerprint {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.right-fingerprint h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.right-fingerprint .description {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.add-fingerprint-btn {
+  align-self: flex-end;
 }

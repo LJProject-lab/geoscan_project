@@ -25,7 +25,7 @@
                   <div class="d-flex justify-content-between align-items-center">
                       <div class="d-flex align-items-center">
                           <img src="assets/img/pnc-logo.png" alt="Logo" style="height: 45px;">
-                          <div class="ims"><a href="index.php" class="ims">&nbsp;IMS</a></div>
+                          <div class="ims"><a href="index.php" class="ims">&nbsp;Internship Management System</a></div>
                       </div>
                       <a href="login.php">
                         <button class="btn-main">Login</button>

@@ -32,7 +32,7 @@ if (isset($_SESSION['student_id'])) {
             <div class="card-body">
                 <div class="login-container-header">
                     <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-                    <span>&nbsp;Internship Management System</span>
+                    <span style="font-family: Century !important;">&nbsp;Internship Management System</span>
                 </div><br>
                 <div class="card-title">
                     <h5>INTERN</h5>
@@ -46,9 +46,9 @@ if (isset($_SESSION['student_id'])) {
                     <div class="col-12">
                         <label for="inputEmail4" class="form-label">Pin</label>
                         <input type="password" class="form-control" id="pin" name="pin">
-                    </div><br><br><br><br>
+                    </div><br><br>
                     <div class="d-grid gap-2 mt-3">
-                        <button class="btn-main" type="submit"><i class="bx bx-door-open"></i>
+                        <button class="btn-main" style="border-radius: 5px;" type="submit"><i class="bx bx-door-open"></i>
                             Login</button>
                     </div>
                     <div class="text-center">

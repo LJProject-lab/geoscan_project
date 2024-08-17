@@ -31,6 +31,13 @@ include "nav.php";
       </a>
     </li><!-- End Blank Page Nav -->
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="settings.php">
+        <i class='bx bxs-cog'></i>
+        <span>Settings</span>
+      </a>
+    </li><!-- End Blank Page Nav -->
+
   </ul>
 
 </aside><!-- End Sidebar-->
@@ -47,26 +54,10 @@ include "nav.php";
     </nav>
   </div><!-- End Page Title -->
 
-
-
   <div class="col-xl-12">
-
     <div class="card">
       <div class="card-body">
-        <table id="datatablesSimple" class="table">
-          <thead>
-            <tr>
-              <th>Transaction No.</th>
-              <th>Cater name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Test</td>
-              <td>Test</td>
-            </tr>
-          </tbody>
-        </table>
+        Empty as of now.
       </div>
     </div>
   </div>

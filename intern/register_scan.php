@@ -1,10 +1,10 @@
 <?php
 session_start();
-require 'config.php';
+require '../config.php';
 
 // Redirect to login if student_id session is not active
 if (!isset($_SESSION['student_id'])) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 
@@ -30,8 +30,8 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <?php include 'includes/top_include.php' ?>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <?php include '../includes/top_include.php' ?>
 </head>
 
 <body>
@@ -44,7 +44,7 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
         <?php else: ?>
             <form id="registerForm">
                 <div class="icon">
-                <i class="fa-solid fa-fingerprint fa-4x"></i>
+                    <i class="fa-solid fa-fingerprint fa-4x"></i>
                 </div>
                 <p class="description">
                     Enabling Touch ID will speed up your time-record process. Just register your phone along with your
@@ -57,7 +57,6 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
                 <a href="#" class="learn-more">Learn more about Touch ID</a>
             </form>
             <br>
-            <div id="message" class="message"></div>
 
             <script>
                 function bufferToBase64(buffer) {
@@ -143,11 +142,12 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
                 });
 
                 document.getElementById('BackButton').addEventListener('click', function () {
-                    window.location.href = 'home.php';
+                    window.location.href = 'settings.php';
                 });
             </script>
         <?php endif; ?>
     </div>
+    <div id="message" class="message"></div>
 </body>
 
 </html>
