@@ -18,18 +18,25 @@ include "nav.php";
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
+      <a class="nav-link collapsed" href="register_intern.php">
+        <i class="bi bi-people-fill"></i>
+        <span>List of Intern</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link collapsed" href="requirement_checklist.php">
         <i class="bi bi-file-earmark-check-fill"></i>
         <span>Requirements Checklist</span>
       </a>
-    </li><!-- End Login Page Nav -->
+    </li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
-    </li><!-- End Blank Page Nav -->
+    </li>
 
   </ul>
 
