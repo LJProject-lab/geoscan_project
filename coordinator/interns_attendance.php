@@ -9,7 +9,7 @@ include "nav.php";
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link " href="dashboard.php">
+      <a class="nav-link collapsed" href="dashboard.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -32,7 +32,7 @@ include "nav.php";
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="interns_attendance.php">
+      <a class="nav-link " href="interns_attendance.php">
         <i class="bx bxs-user-detail"></i>
         <span>Interns Attendance</span>
       </a>
@@ -56,12 +56,33 @@ include "nav.php";
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active">Intern Attendance</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
 
-
+  <div class="card">
+      <div class="card-body">
+        <table id="datatablesSimple" class="table">
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Course</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Test</td>
+              <td>Test</td>
+              <td>Test</td>
+              <td>Test</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
 
 

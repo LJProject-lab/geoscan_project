@@ -33,6 +33,13 @@ include "config.php";
     </li>
 
     <li class="nav-item">
+      <a class="nav-link collapsed" href="interns_attendance.php">
+        <i class="bx bxs-user-detail"></i>
+        <span>Interns Attendance</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link collapsed" href="progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
@@ -73,11 +80,11 @@ include "config.php";
             <div class="modal-body">
 
               <!-- Multi Columns Form -->
-              <form class="row g-3" action="" method="post">
+              <form class="row g-3" action="register_intern_conn.php" method="post">
 
                 <div class="col-md-12">
                     <div class="form-floating mb-3">
-                        <select class="form-select" name="suffix" id="floatingSelect" aria-label="State">
+                        <select class="form-select" name="course" id="floatingSelect" aria-label="State">
                             <option selected disabled>Select Course</option>
                             <?php
                             // Fetching courses from the database
@@ -94,7 +101,7 @@ include "config.php";
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="username" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="student_id" id="floatingName" placeholder="">
                     <label for="floatingName">Student ID</label>
                   </div>
                 </div>
@@ -112,26 +119,26 @@ include "config.php";
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="lastname" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="email" id="floatingName" placeholder="">
                     <label for="floatingName">Email</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="lastname" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="phone" id="floatingName" placeholder="">
                     <label for="floatingName">Phone</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="lastname" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="address" id="floatingName" placeholder="">
                     <label for="floatingName">Address</label>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?>" name="professional" id="floatingName" placeholder="" readonly>
-                    <label for="floatingName">Adviser</label>
+                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?>" name="coordinator" id="floatingName" placeholder="" readonly>
+                    <label for="floatingName">Coordinator</label>
                   </div>
                 </div>
                 <div class="text-center">
@@ -152,12 +159,16 @@ include "config.php";
         <table id="datatablesSimple" class="table">
           <thead>
             <tr>
-              <th>Transaction No.</th>
-              <th>Cater name</th>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Course</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td>Test</td>
+              <td>Test</td>
               <td>Test</td>
               <td>Test</td>
             </tr>
