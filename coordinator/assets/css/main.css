@@ -1,0 +1,101 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+html, body {
+  overflow-x: hidden;
+}
+/* Root Variables */
+:root {
+  --primary-color: #198754;
+  --secondary-color: #6c757d;
+  --desc-color: #333;
+  --gray-color: #7498b6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --light-color: #fff;
+  --bg-color: #f6f9ff;
+
+  /* Buttons */
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+}
+
+a {
+  text-decoration: none;
+}
+i {
+  color: var(--gray-color);
+}
+/* Base Font Style */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Button Base Styles */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease-in-out;
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Secondary Button */
+.button-secondary {
+  background-color: #ffffff;
+  color: var(--primary-color);
+  margin-right: 10px;
+  border: 1px solid var(--primary-color);
+}
+
+/* Success Button */
+.button-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.button-success:hover {
+  transform: scale(1.05);
+}
+
+/* Danger Button */
+.button-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.button-danger:hover {
+  transform: scale(1.05);
+}
+
+/* Warning Button */
+.button-warning {
+  background-color: var(--warning-color);
+  color: black;
+}
+
+.button-warning:hover {
+  transform: scale(1.05);
+}
+
+.h1-header {
+  color: var(--primary-color);
+}
+
+.message {
+  color: red;
+  font-weight: bold;
+}
+.success {
+  color: green;
+  font-weight: bold;
+}

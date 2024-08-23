@@ -12,7 +12,7 @@
         <input type="text" id="student_id" name="student_id" required><br><br>
 
         <label for="pin">4-digit PIN:</label>
-        <input type="password" id="pin" name="pin" pattern="\d{4}" title="Please enter a 4-digit PIN" required><br><br>
+        <input type="password" id="pin" name="pin"  title="Please enter a 4-digit PIN" required><br><br>
 
         <label for="first_name">First Name:</label>
         <input type="text" id="firstname" name="firstname" required><br><br>

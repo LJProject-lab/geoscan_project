@@ -1,4 +1,4 @@
-<?php include 'includes/preloader.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
