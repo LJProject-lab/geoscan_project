@@ -36,7 +36,11 @@
         <button id="BackButton" type="button" class="button-secondary">Back</button>
     </div>
     <div id="message" class="message"></div>
-
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/js/main.js"></script>
     <script>
         function bufferToBase64(buffer) {
             let binary = '';
@@ -50,7 +54,12 @@
         document.getElementById('loginButton').addEventListener('click', async () => {
             const messageDiv = document.getElementById('message');
             const timeSelection = document.getElementById('timeSelection').value;
+
+
             messageDiv.textContent = '';
+
+            // Show the preloader
+            showPreloader();
 
             // Map the timeSelection to formal messages
             const timeSelectionMessages = {
@@ -62,6 +71,7 @@
             if (!navigator.geolocation) {
                 messageDiv.className = 'message error'; // Apply error class
                 messageDiv.textContent = 'Geolocation is not supported by your browser.';
+                hidePreloader(); 
                 return;
             }
 
@@ -149,8 +159,11 @@
                     messageDiv.className = 'message error'; // Apply error class
                     messageDiv.textContent = 'Unable to retrieve your location. Please ensure GPS is enabled and try again.';
                 }
+
             }
+            hidePreloader(); 
         });
+
 
         document.getElementById('BackButton').addEventListener('click', function () {
             window.location.href = './';

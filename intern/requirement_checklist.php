@@ -65,6 +65,10 @@ include "nav.php";
 
 </main><!-- End #main -->
 
-
+<div id="preloader">
+  <div class="loader"></div>
+</div>
+<script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="../assets/js/main.js"></script>
 
 <?php include "footer.php"; ?>

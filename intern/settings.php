@@ -100,7 +100,11 @@ $fingerprint_registered = $user && ($user['credential_id'] || $user['attestation
 
 
 </main><!-- End #main -->
-
+<div id="preloader">
+  <div class="loader"></div>
+</div>
+<script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="../assets/js/main.js"></script>
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
     crossorigin="anonymous"></script>

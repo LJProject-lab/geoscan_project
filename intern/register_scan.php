@@ -67,12 +67,14 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
                     }
                     return window.btoa(binary);
                 }
-
                 document.getElementById('registerForm').addEventListener('submit', async (event) => {
                     event.preventDefault();
 
                     const messageDiv = document.getElementById('message');
                     messageDiv.textContent = '';
+
+                    // Show the preloader
+                    showPreloader();
 
                     try {
                         // Fetch the challenge from the server
@@ -86,6 +88,7 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
                         const challengeData = await challengeResponse.json();
                         if (!challengeData.success) {
                             messageDiv.textContent = challengeData.message;
+                            hidePreloader(); // Hide preloader if there's an error
                             return;
                         }
 
@@ -135,10 +138,14 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
                         } else {
                             messageDiv.textContent = result.message;
                         }
+
                     } catch (error) {
                         console.error('Error:', error);
                         messageDiv.textContent = 'Registration failed. Please try again.';
                     }
+
+                    // Hide the preloader after the registration process is complete
+                    hidePreloader();
                 });
 
                 document.getElementById('BackButton').addEventListener('click', function () {
@@ -148,6 +155,11 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
         <?php endif; ?>
     </div>
     <div id="message" class="message"></div>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
 
 </html>

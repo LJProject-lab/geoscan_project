@@ -1,6 +1,7 @@
 <?php
 include "nav.php";
 include_once 'functions/fetch-records.php';
+include_once '../includes/getAddress.php';
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
@@ -65,8 +66,7 @@ include_once 'functions/fetch-records.php';
             <tr>
               <th>Type</th>
               <th>Timestamp</th>
-              <th>Longitude</th>
-              <th>Latitude</th>
+              <th>Location</th>
             </tr>
           </thead>
           <tbody>
@@ -84,10 +84,7 @@ include_once 'functions/fetch-records.php';
                   <?php echo $log['timestamp']; ?>
                 </td>
                 <td>
-                  <?php echo $log['longitude']; ?>
-                </td>
-                <td>
-                  <?php echo $log['latitude']; ?>
+                  <?php echo htmlspecialchars(getAddress($log['latitude'], $log['longitude'])); ?>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -100,7 +97,11 @@ include_once 'functions/fetch-records.php';
 
 </main><!-- End #main -->
 
-
+<div id="preloader">
+  <div class="loader"></div>
+</div>
+<script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="../assets/js/main.js"></script>
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>
