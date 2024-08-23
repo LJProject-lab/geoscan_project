@@ -101,7 +101,7 @@ include "config.php";
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="student_id" id="floatingName" placeholder="">
+                    <input type="number" class="form-control" name="student_id" pattern="\d{4}"  id="floatingName" placeholder="">
                     <label for="floatingName">Student ID</label>
                   </div>
                 </div>
@@ -135,12 +135,9 @@ include "config.php";
                     <label for="floatingName">Address</label>
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?>" name="coordinator" id="floatingName" placeholder="" readonly>
-                    <label for="floatingName">Coordinator</label>
-                  </div>
-                </div>
+                <!---------    COORDINATOR         ---------------->
+                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['id']); ?>" name="coordinator" id="floatingName" placeholder="" hidden>
+
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary"><i class="ri-send-plane-fill"></i>&nbsp;Submit</button>
                 </div>
@@ -154,28 +151,45 @@ include "config.php";
         </div>
         </div>
 
-    <div class="card">
-      <div class="card-body">
-        <table id="datatablesSimple" class="table">
-          <thead>
-            <tr>
-              <th>Student ID</th>
-              <th>Student Name</th>
-              <th>Course</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Test</td>
-              <td>Test</td>
-              <td>Test</td>
-              <td>Test</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+        <?php
+        $stmt = $pdo->prepare("
+            SELECT u.student_id, u.firstname, u.lastname, c.course_name 
+            FROM tbl_users u
+            JOIN tbl_courses c ON u.course = c.course_id
+        ");
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="card">
+            <div class="card-body">
+                <table id="datatablesSimple" class="table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($users as $user): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($user['student_id']); ?></td>
+                                <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
+                                <td><?php echo htmlspecialchars($user['course_name']); ?></td>
+                                <td>
+                                    <a href="view_intern.php?student_id=<?php echo $user['student_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-eye"></i> View</a>
+                                    <a href="#.php?student_id=<?php echo $user['student_id']; ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Remove</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
   </div>
 
 

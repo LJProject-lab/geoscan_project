@@ -152,6 +152,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 
 .card-title h5{
   font-weight: bold;
+  font-size: large;
   color:#198754;
 }
 .login-container img {

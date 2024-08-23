@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $student_id = $_POST['student_id'];
 
-    // Check if the email is already registered
+    // Check if the student_id is already registered
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM tbl_users WHERE student_id = :student_id");
     $stmt->bindParam(':student_id', $student_id);
     $stmt->execute();
@@ -17,10 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_start();
         $_SESSION['error'] = "This student_id already exists.";
     } else {
-        $student_id = $_POST['student_id'];
         $course = $_POST['course'];
-        $pin = $_POST['pin'];
-        $hashedPin = password_hash($pin, PASSWORD_DEFAULT); 
+        
+        // Extract the last 4 digits of the student_id to use as the PIN
+        $pin = substr($student_id, -4);
+        
+        // Hash the PIN before storing it in the database
+        $hashedPin = password_hash($pin, PASSWORD_DEFAULT);
+        
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $email = $_POST['email'];
@@ -39,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':address', $address);
         $stmt->bindParam(':coordinator', $coordinator);
-
 
         if ($stmt->execute()) {
             session_start();

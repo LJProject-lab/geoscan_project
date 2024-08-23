@@ -69,11 +69,13 @@ include "nav.php";
               <th>Student ID</th>
               <th>Student Name</th>
               <th>Course</th>
+              <th>Course</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td>Test</td>
               <td>Test</td>
               <td>Test</td>
               <td>Test</td>
