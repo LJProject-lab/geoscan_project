@@ -63,9 +63,7 @@ include_once '../includes/getAddress.php';
     </nav>
   </div><!-- End Page Title -->
 
-  <div class="col-xl-12">
-
-<div class="card">
+  <div class="card">
   <div class="card-body">
     <table id="datatablesSimple" class="table">
       <thead>
@@ -73,25 +71,28 @@ include_once '../includes/getAddress.php';
           <th>Student Name</th>
           <th>Type</th>
           <th>Timestamp</th>
+          <th>Photo</th>
           <th>Location</th>
         </tr>
       </thead>
       <tbody>
-        <?php
-        foreach ($logs as $log): ?>
+        <?php foreach ($logs as $log): ?>
           <tr>
             <td>
-              <?php echo $log['firstname'] . " " . $log['lastname']; ?>
+              <?php echo htmlspecialchars($log['firstname'] . " " . $log['lastname']); ?>
             </td>
             <td>
-              <?php if ($log['type'] == "time_in") { ?>
-                Time In
-              <?php } else { ?>
-                Time Out
-              <?php } ?>
+              <?php echo ($log['type'] == "time_in") ? "Time In" : "Time Out"; ?>
             </td>
             <td>
-              <?php echo $log['timestamp']; ?>
+              <?php echo htmlspecialchars($log['timestamp']); ?>
+            </td>
+            <td>
+              <?php if (empty($log['photo'])): ?>
+                N/A
+              <?php else: ?>
+                <img src="<?php echo htmlspecialchars($log['photo']); ?>" alt="Photo" width="100" height="100">
+              <?php endif; ?>
             </td>
             <td>
               <?php echo htmlspecialchars(getAddress($log['latitude'], $log['longitude'])); ?>
@@ -99,12 +100,9 @@ include_once '../includes/getAddress.php';
           </tr>
         <?php endforeach; ?>
       </tbody>
-
     </table>
   </div>
 </div>
-</div>
-
 
 
 

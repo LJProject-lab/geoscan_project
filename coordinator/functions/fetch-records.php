@@ -2,9 +2,16 @@
 // Include the database connection file
 require_once 'config.php';
 
-// Check if the student_id is set in the session
-if (isset($_SESSION['coordinator_id']) && isset($_SESSION['student_id'])) {
-    // Prepare the SQL statement with JOIN to include data from tbl_users
+
+// Initialize $logs as an empty array
+$logs = [];
+
+// Check if the coordinator_id is set in the session
+if (isset($_SESSION['coordinator_id'])) {
+
+    $coordinator_id = $_SESSION['coordinator_id'];
+
+    // Prepare the SQL statement to fetch timelogs based on the coordinator's students
     $sql = "
         SELECT 
             tl.*, 
@@ -14,21 +21,21 @@ if (isset($_SESSION['coordinator_id']) && isset($_SESSION['student_id'])) {
         FROM tbl_timelogs AS tl
         JOIN tbl_users AS u
         ON tl.student_id = u.student_id
-        WHERE tl.student_id = :student_id
+        WHERE u.coordinator_id = :coordinator_id
     ";
 
     try {
-        // Prepare the SQL statement
+        // Prepare and execute the query
         $stmt = $pdo->prepare($sql);
-        // Bind parameters
-        $stmt->bindParam(':student_id', $_SESSION['student_id'], PDO::PARAM_INT);
-        // Execute the query
+        $stmt->bindParam(':coordinator_id', $coordinator_id, PDO::PARAM_INT);
         $stmt->execute();
-        // Fetch all rows
         $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         // Handle database errors
         echo "Error: " . $e->getMessage();
     }
+} else {
+    // Handle case when coordinator_id is not set
+    echo "Coordinator ID is not set in the session.";
 }
 ?>

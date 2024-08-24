@@ -174,8 +174,8 @@ function formatTimestamp($timestamp) {
       <div class="card-body">
         <h5 class="d-flex justify-content-between align-items-center">
           Requirement Forms Checklist
-          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#largeModal">
-            <i class="ri-folders-line" style="color: #fff;"></i> List of Forms need to comply
+          <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#largeModal">
+            <i class="ri-folders-line" style="color: #000;"></i> List of Forms need to comply
           </button>
         </h5>
         <br>
@@ -291,9 +291,7 @@ function formatTimestamp($timestamp) {
                         Your browser does not support the video tag.
                       </video>
                     <?php elseif (in_array($fileExtension, ['doc', 'docx'])): ?>
-                      <p>Microsoft Word Document: <a href="<?php echo $filePath; ?>" target="_blank">View Document</a></p>
-                    <?php elseif (in_array($fileExtension, ['xls', 'xlsx'])): ?>
-                      <p>Microsoft Excel Spreadsheet: <a href="<?php echo $filePath; ?>" target="_blank">View Spreadsheet</a></p>
+                      <p>Microsoft Word Document: <a href="<?php echo $filePath; ?>" target="_blank">Download Document</a></p>
                     <?php else: ?>
                       <p>Unsupported file type.</p>
                     <?php endif; ?>

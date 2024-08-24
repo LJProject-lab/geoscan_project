@@ -156,7 +156,7 @@ include "nav.php";
                     <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['coordinator_id']); ?>" name="coordinator_id" id="floatingName" placeholder="" hidden>
 
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary"><i class="ri-send-plane-fill"></i>&nbsp;Submit</button>
+                  <button type="submit" class="btn btn-success"><i class="ri-send-plane-fill"></i>&nbsp;Submit</button>
                 </div>
               </form><!-- End Multi Columns Form -->
 
