@@ -11714,6 +11714,9 @@ body {
 .modal-header {
   color: 	#097969;
 }
+.modal-header h5 {
+  font-weight: 600;
+}
 label {
   font-weight: 600;
 }

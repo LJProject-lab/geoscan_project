@@ -7,7 +7,7 @@ include 'functions/fetch-users.php';
 if (!isset($_SESSION['admin_id'])) {
     header('Location: ./');
     exit;
-} 
+}
 
 ?>
 <!DOCTYPE html>
@@ -68,10 +68,32 @@ if (!isset($_SESSION['admin_id'])) {
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
                                 <div class="card-body">
-                                    <h4>0</h4>Total Coordinators
+                                    <h4><?php echo $coordinator_count; ?></h4>Total Coordinators
                                 </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="clients.php">View Details</a>
+                                    <a class="small text-white stretched-link" href="coordinators.php">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">
+                                    <h4><?php echo $course_count; ?></h4>Total Courses
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="course.php">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-danger text-white mb-4">
+                                <div class="card-body">
+                                    <h4><?php echo $company_count; ?></h4>Total Companies
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="companies.php">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>

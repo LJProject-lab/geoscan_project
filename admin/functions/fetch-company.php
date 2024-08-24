@@ -5,7 +5,7 @@ require_once '../config.php';
 // Check if the admin_id is set in the session
 if (isset($_SESSION['admin_id'])) {
     // Prepare the SQL statement
-    $sql = "SELECT * FROM tbl_coordinators";
+    $sql = "SELECT * FROM tbl_companies";
 
     try {
         // Prepare the SQL statement
@@ -13,7 +13,7 @@ if (isset($_SESSION['admin_id'])) {
         // Execute the query
         $stmt->execute();
         // Fetch all rows
-        $coordinators = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         // Handle database errors
         echo "Error: " . $e->getMessage();

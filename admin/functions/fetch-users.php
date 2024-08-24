@@ -16,15 +16,41 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 // Get the user count
 $user_count = $row['user_count'];
 
-// // ======
+// ======
 
-// $sql2 = "SELECT COUNT(*) AS client_count FROM tbl_clients";
+$sql2 = "SELECT COUNT(*) AS coordinator_count FROM tbl_coordinators";
 
-// // Prepare the statement
-// $stmt2 = $pdo->prepare($sql2);
-// // Execute the query
-// $stmt2->execute();
-// // Fetch the result
-// $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-// // Get the user count
-// $client_count = $row2['client_count'];
+// Prepare the statement
+$stmt2 = $pdo->prepare($sql2);
+// Execute the query
+$stmt2->execute();
+// Fetch the result
+$row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+// Get the user count
+$coordinator_count = $row2['coordinator_count'];
+
+// ======
+
+$sql2 = "SELECT COUNT(*) AS course_count FROM tbl_courses";
+
+// Prepare the statement
+$stmt2 = $pdo->prepare($sql2);
+// Execute the query
+$stmt2->execute();
+// Fetch the result
+$row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+// Get the user count
+$course_count = $row2['course_count'];
+
+// ======
+
+$sql2 = "SELECT COUNT(*) AS company_count FROM tbl_companies";
+
+// Prepare the statement
+$stmt2 = $pdo->prepare($sql2);
+// Execute the query
+$stmt2->execute();
+// Fetch the result
+$row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+// Get the user count
+$company_count = $row2['company_count'];

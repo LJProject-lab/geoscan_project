@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'functions/session.php';
-include_once 'functions/fetch-coordinators.php';
+include_once 'functions/fetch-course.php';
 include 'includes/top_include.php';
 
 ?>
@@ -14,6 +14,7 @@ include 'includes/top_include.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="assets/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -49,14 +50,14 @@ include 'includes/top_include.php';
                     <br>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php" class="link-ref">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Coordinators</li>
+                        <li class="breadcrumb-item active">Courses</li>
                     </ol>
 
                     <div class="card mb-4">
                         <div class="card-header">
                             <div class="form-group">
                                 <i class="fa-solid fa-cube"></i>&nbsp;
-                                <b>List of Coordinators</b>
+                                <b>List of Courses</b>
                                 &nbsp; | &nbsp;
                                 <button type="button" class="btn-get-main" data-toggle="modal"
                                     data-target="#AddNewModal">
@@ -68,39 +69,27 @@ include 'includes/top_include.php';
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
-                                        <th>Coordinator ID</th>
-                                        <th>Username</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Member Since</th>
+                                        <th>Course ID</th>
+                                        <th>Course Name</th>
+                                        <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($coordinators as $coordinator): ?>
+                                    <?php foreach ($courses as $course): ?>
                                         <tr>
                                             <td>
-                                                <?php echo $coordinator['coordinator_id']; ?>
+                                                <?php echo $course['course_id']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $coordinator['username']; ?>
+                                                <?php echo $course['course_name']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $coordinator['firstname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $coordinator['lastname']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $coordinator['email']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $coordinator['createdAt']; ?>
+                                                <?php echo $course['createdAt']; ?>
                                             </td>
                                             <td>
                                                 <button class="btn-get-del" data-toggle="modal" data-target="#DeleteModal"
-                                                    data-coordinator-id="<?php echo $coordinator['coordinator_id'] ?>"><i
+                                                    data-course-id="<?php echo $course['course_id'] ?>"><i
                                                         class="fa-solid fa-trash"></i>
                                                     Delete</button>
                                             </td>
@@ -122,7 +111,7 @@ include 'includes/top_include.php';
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-between">
-                    <h5 class="modal-title" id="AddNewModalLabel">Add New Coordinator</h5>
+                    <h5 class="modal-title" id="AddNewModalLabel">Add New Course</h5>
                     <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
                         aria-label="Close"></i>
                 </div>
@@ -133,29 +122,13 @@ include 'includes/top_include.php';
                     <!-- Add form -->
 
                     <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" name="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname">Firstname:</label>
-                        <input type="text" class="form-control" id="firstname" name="firstname">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname">Lastname:</label>
-                        <input type="text" class="form-control" id="lastname" name="lastname">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" class="form-control" id="email" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Temporary Password:</label>
-                        <input type="password" class="form-control" id="password" name="password">
+                        <label for="course_name">Course Name:</label>
+                        <input type="text" class="form-control" id="course_name" name="course_name">
                     </div>
                     <br>
                     <div class="form-group">
                         <input type="submit" class="btn-get-main  py-2" value="Add" style="width:100% !important;"
-                            id="AddCoordinator">
+                            id="AddCourses">
                     </div>
                 </div>
             </div>
@@ -202,8 +175,8 @@ include 'includes/top_include.php';
 
 
     <script src="assets/js/datatables-simple-demo.js"></script>
-    <script src="functions/js/add-coordinators.js"></script>
-    <script src="functions/js/delete-coordinators.js"></script>
+    <script src="functions/js/add-courses.js"></script>
+    <script src="functions/js/delete-courses.js"></script>
 </body>
 
 </html>

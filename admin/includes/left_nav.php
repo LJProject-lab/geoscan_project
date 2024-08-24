@@ -36,11 +36,11 @@
                 <div class="collapse" id="collapsePages_ctrl" aria-labelledby="headingTwo"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link" href="clients.php">
+                        <a class="nav-link" href="course.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
                             Courses
                         </a>
-                        <a class="nav-link" href="customers.php">
+                        <a class="nav-link" href="companies.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-building"></i></div>
                             Companies
                         </a>
@@ -57,11 +57,11 @@
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                         <a class="nav-link" href="daily-revenue.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Daily Revenue
+                            Time Logs
                         </a>
                         <a class="nav-link" href="monthly-revenue.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-simple"></i></div>
-                            Monthly Revenue
+                            History
                         </a>
                     </nav>
                 </div>
