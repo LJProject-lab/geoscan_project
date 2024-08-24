@@ -63,7 +63,84 @@ include "nav.php";
   </div><!-- End Page Title -->
 
 
-  
+  <div class="container">
+    <div class="row">
+        
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;423</h3>
+                  <span>Register Interns</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;423</h3>
+                  <span>Attendance Today</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;423</h3>
+                  <span>Review Requirements</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;423</h3>
+                  <span>Register Fingerprints</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+	</div>
+</div>
 
 
 

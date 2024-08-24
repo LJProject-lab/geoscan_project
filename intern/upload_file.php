@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!in_array($fileType, $allowedTypes)) {
         $_SESSION['alert_type'] = "error";
         $_SESSION['alert_message'] = "Sorry, only PDF, DOC, DOCX, JPG, and PNG files are allowed.";
-        header("Location: register_intern.php");
+        header("Location: requirement_checklist.php");
         exit;
     }
 
