@@ -12,6 +12,19 @@
     <div class="header h1-header">
         <h1>Tap to scan</h1>
     </div>
+
+    <!-- Dropdown to select Time In or Time Out -->
+    <div class="select-time">
+        <label for="timeSelection">Select Time:</label>
+        <select id="timeSelection" class="time-dropdown">
+            <option value="time_in">Time In</option>
+            <option value="time_out">Time Out</option>
+        </select>
+    </div>
+
+    <br>
+    <br>
+    <br>
     <div class="icon">
         <button class="button-main-scan" id="loginButton"
             style="border-radius:100%; !important; height:200px; width:185px;"><i class="fa-solid fa-fingerprint fa-8x"
@@ -23,7 +36,11 @@
         <button id="BackButton" type="button" class="button-secondary">Back</button>
     </div>
     <div id="message" class="message"></div>
-
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/js/main.js"></script>
     <script>
         function bufferToBase64(buffer) {
             let binary = '';
@@ -36,10 +53,25 @@
 
         document.getElementById('loginButton').addEventListener('click', async () => {
             const messageDiv = document.getElementById('message');
+            const timeSelection = document.getElementById('timeSelection').value;
+
+
             messageDiv.textContent = '';
 
+            // Show the preloader
+            showPreloader();
+
+            // Map the timeSelection to formal messages
+            const timeSelectionMessages = {
+                'time_in': 'Time In',
+                'time_out': 'Time Out'
+            };
+            const formalMessage = timeSelectionMessages[timeSelection] || 'Unknown';
+
             if (!navigator.geolocation) {
+                messageDiv.className = 'message error'; // Apply error class
                 messageDiv.textContent = 'Geolocation is not supported by your browser.';
+                hidePreloader(); 
                 return;
             }
 
@@ -63,6 +95,7 @@
 
                     const challengeData = await challengeResponse.json();
                     if (!challengeData.success) {
+                        messageDiv.className = 'message error'; // Apply error class
                         messageDiv.textContent = challengeData.message;
                         return;
                     }
@@ -100,33 +133,42 @@
                                 type: assertion.type
                             },
                             longitude,
-                            latitude
+                            latitude,
+                            timeSelection // Include the time selection (in/out)
                         })
                     });
 
                     const result = await response.json();
                     if (result.success) {
-                        messageDiv.className = 'success';
-                        messageDiv.textContent = 'Successfully timed in.';
+                        messageDiv.className = 'message success'; // Apply success class
+                        messageDiv.textContent = `Successfully recorded your ${formalMessage}.`;
                     } else {
+                        messageDiv.className = 'message error'; // Apply error class
                         messageDiv.textContent = result.message;
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    messageDiv.textContent = 'Scanned failed. Please try again.';
+                    messageDiv.className = 'message error'; // Apply error class
+                    messageDiv.textContent = 'Scan failed. Please try again.';
                 }
             } catch (error) {
                 if (error.code === error.PERMISSION_DENIED) {
+                    messageDiv.className = 'message error'; // Apply error class
                     messageDiv.textContent = 'Please enable your GPS location and try again.';
                 } else {
+                    messageDiv.className = 'message error'; // Apply error class
                     messageDiv.textContent = 'Unable to retrieve your location. Please ensure GPS is enabled and try again.';
                 }
+
             }
+            hidePreloader(); 
         });
+
 
         document.getElementById('BackButton').addEventListener('click', function () {
             window.location.href = './';
         });
+
     </script>
 </body>
 

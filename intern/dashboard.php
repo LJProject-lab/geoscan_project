@@ -31,6 +31,13 @@ include "nav.php";
       </a>
     </li><!-- End Blank Page Nav -->
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="settings.php">
+        <i class='bx bxs-cog'></i>
+        <span>Settings</span>
+      </a>
+    </li><!-- End Blank Page Nav -->
+
   </ul>
 
 </aside><!-- End Sidebar-->
@@ -42,31 +49,14 @@ include "nav.php";
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-        <li class="breadcrumb-item active">Dashboard</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
 
-
-
   <div class="col-xl-12">
-
     <div class="card">
       <div class="card-body">
-        <table id="datatablesSimple" class="table">
-          <thead>
-            <tr>
-              <th>Transaction No.</th>
-              <th>Cater name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Test</td>
-              <td>Test</td>
-            </tr>
-          </tbody>
-        </table>
+        Empty as of now.
       </div>
     </div>
   </div>
@@ -74,6 +64,11 @@ include "nav.php";
 
 
 </main><!-- End #main -->
+<div id="preloader">
+  <div class="loader"></div>
+</div>
+<script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="../assets/js/main.js"></script>
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>

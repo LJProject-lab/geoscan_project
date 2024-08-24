@@ -1,10 +1,9 @@
 <?php
 session_start();
 require 'config.php';
-
 // Redirect to login if student_id session is not active
 if (isset($_SESSION['student_id'])) {
-    header('Location: home.php');
+    header('Location: intern/dasboard.php');
     exit;
 }
 ?>
@@ -32,7 +31,7 @@ if (isset($_SESSION['student_id'])) {
             <div class="card-body">
                 <div class="login-container-header">
                     <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-                    <span>&nbsp;Internship Management System</span>
+                    <span style="font-family: Century !important;">&nbsp;Internship Management System</span>
                 </div><br>
                 <div class="card-title">
                     <h5>INTERN</h5>
@@ -46,9 +45,10 @@ if (isset($_SESSION['student_id'])) {
                     <div class="col-12">
                         <label for="inputEmail4" class="form-label">Pin</label>
                         <input type="password" class="form-control" id="pin" name="pin">
-                    </div><br><br><br><br>
+                    </div><br><br>
                     <div class="d-grid gap-2 mt-3">
-                        <button class="btn-main" type="submit"><i class="bx bx-door-open"></i>
+                        <button class="btn-main" style="border-radius: 5px;" type="submit"><i
+                                class="bx bx-door-open"></i>
                             Login</button>
                     </div>
                     <div class="text-center">
@@ -61,31 +61,11 @@ if (isset($_SESSION['student_id'])) {
             </div>
         </div>
 
-
-
-
-
-        <!-------- For edit
-    <div class="login-container">
-        <div class="login-container-header">
-            <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-            <span>&nbsp;Internship Management System</span>
+        <div id="preloader">
+            <div class="loader"></div>
         </div>
-        <h1>INTERN</h1>
-            <form id="loginForm">
-                <label for="student_id">Student ID:</label>
-                <input type="text" id="student_id" name="student_id" required><br>
-
-                <label for="pin">Pin:</label>
-                <input type="password" id="pin" name="pin" required><br>
-                <button type="submit">Login</button>
-                <br>
-                <br>
-                <a href="./">Back</a>
-            </form>
-            <div id="message" class="message"></div>
-    </div>
-    -------->
+        <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+        <script src="assets/js/main.js"></script>
         <script>
             document.getElementById('loginForm').addEventListener('submit', async (event) => {
                 event.preventDefault();

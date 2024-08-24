@@ -1,6 +1,5 @@
 <?php
 include "nav.php";
-include "config.php";
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
@@ -62,6 +61,24 @@ include "config.php";
     </nav>
   </div><!-- End Page Title -->
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <?php if (isset($_SESSION['alert_type']) && isset($_SESSION['alert_message'])): ?>
+        <script>
+            Swal.fire({
+                icon: '<?php echo $_SESSION['alert_type']; ?>',
+                title: '<?php echo $_SESSION['alert_message']; ?>',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+        <?php
+        // Clear the session data after showing the alert
+        unset($_SESSION['alert_type']);
+        unset($_SESSION['alert_message']);
+        ?>
+    <?php endif; ?>
+
 
 
   <div class="col-xl-12">
@@ -101,42 +118,42 @@ include "config.php";
                 </div>
                 <div class="col-md-2">
                   <div class="form-floating">
-                    <input type="number" class="form-control" name="student_id" pattern="\d{4}"  id="floatingName" placeholder="">
+                    <input type="number" class="form-control" name="student_id" pattern="\d{4}"  id="floatingName" placeholder="" required>
                     <label for="floatingName">Student ID</label>
                   </div>
                 </div>
                 <div class="col-md-5">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="firstname" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="firstname" id="floatingName" placeholder="" required>
                     <label for="floatingName">Firstname</label>
                   </div>
                 </div>
                 <div class="col-md-5">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="lastname" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="lastname" id="floatingName" placeholder="" required>
                     <label for="floatingName">Lastname</label>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="email" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="email" id="floatingName" placeholder="" required>
                     <label for="floatingName">Email</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="phone" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="phone" id="floatingName" placeholder="" required>
                     <label for="floatingName">Phone</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-floating">
-                    <input type="text" class="form-control" name="address" id="floatingName" placeholder="">
+                    <input type="text" class="form-control" name="address" id="floatingName" placeholder="" required>
                     <label for="floatingName">Address</label>
                   </div>
                 </div>
                 <!---------    COORDINATOR         ---------------->
-                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['id']); ?>" name="coordinator" id="floatingName" placeholder="" hidden>
+                    <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['coordinator_id']); ?>" name="coordinator_id" id="floatingName" placeholder="" hidden>
 
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary"><i class="ri-send-plane-fill"></i>&nbsp;Submit</button>
@@ -180,7 +197,7 @@ include "config.php";
                                 <td><?php echo htmlspecialchars($user['course_name']); ?></td>
                                 <td>
                                     <a href="view_intern.php?student_id=<?php echo $user['student_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-eye"></i> View</a>
-                                    <a href="#.php?student_id=<?php echo $user['student_id']; ?>" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Remove</a>
+                                    <a href="javascript:void(0);" onclick="confirmDelete('<?php echo $user['student_id']; ?>')" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Remove</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -195,6 +212,26 @@ include "config.php";
 
 
 </main><!-- End #main -->
+
+<script>
+    function confirmDelete(studentId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, remove it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'remove_intern.php?student_id=' + studentId;
+            }
+        });
+    }
+</script>
+
+
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>

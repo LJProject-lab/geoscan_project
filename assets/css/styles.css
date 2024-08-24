@@ -193,9 +193,20 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   cursor: pointer;
 }
 
+
 .message {
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.message.success {
+  color: green;
+}
+
+.message.error {
   color: red;
-  margin-top: 20px;
 }
 
 /* 4 PIN PANEL */
