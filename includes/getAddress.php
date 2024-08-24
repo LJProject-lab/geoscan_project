@@ -1,3 +1,4 @@
+
 <?php
 
 function getAddress($latitude, $longitude) {
@@ -8,10 +9,10 @@ function getAddress($latitude, $longitude) {
     $data = json_decode($response, true);
 
     if ($data && isset($data['results'][0])) {
+
         return $data['results'][0]['formatted'];
     }
     return 'Address not found';
 }
 
 ?>
-

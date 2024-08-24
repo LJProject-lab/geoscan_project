@@ -69,9 +69,9 @@ try {
             $photo = ''; // Set to an empty string or binary data if applicable
 
             $log_sql = "INSERT INTO tbl_timelogs (student_id, pin, type, timestamp, longitude, latitude, photo) 
-                        VALUES (:student_id, :pin, :type, NOW(), :longitude, :latitude, :photo)";
+                 VALUES (:student_id, :pin, :type, NOW(), :longitude, :latitude, :photo)";
             $log_stmt = $pdo->prepare($log_sql);
-            
+
             try {
                 $log_stmt->execute([
                     ':student_id' => $user['student_id'],
@@ -85,7 +85,7 @@ try {
                 if ($log_stmt->rowCount() > 0) {
                     error_log("Log inserted successfully");
                     header('Content-Type: application/json');
-                    echo json_encode(['success' => true]);
+                    echo json_encode(['success' => true, 'message' => 'Log recorded successfully.']);
                 } else {
                     error_log("Log insert failed");
                     header('Content-Type: application/json');

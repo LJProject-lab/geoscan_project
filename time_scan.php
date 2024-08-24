@@ -4,43 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/scan.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <?php include 'includes/top_include.php' ?>
 </head>
 
 <body>
-    <div class="header h1-header">
-        <h1>Tap to scan</h1>
+
+    <div class="wrapper">
+        <div class="container">
+            <div class="header h1-header">
+                <h1>Tap to scan</h1>
+            </div>
+
+            <!-- Dropdown to select Time In or Time Out -->
+            <div class="select-time">
+                <label for="timeSelection">Select Time:</label>
+                <select id="timeSelection" class="time-dropdown">
+                    <option value="time_in">Time In</option>
+                    <option value="time_out">Time Out</option>
+                </select>
+            </div>
+
+            <br><br><br>
+            <div class="icon">
+                <button class="button-main-scan" id="loginButton"
+                    style="border-radius:100%; !important; height:200px; width:185px;"><i
+                        class="fa-solid fa-fingerprint fa-8x" style="color:#fff !important;"></i></button>
+            </div>
+            <br><br>
+            <div class="buttons">
+                <button id="BackButton" type="button" class="button-secondary">Back</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Dropdown to select Time In or Time Out -->
-    <div class="select-time">
-        <label for="timeSelection">Select Time:</label>
-        <select id="timeSelection" class="time-dropdown">
-            <option value="time_in">Time In</option>
-            <option value="time_out">Time Out</option>
-        </select>
-    </div>
 
-    <br>
-    <br>
-    <br>
-    <div class="icon">
-        <button class="button-main-scan" id="loginButton"
-            style="border-radius:100%; !important; height:200px; width:185px;"><i class="fa-solid fa-fingerprint fa-8x"
-                style="color:#fff !important;"></i></button>
-    </div>
-    <br>
-    <br>
-    <div class="buttons">
-        <button id="BackButton" type="button" class="button-secondary">Back</button>
-    </div>
-    <div id="message" class="message"></div>
+
     <div id="preloader">
         <div class="loader"></div>
     </div>
+
     <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function bufferToBase64(buffer) {
             let binary = '';
@@ -52,11 +59,7 @@
         }
 
         document.getElementById('loginButton').addEventListener('click', async () => {
-            const messageDiv = document.getElementById('message');
             const timeSelection = document.getElementById('timeSelection').value;
-
-
-            messageDiv.textContent = '';
 
             // Show the preloader
             showPreloader();
@@ -69,9 +72,12 @@
             const formalMessage = timeSelectionMessages[timeSelection] || 'Unknown';
 
             if (!navigator.geolocation) {
-                messageDiv.className = 'message error'; // Apply error class
-                messageDiv.textContent = 'Geolocation is not supported by your browser.';
-                hidePreloader(); 
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Geolocation is not supported by your browser.',
+                    icon: 'error'
+                });
+                hidePreloader();
                 return;
             }
 
@@ -95,8 +101,11 @@
 
                     const challengeData = await challengeResponse.json();
                     if (!challengeData.success) {
-                        messageDiv.className = 'message error'; // Apply error class
-                        messageDiv.textContent = challengeData.message;
+                        Swal.fire({
+                            title: 'Error',
+                            text: challengeData.message,
+                            icon: 'error'
+                        });
                         return;
                     }
 
@@ -140,30 +149,43 @@
 
                     const result = await response.json();
                     if (result.success) {
-                        messageDiv.className = 'message success'; // Apply success class
-                        messageDiv.textContent = `Successfully recorded your ${formalMessage}.`;
+                        Swal.fire({
+                            title: 'Success',
+                            text: `Successfully recorded your ${formalMessage}.`,
+                            icon: 'success'
+                        });
                     } else {
-                        messageDiv.className = 'message error'; // Apply error class
-                        messageDiv.textContent = result.message;
+                        Swal.fire({
+                            title: 'Error',
+                            text: result.message,
+                            icon: 'error'
+                        });
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    messageDiv.className = 'message error'; // Apply error class
-                    messageDiv.textContent = 'Scan failed. Please try again.';
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Scan failed. Please try again.',
+                        icon: 'error'
+                    });
                 }
             } catch (error) {
                 if (error.code === error.PERMISSION_DENIED) {
-                    messageDiv.className = 'message error'; // Apply error class
-                    messageDiv.textContent = 'Please enable your GPS location and try again.';
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Please enable your GPS location and try again.',
+                        icon: 'error'
+                    });
                 } else {
-                    messageDiv.className = 'message error'; // Apply error class
-                    messageDiv.textContent = 'Unable to retrieve your location. Please ensure GPS is enabled and try again.';
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Unable to retrieve your location. Please ensure GPS is enabled and try again.',
+                        icon: 'error'
+                    });
                 }
-
             }
-            hidePreloader(); 
+            hidePreloader();
         });
-
 
         document.getElementById('BackButton').addEventListener('click', function () {
             window.location.href = './';

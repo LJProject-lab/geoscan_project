@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include 'includes/top_include.php' ?>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
-    <!-- Add your Google Maps API key here -->
-    <link rel="stylesheet" href="assets/css/styles.css"> <!-- Make sure the path to styles.css is correct -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="assets/css/4Pin.css">
     <script>
         function getLocationAndPicture() {
             if (navigator.geolocation) {
@@ -34,10 +35,18 @@
                     if (results[0]) {
                         document.getElementById("address").value = results[0].formatted_address;
                     } else {
-                        alert("No results found");
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'No results found.',
+                            icon: 'error'
+                        });
                     }
                 } else {
-                    alert("Geocoder failed due to: " + status);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Geocoder failed due to:' + status,
+                        icon: 'error'
+                    });
                 }
             });
         }
@@ -45,16 +54,32 @@
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'User denied the request for Geolocation.',
+                        icon: 'error'
+                    });
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Location information is unavailable.',
+                        icon: 'error'
+                    });
                     break;
                 case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'The request to get user location timed out.',
+                        icon: 'error'
+                    });
                     break;
                 case error.UNKNOWN_ERROR:
-                    alert("An unknown error occurred.");
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'An unknown error occurred.',
+                        icon: 'error'
+                    });
                     break;
             }
         }
@@ -113,10 +138,18 @@
                                 resetCaptureProcess(video, canvas, context);
                             };
                         } else {
-                            alert("Failed to upload photo.");
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to upload photo.',
+                                icon: 'error'
+                            });
                         }
                     }).catch(error => {
-                        alert("Error: " + error.message);
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Error: ' + error.message,
+                            icon: 'error'
+                        });
                     });
                 }, 'image/png');
             };
@@ -133,10 +166,18 @@
                     body: JSON.stringify({ fileName: oldPhoto })
                 }).then(response => response.json()).then(data => {
                     if (!data.success) {
-                        alert("Failed to delete old photo.");
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Failed to delete old photo.',
+                            icon: 'error'
+                        });
                     }
                 }).catch(error => {
-                    alert("Error: " + error.message);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error: ' + error.message,
+                        icon: 'error'
+                    });
                 });
             }
         }
@@ -165,10 +206,10 @@
             document.getElementById("photo").value = "";
         }
 
-
-        // Function to handle form submission via AJAX
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelector("form").addEventListener("submit", function (e) {
+                // Show the preloader
+                showPreloader();
                 e.preventDefault(); // Prevent the default form submission
 
                 var formData = new FormData(this); // Create a FormData object with the form data
@@ -177,61 +218,88 @@
                     method: 'POST',
                     body: formData
                 })
-                    .then(response => response.text())
+                    .then(response => response.json())
                     .then(data => {
-                        // Display the response message below the form
-                        document.querySelector("#response-message").innerHTML = data;
+                        hidePreloader();
+                        if (data.status === 'success') {
+                            Swal.fire({
+                                title: 'Success',
+                                text: data.message,
+                                icon: 'success'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: data.message,
+                                icon: 'error'
+                            });
+                        }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
-                        document.querySelector("#response-message").innerHTML = "An unexpected error occurred.";
+                        hidePreloader();
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'An unexpected error occurred: ' + error,
+                            icon: 'error'
+                        });
                     });
+
             });
         });
+
 
     </script>
 </head>
 
 <body onload="getLocationAndPicture(); capturePhoto();">
-    <div class="container">
-        <div class="left-panel">
-            <!-- Left panel content remains the same -->
-            <video id="videoElement" width="320" height="240" autoplay></video>
-            <canvas id="canvasElement" width="320" height="240" style="display:none;"></canvas>
-            <br>
-            <input type="hidden" id="old_photo" name="old_photo" value="">
-            <button type="button" id="captureButton" class="button-secondary">Capture Photo</button>
-        </div>
-        <div class="right-panel">
-            <h2>Time In/Out Recording</h2>
-            <form method="post" enctype="multipart/form-data">
-                <!-- Form inputs -->
-                <label for="student_id">Student ID:</label>
-                <input type="text" id="student_id" name="student_id" required><br><br>
+    <div class="wrapper">
+        <div class="container">
+            <div class="left-panel">
+                <!-- Left panel content remains the same -->
+                <video id="videoElement" width="320" height="240" autoplay></video>
+                <canvas id="canvasElement" width="320" height="240" style="display:none;"></canvas>
+                <br>
+                <input type="hidden" id="old_photo" name="old_photo" value="">
+                <button type="button" id="captureButton" class="button-secondary">Capture Photo</button>
+            </div>
+            <div class="right-panel">
+                <h2>Time In/Out Recording</h2>
+                <form method="post" enctype="multipart/form-data">
+                    <!-- Form inputs -->
+                    <label for="student_id">Student ID:</label>
+                    <input type="text" id="student_id" name="student_id" required><br><br>
 
-                <label for="pin">4-digit PIN:</label>
-                <input type="password" id="pin" name="pin" pattern="\d{4}" title="Please enter a 4-digit PIN"
-                    required><br><br>
+                    <label for="pin">4-digit PIN:</label>
+                    <input type="password" id="pin" name="pin" pattern="\d{4}" title="Please enter a 4-digit PIN"
+                        required><br><br>
 
-                <label for="type">Type:</label>
-                <select id="type" name="type" required>
-                    <option value="time_in">Time In</option>
-                    <option value="time_out">Time Out</option>
-                </select>
+                    <label for="type">Type:</label>
+                    <select id="type" name="type" required>
+                        <option value="time_in">Time In</option>
+                        <option value="time_out">Time Out</option>
+                    </select>
 
-                <input type="text" id="latitude" name="latitude" readonly required hidden>
-                <input type="text" id="longitude" name="longitude" readonly required hidden><br><br>
+                    <input type="text" id="latitude" name="latitude" readonly required hidden>
+                    <input type="text" id="longitude" name="longitude" readonly required hidden><br><br>
 
-                <input type="hidden" id="photo" name="photo">
-                <button type="submit" class="button">Submit</button>
-                <br><br>
-                <a href="./">Back</a>
-            </form>
+                    <input type="hidden" id="photo" name="photo">
+                    <button type="submit" class="button">Submit</button>
+                    <br><br>
+                    <a href="./">Back</a>
+                </form>
 
-            <!-- Div to display the response message -->
-            <div id="response-message" style="color: red; margin-top: 20px;"></div>
+                <!-- Div to display the response message -->
+                <div id="response-message" style="color: red; margin-top: 20px;"></div>
+            </div>
         </div>
     </div>
+
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
+
 
 </html>

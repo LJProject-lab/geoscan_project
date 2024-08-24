@@ -3,7 +3,7 @@ session_start();
 require 'config.php';
 // Redirect to login if student_id session is not active
 if (isset($_SESSION['student_id'])) {
-    header('Location: intern/dasboard.php');
+    header('Location: intern/dashboard.php');
     exit;
 }
 ?>

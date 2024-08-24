@@ -1,8 +1,7 @@
 <?php
 require 'config.php';
 
-// Initialize the message variable
-$message = '';
+$response = ['status' => 'error', 'message' => '']; // Initialize response array
 
 // Retrieve form data
 $student_id = $_POST['student_id'];
@@ -18,22 +17,22 @@ $stmt->execute(['student_id' => $student_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
-    $message = "Error: Student ID does not exist.";
-    echo $message;
+    $response['message'] = "Student ID does not exist.";
+    echo json_encode($response);
     exit;
 }
 
 // Verify the provided pin against the stored hashed pin
 if (!password_verify($pin, $user['pin'])) {
-    $message = "Error: Invalid PIN.";
-    echo $message;
+    $response['message'] = "Invalid PIN.";
+    echo json_encode($response);
     exit;
 }
 
 // Check if the photo was uploaded
 if (!$photo) {
-    $message = "Error: No photo uploaded.";
-    echo $message;
+    $response['message'] = "No photo uploaded.";
+    echo json_encode($response);
     exit;
 }
 
@@ -52,14 +51,14 @@ $hasTimeOut = $checkTimeOut->fetchColumn();
 
 // Validation based on the type
 if ($type == 'time_in' && $hasTimeIn > 0) {
-    $message = "Error: You have already timed in today.";
-    echo $message;
+    $response['message'] = "You have already recorded your Time In for today.";
+    echo json_encode($response);
     exit;
 }
 
 if ($type == 'time_out' && $hasTimeOut > 0) {
-    $message = "Error: You have already timed out today.";
-    echo $message;
+    $response['message'] = "You have already recorded your Time Out for today.";
+    echo json_encode($response);
     exit;
 }
 
@@ -82,16 +81,18 @@ try {
         'photo' => $photo
     ]);
 
-    // Display different success messages based on the type
+    // Update the response based on the type
     if ($type == 'time_in') {
-        $message = "Time In successfully inserted!";
+        $response['status'] = 'success';
+        $response['message'] = "Time In successfully recorded!";
     } elseif ($type == 'time_out') {
-        $message = "Time Out successfully inserted!";
+        $response['status'] = 'success';
+        $response['message'] = "Time Out successfully recorded!";
     }
 
-    echo $message;
+    echo json_encode($response);
 } catch (PDOException $e) {
-    $message = "Error: " . $e->getMessage();
-    echo $message;
+    $response['message'] = "Error: " . $e->getMessage();
+    echo json_encode($response);
 }
 ?>
