@@ -1,65 +1,97 @@
 <?php
-// Database configuration
-$dsn = 'mysql:host=localhost;dbname=pnc';
-$username = 'root'; // replace with your database username
-$password = ''; // replace with your database password
+require 'config.php';
 
-try {
-    // Create a PDO instance
-    $pdo = new PDO($dsn, $username, $password);
-    // Set error mode to exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Initialize the message variable
+$message = '';
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Get form data
-        $student_id = $_POST['student_id'];
-        $pin = $_POST['pin'];
-        $type = $_POST['type'];
-        $latitude = $_POST['latitude'];
-        $longitude = $_POST['longitude'];
-        $photo = $_POST['photo'];
-        $timestamp = date('Y-m-d H:i:s');
+// Retrieve form data
+$student_id = $_POST['student_id'];
+$pin = $_POST['pin'];
+$type = $_POST['type'];
+$latitude = $_POST['latitude'];
+$longitude = $_POST['longitude'];
+$photo = $_POST['photo'];
 
-        // Verify student credentials
-        $sql = "SELECT * FROM tbl_users WHERE student_id = :student_id AND pin = :pin";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':student_id', $student_id);
-        $stmt->bindParam(':pin', $pin);
-        $stmt->execute();
+// Validate that student_id exists in tbl_users
+$stmt = $pdo->prepare("SELECT id, pin FROM tbl_users WHERE student_id = :student_id");
+$stmt->execute(['student_id' => $student_id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($stmt->rowCount() == 1) {
-
-            date_default_timezone_set('Asia/Manila');
-
-            $current_datetime = date('Y-m-d H:i:s');
-
-            // Prepare an insert statement
-            $sql = "INSERT INTO tbl_timelogs (student_id, pin, type, timestamp, latitude, longitude, photo) VALUES (:student_id, :pin, :type, :timestamp, :latitude, :longitude, :photo)";
-            $stmt = $pdo->prepare($sql);
-
-            // Bind parameters
-            $stmt->bindParam(':student_id', $student_id);
-            $stmt->bindParam(':pin', $pin);
-            $stmt->bindParam(':type', $type);
-            $stmt->bindParam(':timestamp', $current_datetime);
-            $stmt->bindParam(':latitude', $latitude);
-            $stmt->bindParam(':longitude', $longitude);
-            $stmt->bindParam(':photo', $photo);
-
-            // Execute the statement
-            if ($stmt->execute()) {
-                echo "Time record submitted successfully.";
-            } else {
-                echo "Error: Could not submit time record.";
-            }
-        } else {
-            echo "Invalid student ID or PIN.";
-        }
-    }
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+if (!$user) {
+    $message = "Error: Student ID does not exist.";
+    echo $message;
+    exit;
 }
 
-// Close the connection
-$pdo = null;
+// Verify the provided pin against the stored hashed pin
+if (!password_verify($pin, $user['pin'])) {
+    $message = "Error: Invalid PIN.";
+    echo $message;
+    exit;
+}
+
+// Check if the photo was uploaded
+if (!$photo) {
+    $message = "Error: No photo uploaded.";
+    echo $message;
+    exit;
+}
+
+// Check for existing time-in or time-out for the student on the current day
+$currentDate = date('Y-m-d');
+
+// Query to check if the student has already timed in today
+$checkTimeIn = $pdo->prepare("SELECT COUNT(*) FROM tbl_timelogs WHERE student_id = :student_id AND type = 'time_in' AND DATE(timestamp) = :date");
+$checkTimeIn->execute(['student_id' => $student_id, 'date' => $currentDate]);
+$hasTimeIn = $checkTimeIn->fetchColumn();
+
+// Query to check if the student has already timed out today
+$checkTimeOut = $pdo->prepare("SELECT COUNT(*) FROM tbl_timelogs WHERE student_id = :student_id AND type = 'time_out' AND DATE(timestamp) = :date");
+$checkTimeOut->execute(['student_id' => $student_id, 'date' => $currentDate]);
+$hasTimeOut = $checkTimeOut->fetchColumn();
+
+// Validation based on the type
+if ($type == 'time_in' && $hasTimeIn > 0) {
+    $message = "Error: You have already timed in today.";
+    echo $message;
+    exit;
+}
+
+if ($type == 'time_out' && $hasTimeOut > 0) {
+    $message = "Error: You have already timed out today.";
+    echo $message;
+    exit;
+}
+
+// Hash the PIN before storing it in tbl_timelogs
+$pin_hash = password_hash($pin, PASSWORD_DEFAULT);
+
+// Prepare the SQL statement to insert the data
+$sql = "INSERT INTO tbl_timelogs (student_id, pin, type, timestamp, latitude, longitude, photo) 
+        VALUES (:student_id, :pin, :type, NOW(), :latitude, :longitude, :photo)";
+
+$stmt = $pdo->prepare($sql);
+
+try {
+    $stmt->execute([
+        'student_id' => $student_id,
+        'pin' => $pin_hash, // Store the hashed PIN
+        'type' => $type,
+        'latitude' => $latitude,
+        'longitude' => $longitude,
+        'photo' => $photo
+    ]);
+
+    // Display different success messages based on the type
+    if ($type == 'time_in') {
+        $message = "Time In successfully inserted!";
+    } elseif ($type == 'time_out') {
+        $message = "Time Out successfully inserted!";
+    }
+
+    echo $message;
+} catch (PDOException $e) {
+    $message = "Error: " . $e->getMessage();
+    echo $message;
+}
 ?>
