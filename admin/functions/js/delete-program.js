@@ -1,10 +1,10 @@
 $(document).ready(function () {
     // Delete button click event
     $(".btn-get-del").click(function () {
-      var course_id = $(this).data("course-id");
+      var program_id = $(this).data("program-id");
   
-      // Set the course id for deletion
-      $("#confirmDeleteBtn").data("course-id", course_id);
+      // Set the program id for deletion
+      $("#confirmDeleteBtn").data("program-id", program_id);
   
       // Show delete confirmation modal
       $("#deleteConfirmationModal").modal("show");
@@ -12,13 +12,13 @@ $(document).ready(function () {
   
     // Confirm delete button click event
     $("#confirmDeleteBtn").click(function () {
-      var course_id = $(this).data("course-id");
+      var program_id = $(this).data("program-id");
   
-      // AJAX call to delete course
+      // AJAX call to delete program
       $.ajax({
-        url: "functions/delete-course.php",
+        url: "functions/delete-program.php",
         method: "POST",
-        data: { course_id: course_id },
+        data: { program_id: program_id },
         dataType: "json",
         success: function (data) {
           // Handle success response
@@ -36,7 +36,7 @@ $(document).ready(function () {
             }).showToast();
   
             setTimeout(function () {
-              window.location.href = "course.php";
+              window.location.href = "program.php";
             }, 1000);
           }
         },

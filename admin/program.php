@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'functions/session.php';
-include_once 'functions/fetch-course.php';
+include_once 'functions/fetch-program.php';
 include 'includes/top_include.php';
 
 ?>
@@ -50,14 +50,14 @@ include 'includes/top_include.php';
                     <br>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item"><a href="index.php" class="link-ref">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Courses</li>
+                        <li class="breadcrumb-item active">Programs</li>
                     </ol>
 
                     <div class="card mb-4">
                         <div class="card-header">
                             <div class="form-group">
                                 <i class="fa-solid fa-cube"></i>&nbsp;
-                                <b>List of Courses</b>
+                                <b>List of Programs</b>
                                 &nbsp; | &nbsp;
                                 <button type="button" class="btn-get-main" data-toggle="modal"
                                     data-target="#AddNewModal">
@@ -69,27 +69,31 @@ include 'includes/top_include.php';
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
-                                        <th>Course ID</th>
-                                        <th>Course Name</th>
+                                        <th>Program ID</th>
+                                        <th>Program Name</th>
+                                        <th>Program Hour</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($courses as $course): ?>
+                                    <?php foreach ($programs as $program): ?>
                                         <tr>
                                             <td>
-                                                <?php echo $course['course_id']; ?>
+                                                <?php echo $program['program_id']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $course['course_name']; ?>
+                                                <?php echo $program['program_name']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $course['createdAt']; ?>
+                                                <?php echo $program['program_hour']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $program['createdAt']; ?>
                                             </td>
                                             <td>
                                                 <button class="btn-get-del" data-toggle="modal" data-target="#DeleteModal"
-                                                    data-course-id="<?php echo $course['course_id'] ?>"><i
+                                                    data-program-id="<?php echo $program['program_id'] ?>"><i
                                                         class="fa-solid fa-trash"></i>
                                                     Delete</button>
                                             </td>
@@ -111,7 +115,7 @@ include 'includes/top_include.php';
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header d-flex justify-content-between">
-                    <h5 class="modal-title" id="AddNewModalLabel">Add New Course</h5>
+                    <h5 class="modal-title" id="AddNewModalLabel">Add New Program</h5>
                     <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
                         aria-label="Close"></i>
                 </div>
@@ -122,13 +126,17 @@ include 'includes/top_include.php';
                     <!-- Add form -->
 
                     <div class="form-group">
-                        <label for="course_name">Course Name:</label>
-                        <input type="text" class="form-control" id="course_name" name="course_name">
+                        <label for="program_name">Program Name:</label>
+                        <input type="text" class="form-control" id="program_name" name="program_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="program_hour">Number of Hours:</label>
+                        <input type="number" class="form-control" id="program_hour" name="program_hour">
                     </div>
                     <br>
                     <div class="form-group">
                         <input type="submit" class="btn-get-main  py-2" value="Add" style="width:100% !important;"
-                            id="AddCourses">
+                            id="AddProgram">
                     </div>
                 </div>
             </div>
@@ -146,7 +154,7 @@ include 'includes/top_include.php';
                 </div>
                 <div class="modal-body">
                     <div id="message"></div>
-                    Are you sure you want to delete this Coordinator?
+                    Are you sure you want to delete this Program?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-get-main" data-dismiss="modal">Cancel</button>
@@ -175,8 +183,8 @@ include 'includes/top_include.php';
 
 
     <script src="assets/js/datatables-simple-demo.js"></script>
-    <script src="functions/js/add-courses.js"></script>
-    <script src="functions/js/delete-courses.js"></script>
+    <script src="functions/js/add-program.js"></script>
+    <script src="functions/js/delete-program.js"></script>
 </body>
 
 </html>

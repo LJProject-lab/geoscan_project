@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2024 at 02:16 AM
+-- Generation Time: Aug 24, 2024 at 05:09 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -81,22 +81,23 @@ INSERT INTO `tbl_coordinators` (`id`, `coordinator_id`, `username`, `password`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_courses`
+-- Table structure for table `tbl_programs`
 --
 
-CREATE TABLE `tbl_courses` (
+CREATE TABLE `tbl_programs` (
   `id` int(11) NOT NULL,
-  `course_id` varchar(255) NOT NULL,
-  `course_name` varchar(100) NOT NULL,
+  `program_id` varchar(255) NOT NULL,
+  `program_name` varchar(100) NOT NULL,
+  `program_hour` int(255) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tbl_courses`
+-- Dumping data for table `tbl_programs`
 --
 
-INSERT INTO `tbl_courses` (`id`, `course_id`, `course_name`, `createdAt`) VALUES
-(7, '29738', 'Bachelor of Science in Information Technology', '2024-08-23 23:35:57');
+INSERT INTO `tbl_programs` (`id`, `program_id`, `program_name`, `program_hour`, `createdAt`) VALUES
+(12, '67312', 'Bachelor of Science in Information Technology', 500, '2024-08-24 14:50:39');
 
 -- --------------------------------------------------------
 
@@ -120,8 +121,8 @@ CREATE TABLE `tbl_timelogs` (
 --
 
 INSERT INTO `tbl_timelogs` (`id`, `student_id`, `pin`, `type`, `timestamp`, `longitude`, `latitude`, `photo`) VALUES
-(55, 'SY2024-1003', '', 'time_in', '2024-08-23 08:06:05', 121.046400, 14.408500, ''),
-(56, 'SY2024-1001', '', 'time_in', '2024-08-23 10:10:38', 121.046400, 14.408500, '');
+(59, 'SY2024-1003', '', 'time_in', '2024-08-24 14:05:54', 121.087956, 14.323581, ''),
+(60, 'SY2024-1003', '', 'time_out', '2024-08-24 14:07:35', 121.111577, 14.310182, '');
 
 -- --------------------------------------------------------
 
@@ -174,9 +175,9 @@ ALTER TABLE `tbl_coordinators`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_courses`
+-- Indexes for table `tbl_programs`
 --
-ALTER TABLE `tbl_courses`
+ALTER TABLE `tbl_programs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -214,16 +215,16 @@ ALTER TABLE `tbl_coordinators`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `tbl_courses`
+-- AUTO_INCREMENT for table `tbl_programs`
 --
-ALTER TABLE `tbl_courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `tbl_programs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_timelogs`
 --
 ALTER TABLE `tbl_timelogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`

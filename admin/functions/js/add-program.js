@@ -1,16 +1,18 @@
 $(document).ready(function () {
-    $("#AddCourses").click(function () {
-      var course_name = $("#course_name").val();
+    $("#AddProgram").click(function () {
+      var program_name = $("#program_name").val();
+      var program_hour = $("#program_hour").val();
   
       var coordinator_id = coordinator_id;
   
       // Make sure all fields are filled
-      if (course_name != "" ) {
+      if (program_name != "" && program_hour != "" ) {
         $.ajax({
-          url: "functions/add-course.php",
+          url: "functions/add-program.php",
           method: "POST",
           data: {
-            course_name: course_name
+            program_name: program_name,
+            program_hour: program_hour
           },
           dataType: "json",
           success: function (data) {
@@ -27,7 +29,7 @@ $(document).ready(function () {
               }).showToast();
   
               setTimeout(function () {
-                window.location.href = "course.php";
+                window.location.href = "program.php";
               }, 1000);
             }
           },
