@@ -1,5 +1,5 @@
-# geoscan_project
-Geolocator and Fingerprint Scan Project
+# Intern Monitoring System
+Geolocator and Fingerprint Scan 
 
 ## Pre-requisites and Requirements for Time In/Time Out System
 
