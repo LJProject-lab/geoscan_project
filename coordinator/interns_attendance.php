@@ -1,5 +1,7 @@
 <?php
 include "nav.php";
+include_once 'functions/fetch-records.php';
+include_once '../includes/getAddress.php';
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
@@ -39,7 +41,7 @@ include "nav.php";
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="progress_report.php">
+      <a class="nav-link collapsed" href="#">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
@@ -52,7 +54,7 @@ include "nav.php";
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>Intern Attendance</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
@@ -62,31 +64,45 @@ include "nav.php";
   </div><!-- End Page Title -->
 
   <div class="card">
-      <div class="card-body">
-        <table id="datatablesSimple" class="table">
-          <thead>
-            <tr>
-              <th>Student ID</th>
-              <th>Student Name</th>
-              <th>Course</th>
-              <th>Course</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Test</td>
-              <td>Test</td>
-              <td>Test</td>
-              <td>Test</td>
-              <td>Test</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-
+  <div class="card-body">
+    <table id="datatablesSimple" class="table">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Type</th>
+          <th>Timestamp</th>
+          <th>Photo</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($logs as $log): ?>
+          <tr>
+            <td>
+              <?php echo htmlspecialchars($log['firstname'] . " " . $log['lastname']); ?>
+            </td>
+            <td>
+              <?php echo ($log['type'] == "time_in") ? "Time In" : "Time Out"; ?>
+            </td>
+            <td>
+              <?php echo htmlspecialchars($log['timestamp']); ?>
+            </td>
+            <td>
+              <?php if (empty($log['photo'])): ?>
+                N/A
+              <?php else: ?>
+                <img src="<?php echo htmlspecialchars($log['photo']); ?>" alt="Photo" width="100" height="100">
+              <?php endif; ?>
+            </td>
+            <td>
+              <?php echo htmlspecialchars(getAddress($log['latitude'], $log['longitude'])); ?>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 
 

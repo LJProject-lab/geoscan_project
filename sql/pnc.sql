@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2024 at 05:09 PM
+-- Generation Time: Aug 25, 2024 at 02:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -71,13 +71,6 @@ CREATE TABLE `tbl_coordinators` (
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tbl_coordinators`
---
-
-INSERT INTO `tbl_coordinators` (`id`, `coordinator_id`, `username`, `password`, `firstname`, `lastname`, `email`, `createdAt`) VALUES
-(3, '50686', 'jcamangon', '$2y$10$9mjsqgM15TyHji/fq55a5OFd7mhPzFAAQK9Az40DslVOfMVPA6Cwm', 'Jimmy', 'Camangon', 'jimmycamangon7@gmail.com', '2024-08-23 23:15:39');
-
 -- --------------------------------------------------------
 
 --
@@ -92,12 +85,21 @@ CREATE TABLE `tbl_programs` (
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `tbl_programs`
+-- Table structure for table `tbl_requirements`
 --
 
-INSERT INTO `tbl_programs` (`id`, `program_id`, `program_name`, `program_hour`, `createdAt`) VALUES
-(12, '67312', 'Bachelor of Science in Information Technology', 500, '2024-08-24 14:50:39');
+CREATE TABLE `tbl_requirements` (
+  `id` int(11) NOT NULL,
+  `student_id` varchar(50) NOT NULL,
+  `form_type` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `file_path` varchar(255) NOT NULL,
+  `status` varchar(50) DEFAULT 'Pending',
+  `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -115,14 +117,6 @@ CREATE TABLE `tbl_timelogs` (
   `latitude` decimal(9,6) NOT NULL,
   `photo` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_timelogs`
---
-
-INSERT INTO `tbl_timelogs` (`id`, `student_id`, `pin`, `type`, `timestamp`, `longitude`, `latitude`, `photo`) VALUES
-(59, 'SY2024-1003', '', 'time_in', '2024-08-24 14:05:54', 121.087956, 14.323581, ''),
-(60, 'SY2024-1003', '', 'time_out', '2024-08-24 14:07:35', 121.111577, 14.310182, '');
 
 -- --------------------------------------------------------
 
@@ -142,15 +136,10 @@ CREATE TABLE `tbl_users` (
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `address` text NOT NULL,
+  `program_id` int(11) NOT NULL,
+  `coordinator_id` int(11) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_users`
---
-
-INSERT INTO `tbl_users` (`id`, `student_id`, `credential_id`, `attestation_object`, `client_data_json`, `pin`, `firstname`, `lastname`, `email`, `phone`, `address`, `createdAt`) VALUES
-(6, 'SY2024-1003', '4zY1JHioK+tg7cZIDsrF9w==', 'o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YViUSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NdAAAAAOqbjWZNAR0hPOS2tIy1ddQAEOM2NSR4qCvrYO3GSA7KxfelAQIDJiABIVggFq4xstae67rN47A7E2BErOABLDGOw+AAetoSXxtCcUoiWCAb1vpEGTm+Aqe/1RTpB7RhPTJSuoJ251tZYfVajL6mEw==', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiVExLVWpFbDUwXzN4bW9LNF81UnZDX0VqSUxySExjVkxqZEVhWXNJU2lzMCIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '$2y$10$YUphQbwvLSeUC832PI.nMOQTEl2CPsUqCXvdF6VJCp1dQ5943dQwi', 'Jimmy', 'Camangon', 'jimscams6@gmail.com', '09365220532', 'Test', '2024-08-24 00:16:13');
 
 --
 -- Indexes for dumped tables
@@ -181,6 +170,12 @@ ALTER TABLE `tbl_programs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_requirements`
+--
+ALTER TABLE `tbl_requirements`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_timelogs`
 --
 ALTER TABLE `tbl_timelogs`
@@ -206,19 +201,25 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_companies`
 --
 ALTER TABLE `tbl_companies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_coordinators`
 --
 ALTER TABLE `tbl_coordinators`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_programs`
 --
 ALTER TABLE `tbl_programs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tbl_requirements`
+--
+ALTER TABLE `tbl_requirements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_timelogs`
@@ -230,7 +231,7 @@ ALTER TABLE `tbl_timelogs`
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

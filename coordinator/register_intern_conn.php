@@ -1,6 +1,7 @@
 <?php
 
 include "config.php";
+session_start(); // Start session at the beginning
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $count = $stmt->fetchColumn();
 
     if ($count > 0) {
-        session_start();
-        $_SESSION['error'] = "This student_id already exists.";
+        $_SESSION['alert_type'] = "error";
+        $_SESSION['alert_message'] = "This student_id already exists.";
     } else {
-        $course = $_POST['course'];
+        $program = $_POST['program'];
         
         // Extract the last 4 digits of the student_id to use as the PIN
         $pin = substr($student_id, -4);
@@ -30,29 +31,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         $phone = $_POST['phone'];
         $address = $_POST['address'];
-        $coordinator = $_POST['coordinator'];
+        $coordinator_id = $_POST['coordinator_id'];
 
-        $stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, course, pin, firstname, lastname, email, phone, address, coordinator) 
-        VALUES (:student_id, :course, :pin, :firstname, :lastname, :email, :phone, :address, :coordinator)");
+        $stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, program_id, pin, firstname, lastname, email, phone, address, coordinator_id) 
+        VALUES (:student_id, :program_id, :pin, :firstname, :lastname, :email, :phone, :address, :coordinator_id)");
         $stmt->bindParam(':student_id', $student_id);
-        $stmt->bindParam(':course', $course);
+        $stmt->bindParam(':program_id', $program);
         $stmt->bindParam(':pin', $hashedPin);
         $stmt->bindParam(':firstname', $firstname);
         $stmt->bindParam(':lastname', $lastname);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':address', $address);
-        $stmt->bindParam(':coordinator', $coordinator);
+        $stmt->bindParam(':coordinator_id', $coordinator_id);
 
         if ($stmt->execute()) {
-            session_start();
-            $_SESSION['success'] = "Intern added successfully.";
+            $_SESSION['alert_type'] = "success";
+            $_SESSION['alert_message'] = "Intern added successfully.";
         } else {
-            echo 'Failed';
+            $_SESSION['alert_type'] = "error";
+            $_SESSION['alert_message'] = "Failed to add intern.";
         }
     }
-}
 
-header("Location: register_intern.php");
-exit;
+    header("Location: register_intern.php");
+    exit;
+}
 ?>

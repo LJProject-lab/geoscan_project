@@ -56,10 +56,18 @@ if ($type == 'time_in' && $hasTimeIn > 0) {
     exit;
 }
 
-if ($type == 'time_out' && $hasTimeOut > 0) {
-    $response['message'] = "You have already recorded your Time Out for today.";
-    echo json_encode($response);
-    exit;
+if ($type == 'time_out') {
+    if ($hasTimeIn <= 0) {
+        $response['message'] = "You must record a Time In before you can Time Out.";
+        echo json_encode($response);
+        exit;
+    }
+
+    if ($hasTimeOut > 0) {
+        $response['message'] = "You have already recorded your Time Out for today.";
+        echo json_encode($response);
+        exit;
+    }
 }
 
 // Hash the PIN before storing it in tbl_timelogs

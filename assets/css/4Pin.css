@@ -49,7 +49,7 @@ html, body {
   max-width: 900px;
   background-color: var(--light-color);
   border-radius: 10px;
-  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 .icon {
@@ -259,10 +259,14 @@ select {
 
 /* Styles for mobile devices */
 @media (max-width: 768px) {
+  body {
+    background-color: var(--light-color);
+  }
   .container {
     flex-direction: column;
     max-width: 100%; /* Ensure the container doesn't exceed the viewport width */
     max-height: 90vh;
+    box-shadow: none;
   }
 
   .left-panel,

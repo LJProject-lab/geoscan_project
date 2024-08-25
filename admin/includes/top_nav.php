@@ -26,7 +26,7 @@ require_once 'functions/fetch-admin.php';
                 aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <!-- <li><a class="dropdown-item" href="#">Settings</a></li> -->
-                <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li>
                     <hr class="dropdown-divider" />
                 </li>

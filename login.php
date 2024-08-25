@@ -31,7 +31,6 @@ if (isset($_SESSION['student_id'])) {
             <div class="card-body">
                 <div class="login-container-header">
                     <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-                    <span style="font-family: Century !important;">&nbsp;Internship Management System</span>
                 </div><br>
                 <div class="card-title">
                     <h5>INTERN</h5>

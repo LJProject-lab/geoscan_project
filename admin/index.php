@@ -30,7 +30,6 @@ if (isset($_SESSION['admin_id'])) {
             <div class="card-body">
                 <div class="login-container-header">
                     <img src="../assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-                    <span style="font-family: Century !important;">&nbsp;Internship Management System</span>
                 </div><br>
                 <div class="card-title">
                     <h5>ADMIN</h5>
@@ -49,9 +48,6 @@ if (isset($_SESSION['admin_id'])) {
                         <button class="btn-main" style="border-radius: 5px;" type="submit"><i
                                 class="bx bx-door-open"></i>
                             Login</button>
-                    </div>
-                    <div class="text-center">
-                        <a class="backbtn" href="../">Back</a>
                     </div>
                 </form><!-- Vertical Form -->
                 <center>

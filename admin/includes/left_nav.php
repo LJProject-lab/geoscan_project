@@ -55,18 +55,18 @@
                 <div class="collapse" id="collapsePages2" aria-labelledby="headingTwo"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link" href="daily-revenue.php">
+                        <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Time Logs
                         </a>
-                        <a class="nav-link" href="monthly-revenue.php">
+                        <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-simple"></i></div>
                             History
                         </a>
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Extras</div>
-                <a class="nav-link" href="profile.php">
+                <a class="nav-link" href="#">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></div>
                     Account Settings
                 </a>

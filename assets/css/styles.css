@@ -1,4 +1,5 @@
 @import url("main.css");
+
 body {
   display: flex;
   flex-direction: column;
@@ -23,6 +24,7 @@ body {
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
 .card-title {
   text-align: center;
 }
@@ -90,6 +92,7 @@ body {
     transform: scale(1);
     opacity: 1;
   }
+
   100% {
     transform: scale(1.5);
     opacity: 0;
@@ -160,6 +163,7 @@ body {
   font-weight: bold;
   color: #198754;
 }
+
 .login-container img {
   width: 70px;
   justify-content: center;
@@ -261,24 +265,29 @@ select {
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    padding: 200px; /* Adjust padding as needed */
-    max-width: 100%; /* Ensure the container doesn't exceed the viewport width */
+    padding: 200px;
+    /* Adjust padding as needed */
+    max-width: 100%;
+    /* Ensure the container doesn't exceed the viewport width */
     max-height: 100vh;
   }
 
   .left-panel,
   .right-panel {
-    width: 100%; /* Ensure panels take full width on small screens */
+    width: 100%;
+    /* Ensure panels take full width on small screens */
   }
 
   #videoElement,
   #canvasElement {
-    width: 80%; /* Make sure video and canvas fit within their container */
+    width: 80%;
+    /* Make sure video and canvas fit within their container */
     height: auto;
   }
 
   form {
-    width: 100%; /* Ensure form takes full width on small screens */
+    width: 100%;
+    /* Ensure form takes full width on small screens */
   }
 }
 

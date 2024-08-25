@@ -1,5 +1,7 @@
 <?php
 include "nav.php";
+include "functions/fetch-forgot-timeout.php";
+$currentDate = date('Y-m-d');
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
@@ -53,13 +55,68 @@ include "nav.php";
     </nav>
   </div><!-- End Page Title -->
 
-  <div class="col-xl-12">
-    <div class="card">
-      <div class="card-body">
-        Empty as of now.
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-body">
+          <!-- Display here the reminder-->
+          <?php
+          if ($missingTimeOuts) {
+            $dates = array_column($missingTimeOuts, 'missing_date');
+            $today = date('Y-m-d');
+
+            if ($today) {
+              // Check if the current date is in the missing dates
+              if (in_array($today, $dates)) {
+                // Display message for the current day
+                echo "
+                      <div class='reminder-alert'>
+                          <span style='color:#198754;'><h3><b>Pending Time Out</b></h3></span>
+                          <p>You have not logged your time out for today (<strong>{$today}</strong>).</p>
+                      </div>";
+              } else {
+                // Display message for past missed time outs
+                echo "
+                      <div class='reminder-alert'>
+                          <span style='color:#198754;'><h3><b>Time Out Reminder</b></h3></span>
+                          <p>It looks like you forgot to log your time out on the following dates:</p>
+                          <ul>";
+                foreach ($dates as $date) {
+                  echo "<li><strong>{$date}</strong></li>";
+                }
+                echo "
+                          </ul>
+                          <p>Please review your attendance records and enter the correct time out for these days. This ensures your attendance is accurately tracked.</p>
+                          <ul>
+                              <li>If you remember your time out, please contact your coordinator for assistance.</li>
+                          </ul>
+                          <div class='button-wrapper' style='float:right;'>(In-development)
+                              <a href='#'>
+                                  <button class='btn-main'>Request for Adjustment</button>
+                              </a>
+                          </div>
+                      </div>";
+              }
+            }
+          } else {
+            echo "<p>No time out records are missing.</p>";
+          }
+          ?>
+        </div>
       </div>
     </div>
+
+
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-body">
+          Empty as of now.
+        </div>
+      </div>
+    </div>
+
   </div>
+
 
 
 
