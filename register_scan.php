@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require 'config.php';
 
 // Redirect to login if student_id session is not active

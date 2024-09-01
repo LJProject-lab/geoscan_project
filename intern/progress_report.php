@@ -1,11 +1,14 @@
 <?php
 include "nav.php";
 include_once 'functions/fetch-records.php';
-include_once '../includes/getAddress.php';
+
+// Call the function to calculate the intern's progress
+$progress = getInternProgress($student_id, $program_id, $pdo);
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
@@ -56,42 +59,22 @@ include_once '../includes/getAddress.php';
       </ol>
     </nav>
   </div><!-- End Page Title -->
-
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-success me-md-2" type="button">
+      <a href="detailed_report.php" style="color:white;">View Detail</a>
+    </button>
+  </div><br>
   <div class="col-xl-12">
 
     <div class="card">
-      <div class="card-body">
-        <table id="datatablesSimple" class="table">
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Timestamp</th>
-              <th>Location</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            foreach ($logs as $log): ?>
-              <tr>
-                <td>
-                  <?php if ($log['type'] == "time_in") { ?>
-                    Time In
-                  <?php } else { ?>
-                    Time Out
-                  <?php } ?>
-                </td>
-                <td>
-                  <?php echo $log['timestamp']; ?>
-                </td>
-                <td>
-                  <?php echo htmlspecialchars(getAddress($log['latitude'], $log['longitude'])); ?>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
+      <style>
 
-        </table>
+      </style>
+
+      <div class="card-body">
+        <canvas id="progressChart" class="small-chart"></canvas> <!-- Apply the CSS class -->
       </div>
+
     </div>
   </div>
 
@@ -106,4 +89,53 @@ include_once '../includes/getAddress.php';
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>
 
+<script>
+  // Fetch progress data from PHP
+  const progressData = <?php echo json_encode($progress); ?>;
+
+  // Render the horizontal bar chart using Chart.js
+  const ctx = document.getElementById('progressChart').getContext('2d');
+  const progressChart = new Chart(ctx, {
+    type: 'bar', // Bar chart type
+    data: {
+      labels: ['Progress'],
+      datasets: [
+        {
+          label: 'Hours Rendered',
+          data: [progressData.total_hours],
+          backgroundColor: '#198754',
+        },
+        {
+          label: 'Hours Remaining',
+          data: [progressData.hours_remaining],
+          backgroundColor: '#f68c09',
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y', // Makes the bar horizontal
+      responsive: true,
+      maintainAspectRatio: false, // Allows resizing
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Internship Progress'
+        }
+      },
+      scales: {
+        x: {
+          stacked: true, // Stacks the bars on the x-axis
+          beginAtZero: true,
+          max: progressData.required_hours // Set the max value to required hours
+        },
+        y: {
+          stacked: true // Stacks the bars on the y-axis
+        }
+      }
+    }
+  });
+</script>
 <?php include "footer.php"; ?>

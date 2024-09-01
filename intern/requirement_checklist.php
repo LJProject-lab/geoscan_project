@@ -1,5 +1,6 @@
 <?php
 include "nav.php";
+require "../config.php";
 
 $uploadedFilePath = isset($_SESSION['uploadedFilePath']) ? $_SESSION['uploadedFilePath'] : null;
 unset($_SESSION['uploadedFilePath']);

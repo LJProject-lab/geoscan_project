@@ -1,9 +1,9 @@
 <?php
-session_start();
+
 require 'config.php';
 
 if (isset($_SESSION['username'])) {
-    header('Location: home.php');
+    header('Location: dashboard.php');
     exit;
 }
 ?>
@@ -37,7 +37,6 @@ if (isset($_SESSION['username'])) {
             <div class="card-body">
                 <div class="login-container-header">
                     <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-                    <span>&nbsp;Internship Management System</span>
                 </div><br>
                 <div class="card-title">
                     <h5>COORDINATOR</h5>
@@ -55,9 +54,6 @@ if (isset($_SESSION['username'])) {
                     <div class="d-grid gap-2 mt-3">
                         <button class="btn-main" type="submit"><i class="bx bx-door-open"></i>
                             Login</button>
-                    </div>
-                    <div class="text-center">
-                        <a class="backbtn" href="./">Back</a>
                     </div>
                 </form><!-- Vertical Form -->
                 <center>

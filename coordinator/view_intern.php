@@ -77,10 +77,10 @@ include "nav.php";
                 // Fetch the user's details from the database
                 $stmt = $pdo->prepare("
                     SELECT u.student_id, u.firstname, u.lastname, u.email, u.phone, u.address, u.coordinator_id, u.credential_id, 
-                        c.course_id, c.course_name, 
+                        c.program_id, c.program_name, 
                         co.firstname AS coordinator_firstname, co.lastname AS coordinator_lastname
                     FROM tbl_users u
-                    JOIN tbl_courses c ON u.course = c.course_id
+                    JOIN tbl_programs c ON u.program_id = c.program_id
                     LEFT JOIN tbl_coordinators co ON u.coordinator_id = co.coordinator_id
                     WHERE u.student_id = :student_id
                 ");
@@ -137,8 +137,8 @@ include "nav.php";
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Course</div>
-                    <div class="col-lg-9 col-md-8"><?php echo htmlspecialchars($user['course_name']); ?></div>
+                    <div class="col-lg-3 col-md-4 label">program</div>
+                    <div class="col-lg-9 col-md-8"><?php echo htmlspecialchars($user['program_name']); ?></div>
                   </div>
 
                   <div class="row">

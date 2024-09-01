@@ -1,6 +1,4 @@
 <?php
-
-include "config.php";
 session_start();
 if (!isset($_SESSION['student_id'])) {
   header("Location: ../login.php");
@@ -77,7 +75,7 @@ if (!isset($_SESSION['student_id'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>

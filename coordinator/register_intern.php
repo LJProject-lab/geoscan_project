@@ -39,7 +39,7 @@ include "nav.php";
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="progress_report.php">
+      <a class="nav-link collapsed" href="interns_progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
@@ -101,19 +101,19 @@ include "nav.php";
 
                 <div class="col-md-12">
                     <div class="form-floating mb-3">
-                        <select class="form-select" name="course" id="floatingSelect" aria-label="State">
-                            <option selected disabled>Select Course</option>
+                        <select class="form-select" name="program_id" id="floatingSelect" aria-label="State">
+                            <option selected disabled>Select Program</option>
                             <?php
-                            // Fetching courses from the database
-                            $stmt = $pdo->query("SELECT course_id, course_name FROM tbl_courses");
+                            // Fetching programs from the database
+                            $stmt = $pdo->query("SELECT program_id, program_name FROM tbl_programs");
 
                             // Looping through the result set and generating option elements
                             while ($row = $stmt->fetch()) {
-                                echo '<option value="' . htmlspecialchars($row['course_id']) . '">' . htmlspecialchars($row['course_name']) . '</option>';
+                                echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
                             }
                             ?>
                         </select>
-                        <label for="floatingSelect">Course</label>
+                        <label for="floatingSelect">Program</label>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -170,9 +170,10 @@ include "nav.php";
 
         <?php
         $stmt = $pdo->prepare("
-            SELECT u.student_id, u.firstname, u.lastname, c.course_name 
+            SELECT u.student_id, u.firstname, u.lastname, c.program_name , c.program_hour
             FROM tbl_users u
-            JOIN tbl_courses c ON u.course = c.course_id
+            JOIN tbl_programs c ON u.program_id = c.program_id
+            WHERE u.coordinator_id = " . $_SESSION['coordinator_id'] . "
         ");
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -185,7 +186,8 @@ include "nav.php";
                         <tr>
                             <th>Student ID</th>
                             <th>Student Name</th>
-                            <th>Course</th>
+                            <th>Program</th>
+                            <th>Hours to render</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -194,7 +196,8 @@ include "nav.php";
                             <tr>
                                 <td><?php echo htmlspecialchars($user['student_id']); ?></td>
                                 <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
-                                <td><?php echo htmlspecialchars($user['course_name']); ?></td>
+                                <td><?php echo htmlspecialchars($user['program_name']); ?></td>
+                                <td><?php echo htmlspecialchars($user['program_hour']); ?></td>
                                 <td>
                                     <a href="view_intern.php?student_id=<?php echo $user['student_id']; ?>" class="btn btn-success btn-sm"><i class="bi bi-eye"></i> View</a>
                                     <a href="javascript:void(0);" onclick="confirmDelete('<?php echo $user['student_id']; ?>')" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Remove</a>

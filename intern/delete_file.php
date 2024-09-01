@@ -1,7 +1,7 @@
 <?php
 // delete_file.php
 
-include 'config.php'; // Include your database connection
+include '../config.php'; // Include your database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fileId = $_POST['file_id'];

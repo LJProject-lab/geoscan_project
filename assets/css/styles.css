@@ -1,5 +1,5 @@
+@import url("main.css");
 
-@import url('main.css');
 body {
   display: flex;
   flex-direction: column;
@@ -10,21 +10,22 @@ body {
   background-color: var(--bg-color);
 }
 
-.backbtn{
+.backbtn {
   text-decoration: none;
   color: #9100ca;
 }
 
-.card{
+.card {
   margin: 20px;
-  background: rgba( 255, 255, 255, 0.55 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 3.5px );
--webkit-backdrop-filter: blur( 3.5px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
-.card-title{
+
+.card-title {
   text-align: center;
 }
 
@@ -36,6 +37,13 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 .header h1 {
   font-size: 29px;
   font-weight: bold;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .container {
@@ -84,6 +92,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
     transform: scale(1);
     opacity: 1;
   }
+
   100% {
     transform: scale(1.5);
     opacity: 0;
@@ -146,14 +155,15 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   margin-top: 3px;
 }
 
-.login-container-header span{
-  color:#198754;
+.login-container-header span {
+  color: #198754;
 }
 
-.card-title h5{
+.card-title h5 {
   font-weight: bold;
-  color:#198754;
+  color: #198754;
 }
+
 .login-container img {
   width: 70px;
   justify-content: center;
@@ -176,7 +186,6 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 .login-container input[type="password"] {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
@@ -192,7 +201,6 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   font-size: 1em;
   cursor: pointer;
 }
-
 
 .message {
   padding: 10px;
@@ -215,9 +223,10 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   background-color: var(--light-color);
   border-radius: 10px;
   box-shadow: 0 4px 8px var(--shadow-color);
-  overflow: hidden;
+  /* overflow: hidden; */
   max-width: 900px;
   width: 100%;
+  padding: 1em;
 }
 
 .left-panel {
@@ -226,12 +235,10 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
 }
 
 .right-panel {
   flex: 1;
-  padding: 40px;
 }
 
 h2 {
@@ -249,36 +256,41 @@ input[type="password"],
 select {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
+/* Styles for mobile devices */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
+    padding: 200px;
+    /* Adjust padding as needed */
+    max-width: 100%;
+    /* Ensure the container doesn't exceed the viewport width */
+    max-height: 100vh;
   }
 
   .left-panel,
   .right-panel {
-    flex: none;
     width: 100%;
+    /* Ensure panels take full width on small screens */
   }
 
-  .left-panel {
-    order: 2;
-    padding: 20px;
-  }
-
-  .right-panel {
-    order: 1;
-    padding: 20px;
-  }
-
-  video,
-  canvas {
-    width: 100%;
+  #videoElement,
+  #canvasElement {
+    width: 80%;
+    /* Make sure video and canvas fit within their container */
     height: auto;
   }
+
+  form {
+    width: 100%;
+    /* Ensure form takes full width on small screens */
+  }
+}
+
+#videoElement {
+  border-radius: 10px;
 }

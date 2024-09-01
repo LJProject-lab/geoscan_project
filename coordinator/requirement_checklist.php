@@ -40,7 +40,7 @@ include "nav.php";
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="progress_report.php">
+      <a class="nav-link collapsed" href="interns_progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
@@ -64,9 +64,10 @@ include "nav.php";
 
   <?php
         $stmt = $pdo->prepare("
-            SELECT u.student_id, u.firstname, u.lastname, c.course_name 
+            SELECT u.student_id, u.firstname, u.lastname, c.program_name 
             FROM tbl_users u
-            JOIN tbl_courses c ON u.course = c.course_id
+            JOIN tbl_programs c ON u.program_id = c.program_id
+            WHERE u.coordinator_id = " . $_SESSION['coordinator_id'] . "
         ");
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -79,7 +80,7 @@ include "nav.php";
         <tr>
             <th>Student ID</th>
             <th>Student Name</th>
-            <th>Course</th>
+            <th>Program</th>
             <th>File Uploaded</th>
             <th>Action</th>
         </tr>
@@ -103,7 +104,7 @@ include "nav.php";
             <tr>
                 <td><?php echo htmlspecialchars($user['student_id']); ?></td>
                 <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
-                <td><?php echo htmlspecialchars($user['course_name']); ?></td>
+                <td><?php echo htmlspecialchars($user['program_name']); ?></td>
                 <td><?php echo $totalDocuments; ?></td>
                 <td>
                     <a href="view_intern_requirement.php?student_id=<?php echo $user['student_id']; ?>" class="btn btn-success btn-sm">

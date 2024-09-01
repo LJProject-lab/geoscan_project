@@ -31,7 +31,7 @@ $coordinator_count = $row2['coordinator_count'];
 
 // ======
 
-$sql2 = "SELECT COUNT(*) AS course_count FROM tbl_courses";
+$sql2 = "SELECT COUNT(*) AS program_count FROM tbl_programs";
 
 // Prepare the statement
 $stmt2 = $pdo->prepare($sql2);
@@ -40,7 +40,7 @@ $stmt2->execute();
 // Fetch the result
 $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 // Get the user count
-$course_count = $row2['course_count'];
+$program_count = $row2['program_count'];
 
 // ======
 

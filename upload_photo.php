@@ -17,4 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['photo'])) {
 
 header('Content-Type: application/json');
 echo json_encode($response);
+
+// var_dump($_FILES);
+
 ?>

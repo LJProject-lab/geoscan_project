@@ -77,7 +77,7 @@ include "nav.php";
         $student_id = $_GET['student_id'];
 
         // Fetch user details
-        $stmt = $pdo->prepare("SELECT firstname, lastname, course FROM tbl_users WHERE student_id = :student_id");
+        $stmt = $pdo->prepare("SELECT firstname, lastname, program_id FROM tbl_users WHERE student_id = :student_id");
         $stmt->bindParam(':student_id', $student_id);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -148,10 +148,10 @@ include "nav.php";
                     <div class="card-body profile-card pt-4 d-flex flex-column">
                         <div class="col-12">
                             <?php foreach ($forms as $formCode => $formDescription): ?>
-                                <div class="form-check">
-                                    <input class="form-check-input text-black" type="checkbox" id="formCheck<?php echo $formCode; ?>"
+                                <div class="form-check" >
+                                    <input class="form-check-input" style="opacity:1 !important;" type="checkbox" id="formCheck<?php echo $formCode; ?>"
                                         <?php echo in_array($formCode, $approvedForms) ? 'checked' : ''; ?> disabled/>
-                                    <label class="form-check-label text-black" for="formCheck<?php echo $formCode; ?>">
+                                    <label class="form-check-label"  style="opacity:1 !important;" for="formCheck<?php echo $formCode; ?>">
                                         <?php echo htmlspecialchars($formDescription); ?>
                                     </label>
                                 </div>
