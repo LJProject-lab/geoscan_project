@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Database configuration
 $host = 'localhost';
 $db   = 'pnc';
@@ -20,5 +21,4 @@ try {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-define('OPENCAGE_API_KEY', '4ecd274551674d8fbcf479931a5f67c0'); 
 ?>

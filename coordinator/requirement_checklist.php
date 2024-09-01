@@ -40,7 +40,7 @@ include "nav.php";
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="interns_progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
@@ -67,6 +67,7 @@ include "nav.php";
             SELECT u.student_id, u.firstname, u.lastname, c.program_name 
             FROM tbl_users u
             JOIN tbl_programs c ON u.program_id = c.program_id
+            WHERE u.coordinator_id = " . $_SESSION['coordinator_id'] . "
         ");
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);

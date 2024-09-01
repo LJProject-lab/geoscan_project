@@ -40,7 +40,7 @@ include "nav.php";
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="interns_progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
@@ -62,11 +62,11 @@ include "nav.php";
     </nav>
   </div><!-- End Page Title -->
 
-
-  <div class="container">
+  <!-- Change from 'container' to 'container-fluid' -->
+  <div class="container-fluid">
     <div class="row">
-        
-      <div class="col-xl-3 col-sm-6 col-12">
+
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -84,7 +84,7 @@ include "nav.php";
         </div>
       </div>
 
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -102,7 +102,7 @@ include "nav.php";
         </div>
       </div>
 
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -120,7 +120,7 @@ include "nav.php";
         </div>
       </div>
 
-      <div class="col-xl-3 col-sm-6 col-12">
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
         <div class="card">
           <div class="card-content">
             <div class="card-body">
@@ -138,11 +138,8 @@ include "nav.php";
         </div>
       </div>
 
-      
-	</div>
-</div>
-
-
+    </div>
+  </div>
 
 </main><!-- End #main -->
 

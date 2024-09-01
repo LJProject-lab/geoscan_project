@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $address = $_POST['address'];
         $coordinator_id = $_POST['coordinator_id'];
 
-        $stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, program_id, pin, firstname, lastname, email, phone, address, coordinator_id) 
-        VALUES (:student_id, :program_id, :pin, :firstname, :lastname, :email, :phone, :address, :coordinator_id)");
+        $stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, pin, firstname, lastname, email, phone, address, program_id, coordinator_id) 
+        VALUES (:student_id, :pin, :firstname, :lastname, :email, :phone, :address, :program_id, :coordinator_id)");
         $stmt->bindParam(':student_id', $student_id);
         $stmt->bindParam(':program_id', $program);
         $stmt->bindParam(':pin', $hashedPin);

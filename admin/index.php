@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require '../config.php';
 // Redirect to login if admin_id session is not active
 if (isset($_SESSION['admin_id'])) {

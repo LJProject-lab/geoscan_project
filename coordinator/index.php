@@ -1,9 +1,9 @@
 <?php
-session_start();
+
 require 'config.php';
 
 if (isset($_SESSION['username'])) {
-    header('Location: home.php');
+    header('Location: dashboard.php');
     exit;
 }
 ?>

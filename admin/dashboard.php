@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require '../config.php';
 include 'includes/top_include.php';
 include 'functions/fetch-users.php';

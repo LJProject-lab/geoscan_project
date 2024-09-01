@@ -1,5 +1,5 @@
 <?php
-session_start();
+require '../config.php';
 require 'functions/session.php';
 include_once 'functions/fetch-students.php';
 include 'includes/top_include.php';
