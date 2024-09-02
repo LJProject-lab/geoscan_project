@@ -43,9 +43,19 @@ foreach ($interns as $intern) {
                 <span>Dashboard</span>
             </a>
         </li><!-- End Profile Page Nav -->
+
+        <li class="nav-heading">Configuration</li>
+
+        <li class="nav-item">
+        <a class="nav-link collapsed" href="add_intern.php">
+            <i class="bi bi-person-plus-fill"></i>
+            <span>Add Intern</span>
+        </a>
+        </li>
+
         <li class="nav-heading">Pages</li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="register_intern.php">
+            <a class="nav-link collapsed" href="intern.php">
                 <i class="bi bi-people-fill"></i>
                 <span>List of Intern</span>
             </a>

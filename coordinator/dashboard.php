@@ -16,10 +16,19 @@ include "nav.php";
       </a>
     </li><!-- End Profile Page Nav -->
 
+    <li class="nav-heading">Configuration</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="add_intern.php">
+        <i class="bi bi-person-plus-fill"></i>
+        <span>Add Intern</span>
+      </a>
+    </li>
+
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="register_intern.php">
+      <a class="nav-link collapsed" href="intern.php">
         <i class="bi bi-people-fill"></i>
         <span>List of Intern</span>
       </a>
@@ -96,7 +105,7 @@ include "nav.php";
                     <div class="ps-3">
                       <h6><?php echo $count; ?></h6>
                         <span class="text-muted small pt-2 ps-1">
-                          <a href="#">
+                          <a href="intern.php">
                             <i class="bi bi-arrow-right"></i> &nbsp;View All
                           </a>
                         </span>
@@ -222,7 +231,7 @@ include "nav.php";
               <div class="card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Today</span></h5>
+                  <h5 class="card-title">Reports <span>/Todays</span></h5>
 
                   <?php
                   $today = date('Y-m-d');
