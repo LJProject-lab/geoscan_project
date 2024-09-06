@@ -81,7 +81,24 @@ include "nav.php";
                             <div class="col-sm-10">
                                 <input class="form-control" type="file" id="formFile" name="excel_file">
                             </div>
-                        </div> 
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Program</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Default select example">
+                                <option selected disabled>Select Program</option>
+                                <?php
+                                // Fetching programs from the database
+                                $stmt = $pdo->query("SELECT program_id, program_name FROM tbl_programs");
+
+                                // Looping through the result set and generating option elements
+                                while ($row = $stmt->fetch()) {
+                                    echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
+                                }
+                                ?>
+                                </select>
+                            </div>
+                        </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="submit" name="process" class="btn btn-warning">Process</button>
                         <button type="button" class="btn btn-success">Save</button>
