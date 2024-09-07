@@ -12,7 +12,7 @@ include_once '../includes/getAddress.php';
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="dashboard.php">
+      <a class="nav-link collapsed" href="index.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -51,7 +51,7 @@ include_once '../includes/getAddress.php';
     <h1>Progress Report</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item active">Progress Report</li>
       </ol>
     </nav>

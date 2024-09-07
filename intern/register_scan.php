@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require '../config.php';
 
 // Redirect to login if student_id session is not active
@@ -135,6 +135,10 @@ if ($user && ($user['credential_id'] || $user['attestation_object'] || $user['cl
                         const result = await response.json();
                         if (result.success) {
                             messageDiv.textContent = 'Registration successful. You can now log in with your fingerprint.';
+
+                            setTimeout(function () {
+                                window.location.href = "./";
+                            }, 1000);
                         } else {
                             messageDiv.textContent = result.message;
                         }

@@ -19,7 +19,7 @@
 
             <!-- Dropdown to select Time In or Time Out -->
             <div class="select-time">
-                <label for="timeSelection">Select Time:</label>
+                <label for="timeSelection">Select Type:</label>
                 <select id="timeSelection" class="time-dropdown">
                     <option value="time_in">Time In</option>
                     <option value="time_out">Time Out</option>

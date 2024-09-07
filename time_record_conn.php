@@ -36,6 +36,13 @@ if (!$photo) {
     exit;
 }
 
+// Check if latitude and longitude are provided
+if (empty($latitude) || empty($longitude)) {
+    $response['message'] = "Location must be provided. Please enable your GPS location and try again.";
+    echo json_encode($response);
+    exit;
+}
+
 // Check for existing time-in or time-out for the student on the current day
 $currentDate = date('Y-m-d');
 

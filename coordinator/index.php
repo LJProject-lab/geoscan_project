@@ -1,97 +1,362 @@
 <?php
-
-require 'config.php';
-
-if (isset($_SESSION['username'])) {
-    header('Location: dashboard.php');
-    exit;
-}
+include "nav.php";
+include "functions/fetch-forgot-timeout.php";
+$currentDate = date('Y-m-d');
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+<link href="../assets/css/table.css" rel="stylesheet">
+<!-- ======= Sidebar ======= -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include 'includes/top_include.php'; ?>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-</head>
+<aside id="sidebar" class="sidebar">
 
-<style>
-    body {
-        background-color: #f6f9ff;
-    }
-    button{
-        border-radius: 5px;
-    }
-    button i{
-        color: #fff;
-    }
-</style>
+  <ul class="sidebar-nav" id="sidebar-nav">
 
-<body>
-    <div class="col-lg-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="login-container-header">
-                    <img src="assets/img/pnc-logo.png" alt="University of Cabuyao Logo">
-                </div><br>
-                <div class="card-title">
-                    <h5>COORDINATOR</h5>
+    <li class="nav-item">
+      <a class="nav-link " href="dashboard.php">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Profile Page Nav -->
+
+    <li class="nav-heading">Configuration</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="add_intern.php">
+        <i class="bi bi-person-plus-fill"></i>
+        <span>Add Intern</span>
+      </a>
+    </li>
+
+    <li class="nav-heading">Pages</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="intern.php">
+        <i class="bi bi-people-fill"></i>
+        <span>List of Intern</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="requirement_checklist.php">
+        <i class="bi bi-file-earmark-check-fill"></i>
+        <span>Requirements Checklist</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="interns_attendance.php">
+        <i class="bx bxs-user-detail"></i>
+        <span>Interns Attendance</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="interns_progress_report.php">
+        <i class="ri-line-chart-fill"></i>
+        <span>Progress Report</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="intern_adjustments.php">
+        <i class='bx bxs-cog'></i>
+        <span>Intern Adjustments</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="action_logs.php">
+        <i class='bx bx-history'></i>
+        <span>Audit Trail</span>
+      </a>
+    </li>
+
+  </ul>
+
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <!-- Change from 'container' to 'container-fluid' -->
+
+  <section class="section dashboard">
+    <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+        <div class="row">
+
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="card-body">
+                <h5 class="card-title">Registered Interns</h5>
+
+                <?php
+                // Prepare the SQL query to count rows with the specific coordinator_id
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM tbl_users WHERE coordinator_id = :coordinator_id");
+                $stmt->bindParam(':coordinator_id', $_SESSION['coordinator_id'], PDO::PARAM_INT);
+
+                // Execute the query
+                $stmt->execute();
+
+                // Fetch the count
+                $count = $stmt->fetchColumn();
+                ?>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-person-check"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6><?php echo $count; ?></h6>
+                    <span class="text-muted small pt-2 ps-1">
+                      <a href="intern.php">
+                        <i class="bi bi-arrow-right"></i> &nbsp;View All
+                      </a>
+                    </span>
+                  </div>
                 </div>
-                <!-- Vertical Form -->
-                <form id="loginForm" class="row g-3">
-                    <div class="col-12">
-                        <label for="inputNanme4" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputEmail4" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div><br><br><br><br>
-                    <div class="d-grid gap-2 mt-3">
-                        <button class="btn-main" type="submit"><i class="bx bx-door-open"></i>
-                            Login</button>
-                    </div>
-                </form><!-- Vertical Form -->
-                <center>
-                    <div id="message" class="message"></div>
-                </center>
+              </div>
+
             </div>
-        </div>
+          </div><!-- End Sales Card -->
 
-        <script>
-            document.getElementById('loginForm').addEventListener('submit', async (event) => {
-                event.preventDefault();
-                const messageDiv = document.getElementById('message');
-                messageDiv.textContent = '';
+          <!-- Revenue Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
 
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
+              <div class="card-body">
+                <h5 class="card-title">Attendance <span>| Today</span></h5>
 
-                try {
-                    const response = await fetch('login_process.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ username, password })
-                    });
+                <?php
+                $today = date('Y-m-d');
 
-                    const result = await response.json();
-                    if (result.success) {
-                        window.location.href = 'dashboard.php';
-                    } else {
-                        messageDiv.textContent = result.message;
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    messageDiv.textContent = 'Login failed. Please try again.';
+                $stmt = $pdo->prepare("
+                   SELECT student_id
+                   FROM tbl_users
+                   WHERE coordinator_id = :coordinator_id
+               ");
+                $stmt->bindParam(':coordinator_id', $_SESSION['coordinator_id'], PDO::PARAM_INT);
+                $stmt->execute();
+
+                // Fetch all student_id values
+                $student_ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                if (empty($student_ids)) {
+                  $count = 0; // No students, so count is zero
+                } else {
+                  // Step 2: Prepare a query to count unique student_id for today
+                  $placeholders = implode(',', array_fill(0, count($student_ids), '?'));
+                  $stmt = $pdo->prepare("
+                       SELECT COUNT(DISTINCT student_id)
+                       FROM tbl_timelogs
+                       WHERE student_id IN ($placeholders) AND DATE(timestamp) = ?
+                   ");
+                  $params = array_merge($student_ids, [$today]);
+                  $stmt->execute($params);
+
+                  // Fetch the count
+                  $count = $stmt->fetchColumn();
                 }
-            });
-        </script>
-</body>
+                ?>
 
-</html>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-clock-history"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6><?php echo $count; ?></h6>
+                    <span class="text-muted small pt-2 ps-1">
+                      <a href="#">
+                        <i class="bi bi-arrow-right"></i> &nbsp;View All
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Revenue Card -->
+
+          <!-- Customers Card -->
+          <div class="col-xxl-4 col-xl-12">
+
+            <div class="card info-card customers-card">
+
+              <div class="card-body">
+                <h5 class="card-title">Requirements to Review</h5>
+
+                <?php
+                // Fetch student IDs for the given coordinator_id
+                $stmt = $pdo->prepare("
+          SELECT student_id 
+          FROM tbl_users 
+          WHERE coordinator_id = :coordinator_id
+      ");
+                $stmt->execute(['coordinator_id' => $_SESSION['coordinator_id']]);
+                $student_ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                // Initialize the count variable
+                $pendingCount = 0;
+
+                if (!empty($student_ids)) {
+                  // Create a placeholder string for the SQL query
+                  $placeholders = implode(',', array_fill(0, count($student_ids), '?'));
+
+                  // Count records in tbl_requirements with status 'pending' for the fetched student_ids
+                  $countStmt = $pdo->prepare("
+        SELECT COUNT(*) 
+        FROM tbl_requirements 
+        WHERE student_id IN ($placeholders) AND status = 'pending'
+    ");
+                  $countStmt->execute($student_ids);
+
+                  // Fetch the count
+                  $pendingCount = $countStmt->fetchColumn();
+                }
+                ?>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-clipboard-check"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6><?php echo htmlspecialchars($pendingCount); ?></h6>
+                    <span class="text-muted small pt-2 ps-1">
+                      <a href="requirement_checklist.php">
+                        <i class="bi bi-arrow-right"></i> &nbsp;View All
+                      </a>
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="col-sm-12 col-xl-6">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 class="card-title">Reports <span>/Todays</span></h5>
+
+                <?php
+                $today = date('Y-m-d');
+
+                $sql = "
+                      SELECT u.student_id, u.firstname, u.lastname, 
+                            MAX(CASE WHEN t.type = 'time_in' THEN t.timestamp ELSE NULL END) AS time_in,
+                            MAX(CASE WHEN t.type = 'time_out' THEN t.timestamp ELSE NULL END) AS time_out
+                      FROM tbl_users u
+                      LEFT JOIN tbl_timelogs t ON u.student_id = t.student_id 
+                      WHERE u.coordinator_id = :coordinator_id
+                      AND DATE(t.timestamp) = :today
+                      GROUP BY u.student_id, u.firstname, u.lastname
+                  ";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':coordinator_id', $_SESSION['coordinator_id'], PDO::PARAM_INT);
+                $stmt->bindParam(':today', $today);
+                $stmt->execute();
+
+                $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+
+                <table id="datatablesSimple" class="table">
+                  <thead>
+                    <tr>
+                      <th>Student ID</th>
+                      <th>Student Name</th>
+                      <th>Time In</th>
+                      <th>Time Out</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($records as $record): ?>
+                      <tr>
+                        <td><?php echo htmlspecialchars($record['student_id']); ?></td>
+                        <td><?php echo htmlspecialchars($record['firstname'] . ' ' . $record['lastname']); ?></td>
+                        <td><?php echo $record['time_in'] ? date('H:i:s', strtotime($record['time_in'])) : '-'; ?></td>
+                        <td><?php echo $record['time_out'] ? date('H:i:s', strtotime($record['time_out'])) : '-'; ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-xl-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Interns <span>with No Time-Out Entries</span></h5>
+                <?php
+                if ($missingTimeOuts) {
+                  $dates = array_column($missingTimeOuts, 'missing_date');
+                  $firstnames = array_column($missingTimeOuts, 'firstname');
+                  $lastnames = array_column($missingTimeOuts, 'lastname');
+                  $today = date('Y-m-d');
+
+                  if ($today) {
+                    // Check if the current date is in the missing dates
+                    if (in_array($today, $dates)) {
+                      // Display message for the current day
+                      echo "
+
+                <div class='reminder-alert'>
+                    <span style='color:#198754;'><h3><b>Pending Time Out</b></h3></span>.
+                    
+                    <p>You have not logged your time out for today (<strong>{$today}</strong>).</p>
+                </div>";
+                    } else {
+                      // Display message for past missed time outs
+                      echo "
+                <div class='out-container'>
+                <div class='reminder-alert'>
+                    <p>Some of your interns have not logged their time out on the following dates:</p>
+                    <ul>";
+                      foreach ($missingTimeOuts as $entry) {
+                        echo "<li><strong>{$entry['firstname']} {$entry['lastname']}:</strong> {$entry['missing_date']}</li>";
+                      }
+
+                      echo "</div>
+                                      </div>";
+                    }
+                  }
+                } else {
+                  echo "<p>All time out records are up to date.</p>";
+                }
+                ?>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+<script src="../assets/js/datatables-simple-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+  crossorigin="anonymous"></script>
+
+<?php include "footer.php"; ?>

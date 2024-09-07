@@ -1,7 +1,6 @@
 <?php
 
 include "config.php";
-session_start(); // Start session at the beginning
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['alert_type'] = "error";
         $_SESSION['alert_message'] = "This student_id already exists.";
     } else {
-        $program = $_POST['program'];
+        $program_id = $_POST['program_id'];
         
         // Extract the last 4 digits of the student_id to use as the PIN
         $pin = substr($student_id, -4);
@@ -36,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, pin, firstname, lastname, email, phone, address, program_id, coordinator_id) 
         VALUES (:student_id, :pin, :firstname, :lastname, :email, :phone, :address, :program_id, :coordinator_id)");
         $stmt->bindParam(':student_id', $student_id);
-        $stmt->bindParam(':program_id', $program);
+        $stmt->bindParam(':program_id', $program_id);
         $stmt->bindParam(':pin', $hashedPin);
         $stmt->bindParam(':firstname', $firstname);
         $stmt->bindParam(':lastname', $lastname);

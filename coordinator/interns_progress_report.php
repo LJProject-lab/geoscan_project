@@ -38,14 +38,24 @@ foreach ($interns as $intern) {
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link collapsed" href="dashboard.php">
+            <a class="nav-link collapsed" href="index.php">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li><!-- End Profile Page Nav -->
+
+        <li class="nav-heading">Configuration</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="add_intern.php">
+                <i class="bi bi-person-plus-fill"></i>
+                <span>Add Intern</span>
+            </a>
+        </li>
+
         <li class="nav-heading">Pages</li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="register_intern.php">
+            <a class="nav-link collapsed" href="intern.php">
                 <i class="bi bi-people-fill"></i>
                 <span>List of Intern</span>
             </a>
@@ -68,6 +78,18 @@ foreach ($interns as $intern) {
                 <span>Progress Report</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="intern_adjustments.php">
+                <i class='bx bxs-cog'></i>
+                <span>Intern Adjustments</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="action_logs.php">
+                <i class='bx bx-history'></i>
+                <span>Audit Trail</span>
+            </a>
+        </li>
     </ul>
 </aside><!-- End Sidebar-->
 
@@ -76,7 +98,7 @@ foreach ($interns as $intern) {
         <h1>Interns Progress Report</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                 <li class="breadcrumb-item active">Interns Progress Report</li>
             </ol>
         </nav>

@@ -1,6 +1,6 @@
 <?php
 include "nav.php";
-require "../config.php";
+
 
 $uploadedFilePath = isset($_SESSION['uploadedFilePath']) ? $_SESSION['uploadedFilePath'] : null;
 unset($_SESSION['uploadedFilePath']);
@@ -58,7 +58,7 @@ function formatTimestamp($timestamp) {
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="dashboard.php">
+      <a class="nav-link collapsed" href="index.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -96,7 +96,7 @@ function formatTimestamp($timestamp) {
     <h1>Requirements Checklist</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item active">Requirements Checklist</li>
       </ol>
     </nav>
@@ -151,11 +151,11 @@ function formatTimestamp($timestamp) {
               <label for="file" class="form-label">Attach File</label>
               <input class="form-control" type="file" id="file" name="file" required>
             </div>
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="submit" class="btn-main">Upload</button>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="ri-close-circle-line" style="color: #fff;"></i>&nbsp;Close</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -227,7 +227,7 @@ function formatTimestamp($timestamp) {
                 </ul>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -298,7 +298,7 @@ function formatTimestamp($timestamp) {
                     <?php endif; ?>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                   </div>
                 </div>
               </div>

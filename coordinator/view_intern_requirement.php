@@ -1,5 +1,6 @@
 <?php
 include "nav.php";
+include "crypt_helper.php";
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
@@ -17,46 +18,62 @@ include "nav.php";
 
 <aside id="sidebar" class="sidebar">
 
-  <ul class="sidebar-nav" id="sidebar-nav">
+    <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="dashboard.php">
+    <a class="nav-link collapsed" href="dashboard.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
-      </a>
+    </a>
     </li><!-- End Profile Page Nav -->
+
+    <li class="nav-heading">Configuration</li>
+
+    <li class="nav-item">
+    <a class="nav-link collapsed" href="add_intern.php">
+        <i class="bi bi-person-plus-fill"></i>
+        <span>Add Intern</span>
+    </a>
+    </li>
 
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="register_intern.php">
+    <a class="nav-link collapsed" href="intern.php">
         <i class="bi bi-people-fill"></i>
         <span>List of Intern</span>
-      </a>
+    </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link " href="requirement_checklist.php">
+    <a class="nav-link " href="requirement_checklist.php">
         <i class="bi bi-file-earmark-check-fill"></i>
         <span>Requirements Checklist</span>
-      </a>
+    </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="interns_attendance.php">
+    <a class="nav-link collapsed" href="interns_attendance.php">
         <i class="bx bxs-user-detail"></i>
         <span>Interns Attendance</span>
-      </a>
+    </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="progress_report.php">
+    <a class="nav-link collapsed" href="interns_progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
-      </a>
+    </a>
     </li>
 
-  </ul>
+    <li class="nav-item">
+    <a class="nav-link collapsed" href="action_logs.php">
+    <i class='bx bx-history' ></i>
+        <span>Audit Trail</span>
+    </a>
+    </li>
+
+    </ul>
 
 </aside><!-- End Sidebar-->
 
@@ -74,7 +91,7 @@ include "nav.php";
 
     <?php
     if (isset($_GET['student_id'])) {
-        $student_id = $_GET['student_id'];
+        $student_id = decryptData($_GET['student_id']);
 
         // Fetch user details
         $stmt = $pdo->prepare("SELECT firstname, lastname, program_id FROM tbl_users WHERE student_id = :student_id");
@@ -243,16 +260,34 @@ include "nav.php";
                                                             <?php endif; ?>
                                                         </div>
                                                         <div class="modal-footer">
+                                                            <?php if (isset($file['status']) && $file['status'] == "Cancelled"): ?>
                                                             <form method="post" action="update_file_status.php" class="d-inline">
-                                                                <input type="hidden" name="file_id" value="<?php echo $file['id']; ?>">
+                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
+                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
+                                                                <button type="submit" name="approve" class="btn btn-success">Approve</button>
+                                                            </form>
+                                                            <?php elseif (isset($file['status']) && $file['status'] == "Approved"): ?>
+                                                            <form method="post" action="update_file_status.php" class="d-inline">
+                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
+                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
+                                                                <button type="submit" name="cancel" class="btn btn-danger">Cancel</button>
+                                                            </form>
+                                                            <?php else: ?>
+                                                            <form method="post" action="update_file_status.php" class="d-inline">
+                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
+                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
                                                                 <button type="submit" name="approve" class="btn btn-success">Approve</button>
                                                             </form>
                                                             <form method="post" action="update_file_status.php" class="d-inline">
-                                                                <input type="hidden" name="file_id" value="<?php echo $file['id']; ?>">
+                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
+                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
                                                                 <button type="submit" name="cancel" class="btn btn-danger">Cancel</button>
                                                             </form>
+                                                            <?php endif; ?>
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                         </div>
+
+
                                                     </div>
                                                 </div>
                                             </div>
