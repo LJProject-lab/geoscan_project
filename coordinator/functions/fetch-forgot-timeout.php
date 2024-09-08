@@ -7,9 +7,10 @@ function checkMissingTimeOut_Intern($pdo, $coordinator_id) {
 
     // SQL query to check for missing time_out entries for the given student
     $sql = "
-        SELECT DATE(t1.timestamp) as missing_date, t3.firstname, t3.lastname, t3.coordinator_id
+        SELECT DATE(t1.timestamp) as missing_date, t3.firstname, t3.lastname, t3.coordinator_id, t4.status
         FROM tbl_timelogs t1
         LEFT JOIN tbl_users t3 ON t1.student_id = t3.student_id
+        LEFT JOIN tbl_adjustments t4 ON t1.student_id = t4.student_id
         LEFT JOIN tbl_timelogs t2 
         ON t1.student_id = t2.student_id 
         AND DATE(t1.timestamp) = DATE(t2.timestamp) 

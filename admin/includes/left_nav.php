@@ -66,6 +66,10 @@
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Extras</div>
+                <a class="nav-link" href="intern_adjustments.php">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
+                    Intern Adjustments
+                </a>
                 <a class="nav-link" href="#">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></div>
                     Account Settings

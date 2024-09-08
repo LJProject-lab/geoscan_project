@@ -4,12 +4,15 @@ require 'config.php'; // Include your database connection file
 
 $coordinator_id = $_SESSION['coordinator_id'];
 
-$sql = "SELECT r.action_name,al.action_desc, al.created_at, u.firstname, u.lastname
+$sql = "SELECT DISTINCT r.action_name, al.action_desc, al.created_at, u.firstname, u.lastname
         FROM tbl_actionlogs al
         LEFT JOIN tbl_users u ON al.user_id = u.coordinator_id
         LEFT JOIN tbl_reference r ON al.action_id = r.action_id
         WHERE al.user_id = :coordinator_id
+        AND al.student_id = u.student_id
         ORDER BY al.created_at DESC";
+
+
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':coordinator_id', $coordinator_id, PDO::PARAM_INT);
 $stmt->execute();

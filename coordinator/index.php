@@ -299,44 +299,57 @@ $currentDate = date('Y-m-d');
 
             </div>
           </div>
-
           <div class="col-sm-12 col-xl-6">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Interns <span>with No Time-Out Entries</span></h5>
                 <?php
                 if ($missingTimeOuts) {
-                  $dates = array_column($missingTimeOuts, 'missing_date');
-                  $firstnames = array_column($missingTimeOuts, 'firstname');
-                  $lastnames = array_column($missingTimeOuts, 'lastname');
+                  $interns = [];
+
+                  // Aggregate missing dates by intern
+                  foreach ($missingTimeOuts as $entry) {
+                    $key = $entry['firstname'] . ' ' . $entry['lastname'];
+                    if (!isset($interns[$key])) {
+                      $interns[$key] = [
+                        'dates' => [],
+                        'status' => $entry['status']
+                      ];
+                    }
+                    $interns[$key]['dates'][] = $entry['missing_date'];
+                  }
+
+                  // Get today's date
                   $today = date('Y-m-d');
 
-                  if ($today) {
-                    // Check if the current date is in the missing dates
-                    if (in_array($today, $dates)) {
-                      // Display message for the current day
-                      echo "
-
-                <div class='reminder-alert'>
-                    <span style='color:#198754;'><h3><b>Pending Time Out</b></h3></span>.
-                    
-                    <p>You have not logged your time out for today (<strong>{$today}</strong>).</p>
-                </div>";
-                    } else {
-                      // Display message for past missed time outs
-                      echo "
-                <div class='out-container'>
-                <div class='reminder-alert'>
-                    <p>Some of your interns have not logged their time out on the following dates:</p>
-                    <ul>";
-                      foreach ($missingTimeOuts as $entry) {
-                        echo "<li><strong>{$entry['firstname']} {$entry['lastname']}:</strong> {$entry['missing_date']}</li>";
-                      }
-
-                      echo "</div>
-                                      </div>";
-                    }
+                  // Display today's missing time-out message
+                  if (in_array($today, array_merge(...array_column($interns, 'dates')))) {
+                    echo "
+                    <div class='reminder-alert'>
+                        <span style='color:#198754;'><h3><b>Pending Time Out</b></h3></span>
+                        <p>You have not logged your time out for today (<strong>{$today}</strong>).</p>
+                    </div>";
                   }
+
+                  // Display past missed time-outs
+                  echo "
+                <div class='out-container'>
+                    <div class='reminder-alert'>
+                        <p>Some of your interns have not logged their time out on the following dates:</p>
+                        <ul>";
+
+                  foreach ($interns as $intern => $details) {
+                    $dates = implode(', ', $details['dates']);
+                    $statusBadge = $details['status'] == 'Approved' ?
+                      "<span class='badge badge-warning' style='color:black;background-color:orange;'>Under Review</span>" :
+                      '';
+
+                    echo "<li><strong>{$intern}:</strong> {$dates} {$statusBadge}</li>";
+                  }
+
+                  echo "</ul>
+                    </div>
+                </div>";
                 } else {
                   echo "<p>All time out records are up to date.</p>";
                 }
@@ -344,6 +357,8 @@ $currentDate = date('Y-m-d');
               </div>
             </div>
           </div>
+
+
 
 
 

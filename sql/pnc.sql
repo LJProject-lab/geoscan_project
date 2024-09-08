@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2024 at 07:21 PM
+-- Generation Time: Sep 08, 2024 at 06:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `tbl_actionlogs` (
   `id` int(11) NOT NULL,
   `user_id` varchar(255) NOT NULL,
+  `student_id` varchar(255) NOT NULL,
   `action_id` int(11) NOT NULL,
   `action_desc` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -39,22 +40,25 @@ CREATE TABLE `tbl_actionlogs` (
 -- Dumping data for table `tbl_actionlogs`
 --
 
-INSERT INTO `tbl_actionlogs` (`id`, `user_id`, `action_id`, `action_desc`, `created_at`) VALUES
-(17, '1', 7, 'Company Test created', '2024-09-02 15:30:09'),
-(18, '1', 9, 'Deleted company Test', '2024-09-02 15:30:12'),
-(19, '1', 3, 'Deleted coordinator ', '2024-09-02 15:32:31'),
-(20, '1', 1, 'Coordinator account created for test', '2024-09-02 15:32:51'),
-(21, '1', 3, 'Deleted coordinator test', '2024-09-02 15:32:54'),
-(22, '1', 4, 'Program Test created', '2024-09-02 15:34:39'),
-(23, '1', 6, 'Deleted program Test', '2024-09-02 15:34:42'),
-(24, '1', 10, 'Deleted student JobertCadiz', '2024-09-02 15:36:38'),
-(25, '1', 10, 'Deleted student John Doe', '2024-09-02 15:37:01'),
-(26, '1', 4, 'Program Test created', '2024-09-07 00:42:19'),
-(27, '1', 6, 'Deleted program Test', '2024-09-07 00:42:40'),
-(28, '1', 17, 'Status Set Active for student ID 1234567', '2024-09-07 02:07:13'),
-(61, '10750', 18, 'Requirement PNC:AA-FO-20 Set Cancelled for Student Jimmy Camangon', '2024-09-07 08:37:06'),
-(62, '10750', 18, 'Requirement PNC:AA-FO-21 Set Approved for Student Jimmy Camangon', '2024-09-07 08:37:17'),
-(63, '46918', 18, 'Requirement PNC:AA-FO-22 Set Approved for Student Juan Tamad', '2024-09-07 08:49:41');
+INSERT INTO `tbl_actionlogs` (`id`, `user_id`, `student_id`, `action_id`, `action_desc`, `created_at`) VALUES
+(17, '1', '', 7, 'Company Test created', '2024-09-02 15:30:09'),
+(18, '1', '', 9, 'Deleted company Test', '2024-09-02 15:30:12'),
+(19, '1', '', 3, 'Deleted coordinator ', '2024-09-02 15:32:31'),
+(20, '1', '', 1, 'Coordinator account created for test', '2024-09-02 15:32:51'),
+(21, '1', '', 3, 'Deleted coordinator test', '2024-09-02 15:32:54'),
+(22, '1', '', 4, 'Program Test created', '2024-09-02 15:34:39'),
+(23, '1', '', 6, 'Deleted program Test', '2024-09-02 15:34:42'),
+(24, '1', '', 10, 'Deleted student JobertCadiz', '2024-09-02 15:36:38'),
+(25, '1', '', 10, 'Deleted student John Doe', '2024-09-02 15:37:01'),
+(26, '1', '', 4, 'Program Test created', '2024-09-07 00:42:19'),
+(27, '1', '', 6, 'Deleted program Test', '2024-09-07 00:42:40'),
+(67, '10750', '1234567', 18, 'Requirement PNC:AA-FO-20 Set Cancelled for Student Jimmy Camangon', '2024-09-08 00:35:36'),
+(68, '10750', '1234567', 18, 'Requirement PNC:AA-FO-21 Set Approved for Student Jimmy Camangon', '2024-09-08 00:35:39'),
+(69, '10750', '123456', 18, 'Requirement PNC:AA-FO-24 Set Cancelled for Student Jobert Cadiz', '2024-09-08 00:35:44'),
+(72, '10750', '1234567', 19, 'Adjustment request for Student Jimmy Camangon has been approved. Reason: Nakalimutan ko po sorry po.', '2024-09-08 01:34:21'),
+(73, '10750', '123456', 19, 'Adjustment request for Student Jobert Cadiz has been approved. Reason: Nakalimutan ko din po.', '2024-09-08 01:34:54'),
+(74, '1', '123456', 19, 'Adjustment request for Student Jobert Cadiz has been approved. Reason: Nakalimutan ko din po.', '2024-09-08 04:51:03'),
+(75, '1', '1234567', 19, 'Adjustment request for Student Jimmy Camangon has been approved. Reason: Nakalimutan ko po sorry po.', '2024-09-08 04:52:56');
 
 -- --------------------------------------------------------
 
@@ -76,8 +80,9 @@ CREATE TABLE `tbl_adjustments` (
 --
 
 INSERT INTO `tbl_adjustments` (`id`, `student_id`, `records`, `reason`, `status`, `createdAt`) VALUES
-(6, '1234567', '2024-09-01,2024-09-02', 'Nakalimutan ko po sorry po.', 'Pending', '2024-09-07 17:03:03'),
-(7, '1234566', '2024-08-31', 'Nakalimutan ko lang din po sorry po :3', 'Pending', '2024-09-07 17:08:38');
+(6, '1234567', '2024-09-01,2024-09-02', 'Nakalimutan ko po sorry po.', 'Approved', '2024-09-08 04:56:48'),
+(7, '1234566', '2024-08-31', 'Nakalimutan ko lang din po sorry po :3', 'Pending', '2024-09-07 17:08:38'),
+(8, '123456', '2024-08-31', 'Nakalimutan ko din po.', 'Adjusted', '2024-09-08 04:51:03');
 
 -- --------------------------------------------------------
 
@@ -192,7 +197,8 @@ INSERT INTO `tbl_reference` (`action_id`, `action_name`) VALUES
 (15, 'Changed system settings'),
 (16, 'Performed a security audit'),
 (17, 'Set Status Student'),
-(18, 'Set Requirement Status Intern');
+(18, 'Set Requirement Status Intern'),
+(19, 'Set Adjustment Status Intern');
 
 -- --------------------------------------------------------
 
@@ -217,7 +223,8 @@ CREATE TABLE `tbl_requirements` (
 INSERT INTO `tbl_requirements` (`id`, `student_id`, `form_type`, `file_name`, `file_path`, `status`, `uploaded_at`) VALUES
 (11, '1234567', 'PNC:AA-FO-20', 'UC-PnC-Internship-Manual-1.pdf', 'requirements/UC-PnC-Internship-Manual-1.pdf', 'Cancelled', '2024-09-07 00:29:29'),
 (12, '1234567', 'PNC:AA-FO-21', 'UC-PnC-Internship-Manual-1.pdf', 'requirements/UC-PnC-Internship-Manual-1.pdf', 'Approved', '2024-09-07 08:01:20'),
-(13, '1234566', 'PNC:AA-FO-22', 'UC-PnC-Internship-Manual-1.pdf', 'requirements/UC-PnC-Internship-Manual-1.pdf', 'Approved', '2024-09-07 08:44:50');
+(13, '1234566', 'PNC:AA-FO-22', 'UC-PnC-Internship-Manual-1.pdf', 'requirements/UC-PnC-Internship-Manual-1.pdf', 'Approved', '2024-09-07 08:44:50'),
+(14, '123456', 'PNC:AA-FO-24', 'UC-PnC-Internship-Manual-1.pdf', 'requirements/UC-PnC-Internship-Manual-1.pdf', 'Cancelled', '2024-09-08 00:33:32');
 
 -- --------------------------------------------------------
 
@@ -247,7 +254,9 @@ INSERT INTO `tbl_timelogs` (`id`, `student_id`, `pin`, `type`, `timestamp`, `lon
 (65, '1234567', '', 'time_in', '2024-09-02 05:57:29', 121.143504, 14.273903, ''),
 (66, '1234567', '', 'time_in', '2024-09-03 05:57:29', 121.143504, 14.273903, ''),
 (67, '1234567', '', 'time_out', '2024-09-03 09:58:14', 121.143504, 14.273903, ''),
-(70, '1234566', '', 'time_in', '2024-08-31 07:35:51', 121.143504, 14.273903, '');
+(70, '1234566', '', 'time_in', '2024-08-31 07:35:51', 121.143504, 14.273903, ''),
+(82, '123456', '', 'time_in', '2024-08-31 07:35:51', 121.143504, 14.273903, ''),
+(96, '123456', '', 'time_out', '2024-08-31 09:51:00', 121.143504, 14.273903, '');
 
 -- --------------------------------------------------------
 
@@ -279,7 +288,8 @@ CREATE TABLE `tbl_users` (
 
 INSERT INTO `tbl_users` (`id`, `student_id`, `credential_id`, `attestation_object`, `client_data_json`, `pin`, `firstname`, `lastname`, `email`, `phone`, `address`, `program_id`, `coordinator_id`, `status`, `createdAt`) VALUES
 (17, '1234567', 'x02NSE73OU/QCt9+PyW6Qz4ro+oCPc6Sd+6PVkW3yoU=', 'o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZzkBAGNzaWdZAQCqeMGOup0vuILjr8oz/cC2WTOG5XNVwgITNXlB6uD35F5AQcUw0kBBlot8hD6TH7dPffgnPZgQ8R1JoKmBFI6VOH0lV3jYlNlp9ryrxwQogMOLc6mjlhJiK+RtYTNidAGFwHn/8qr7Wy+00dI5U0y8zrNyO8SanwsV/HsQ9Z97I37/slgGz6cOwSiEdUpSjxrZVZdN2tWm4+movRJNhe4b+40EXjz710H5CWeczKY0la/FmX3cwggb7TVDtxsd2J24/QJXonYVHtCV+aUX+/CF2uXNdG2IaUfK+mlA4Ar798b6GXFzpAy+Xx1KWO8rpS7BymnoR3pioI9Af1isnq1DaGF1dGhEYXRhWQFnSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAGAosBex1EwCtLOvza/Ja7IAIMdNjUhO9zlP0Arffj8lukM+K6PqAj3Oknfuj1ZFt8qFpAEDAzkBACBZAQDpCwXlI4Keo/ox75/2K+ov1igwmto6Vey5lZHpqDGYZh6SLUjmCVxAD6wRU6c/p8c/tHc9VhJo/LF6KjWglT8G79vqmT+l5TZHXnZHp55kmiSYz67glNWKmwo9mUrWd0SPiPYbGP0NR24BHdPUlHg+AshXuwBa3O6f+NZsFdfBsyAl6Jqks+DorgYhM5mUMjMZXPnWBXpP51G0+uCS5yEgrehcoJ5ZUnJLtIyZN9538pRYqo3kgm29EIyBQWslxFhdXsx7pSsUIpRsqu/nQ/Va71OQOCuGW+02/RRh1Clr/wtfhVjzj8VSHuHr3T8cOWZvj0jmYtqcMyr8PhYAgmUlIUMBAAE=', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiLWFiR0h0YWE4d19wNDIyWTVrM3N6eWozd01fV1NaYjY1VmlZdnJJN3IxdyIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '$2y$10$E5C5eRWIN.ZAWIEv07G5..rie7g2etoeTd5NZsZ22oqZdJz2vp3jC', 'Jimmy', 'Camangon', 'jimmycamangon7@gmail.com', '09365220532', 'Caingin', 95742, 10750, 'Active', '2024-09-07 02:12:29'),
-(21, '1234566', '5a/vHoKyxBFUV0LMUXpMhfyyowW2TNPAEK9kbLA1Lfs=', 'o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZzkBAGNzaWdZAQCLk1g4aW8zUqLyNjQizsUi3ZFJOCIfRsQKZggbWhihlaz2+Bq5+b0QlZlE1cQuLGZwDDOWwCnHQGxZ0mbKV/UOQg7cTq37LIDLrzC2F/0Dqo4DvZGBifZgLHDYpSlKoTzf+Aor6Vrwz0mrcOmjVXwfkNZ/7kNv0TxZs+RIVvT6eeeEjuw2cE5lKXaUdpc43tmzcbAOZR1dxhNjavJZE3GBuwtDu5lqdwP0FzVXHMBR4clDTiLJ9AXkUnClOydpTq7RhHHQM6mhVfThOHZVbgGdkPZoDmZI9/EwFP/9RJu9kYwqTDQEvKZSB+TLn23AE/7zONhF7+QSSq0x71wgiqquaGF1dGhEYXRhWQFnSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAGAosBex1EwCtLOvza/Ja7IAIOWv7x6CssQRVFdCzFF6TIX8sqMFtkzTwBCvZGywNS37pAEDAzkBACBZAQCyqROVt4ASXc1sMS/rI7U+Nk1BSYxwk50SPiEfwI1h1Ks5b58gYzZH/JeUsB52Umdz9FOLqvNhitFoe9kta24ZDloT+30MvxKvCFPRx6E7FhCX1Ux6sHqE85YYTJonLhTlb5rdtsrg7GS/U77nVwtvjhnQsQRrBNQfslHrCPCDxG6UBkYoQ6wA92g9Q2D5dCuNejHQr4xzup/Fqf3hiSLa+D8CvQtqJEoijfYUhq/Am037SrsxKFwpZGKvG7vghRa1PVRxpilJcrqccJzQ8FCmCmEPYwxfm5e5XJy3iwOftEaCECulFpM/237I8OV/DBOt96ZGBzpOeXs0x0v9NYZBIUMBAAE=', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiQmNSSlJFTF9UWDJZVUVycFlDbmxQakhtYjUzckI3VTRLaFRKYkpuN2luTSIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '$2y$10$z5xH.Uhy.DAr6bytgQkGGOcl4LE0tkXx/OFVDOY.MjBjNDAWIdIT.', 'Juan', 'Tamad', 'juantamad@gmail.com', '09365220532', 'Caingin', 95742, 46918, '', '2024-09-07 13:14:29');
+(21, '1234566', '5a/vHoKyxBFUV0LMUXpMhfyyowW2TNPAEK9kbLA1Lfs=', 'o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZzkBAGNzaWdZAQCLk1g4aW8zUqLyNjQizsUi3ZFJOCIfRsQKZggbWhihlaz2+Bq5+b0QlZlE1cQuLGZwDDOWwCnHQGxZ0mbKV/UOQg7cTq37LIDLrzC2F/0Dqo4DvZGBifZgLHDYpSlKoTzf+Aor6Vrwz0mrcOmjVXwfkNZ/7kNv0TxZs+RIVvT6eeeEjuw2cE5lKXaUdpc43tmzcbAOZR1dxhNjavJZE3GBuwtDu5lqdwP0FzVXHMBR4clDTiLJ9AXkUnClOydpTq7RhHHQM6mhVfThOHZVbgGdkPZoDmZI9/EwFP/9RJu9kYwqTDQEvKZSB+TLn23AE/7zONhF7+QSSq0x71wgiqquaGF1dGhEYXRhWQFnSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAGAosBex1EwCtLOvza/Ja7IAIOWv7x6CssQRVFdCzFF6TIX8sqMFtkzTwBCvZGywNS37pAEDAzkBACBZAQCyqROVt4ASXc1sMS/rI7U+Nk1BSYxwk50SPiEfwI1h1Ks5b58gYzZH/JeUsB52Umdz9FOLqvNhitFoe9kta24ZDloT+30MvxKvCFPRx6E7FhCX1Ux6sHqE85YYTJonLhTlb5rdtsrg7GS/U77nVwtvjhnQsQRrBNQfslHrCPCDxG6UBkYoQ6wA92g9Q2D5dCuNejHQr4xzup/Fqf3hiSLa+D8CvQtqJEoijfYUhq/Am037SrsxKFwpZGKvG7vghRa1PVRxpilJcrqccJzQ8FCmCmEPYwxfm5e5XJy3iwOftEaCECulFpM/237I8OV/DBOt96ZGBzpOeXs0x0v9NYZBIUMBAAE=', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiQmNSSlJFTF9UWDJZVUVycFlDbmxQakhtYjUzckI3VTRLaFRKYkpuN2luTSIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '$2y$10$z5xH.Uhy.DAr6bytgQkGGOcl4LE0tkXx/OFVDOY.MjBjNDAWIdIT.', 'Juan', 'Tamad', 'juantamad@gmail.com', '09365220532', 'Caingin', 95742, 46918, '', '2024-09-07 13:14:29'),
+(22, '123456', 'K+vpXzy45oVJu4613qpeIsKqLFFOQcsB4TAclzu2B4c=', 'o2NmbXRmcGFja2VkZ2F0dFN0bXSiY2FsZzkBAGNzaWdZAQAj0QQ7ehJtIqwhT0tOvzfmnfc0JBxHSWAaPQVu72+ipOk/a0FtYhPsqamiKZbPsH+ZYmVfq/uFV02P1xpEuethYjoNdtLdCNaZyz4lYuVnLPr1RG+ZhiLw1ATZv5W0mMFJZSbbBOMPA7hlwB94gfeRmm81OI/kHIsiqDAnR5R79b3j8e4aqCs05yfTqOpRd43DTOXx3iJYH+4MCkzIiWnHSS3SWvYq323JgQnvB7Wm/Cwsl4Bs+hT5V1Amwb1ANWAirhG4qxkDBA40B5sEOojYMFu+FClGOm5iYeKjuaniyTlKgTWUklr3u0ZrWPAyVoIrVUPQhAjAvHtUD9tfnlMsaGF1dGhEYXRhWQFnSZYN5YgOjGh0NBcPZHZgW4/krrmihjLHmVzzuoMdl2NFAAAAAGAosBex1EwCtLOvza/Ja7IAICvr6V88uOaFSbuOtd6qXiLCqixRTkHLAeEwHJc7tgeHpAEDAzkBACBZAQDYNWG4Vp9378/UhTrhQg/Dg4+TELpvEbRM6NVKbxu+QNb/rB50+lTpBmmqzOSTA1XbUF9xbDXBY/HdL44pgYVy/FyS/ZJsk2nUTdIqjGqEHZ+dcROXgxa5vfZdSv0KYUPnySzxWp5mNVf6Tb0xbznZz2vEa9eZTYvLCzrJon4rGzmT/ZzPATRWH/6Ec8WRco2QgkoLwETlCIJ7eZHW0VdT4pmkZHENgjQCoDYD4ir9PkmegWudKgVJQI0gsEz2oqWJV3rwv1FDAP7sh78zIC0V0dN+hgl96cnoijKwpWX6rd6ET26E3i/lNR+DJ7S4KckxGabMr1EGPkbUF09ZHBSdIUMBAAE=', 'eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiYThpQWVFSDlaV3N2dGNlcHRweWlSUXR3Qm9GVnp5a0tTT0ljemFaMUdFYyIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3QiLCJjcm9zc09yaWdpbiI6ZmFsc2V9', '$2y$10$KPyEbadPCBPrPPQyTHPEdOoEKqbUjKdxj3M3EJGU8dWjYbyKJFpmq', 'Jobert', 'Cadiz', 'jimscams6@gmail.com', '09365220532', 'Caingin', 95742, 10750, '', '2024-09-08 00:17:33');
 
 --
 -- Indexes for dumped tables
@@ -353,13 +363,13 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_actionlogs`
 --
 ALTER TABLE `tbl_actionlogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `tbl_adjustments`
 --
 ALTER TABLE `tbl_adjustments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_admin`
@@ -389,19 +399,19 @@ ALTER TABLE `tbl_programs`
 -- AUTO_INCREMENT for table `tbl_requirements`
 --
 ALTER TABLE `tbl_requirements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbl_timelogs`
 --
 ALTER TABLE `tbl_timelogs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

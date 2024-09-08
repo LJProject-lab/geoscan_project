@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $status = '';
 
         // Fetch name 
-        $sql_fetch = "SELECT A.firstname, A.lastname, B.form_type  FROM tbl_users AS A LEFT JOIN tbl_requirements AS B ON A.student_id = B.student_id WHERE A.student_id = :student_id AND B.id = :file_id";
+        $sql_fetch = "SELECT A.firstname, A.lastname, B.form_type, A.student_id  FROM tbl_users AS A LEFT JOIN tbl_requirements AS B ON A.student_id = B.student_id WHERE A.student_id = :student_id AND B.id = :file_id";
         $stmt_fetch = $pdo->prepare($sql_fetch);
         $stmt_fetch->bindParam(':student_id', $student_id, PDO::PARAM_STR);
         $stmt_fetch->bindParam(':file_id', $file_id, PDO::PARAM_STR);
@@ -39,11 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
             if ($stmt->execute()) {
+                $student_id = $student['student_id'];
                 $firstname = $student['firstname'];
                 $lastname = $student['lastname'];
                 $form_type = $student['form_type'];
 
-                $sql_log = 'INSERT INTO tbl_actionlogs (user_id, action_id, action_desc) VALUES (:user_id, :action_id, :action_desc)';
+                $sql_log = 'INSERT INTO tbl_actionlogs (user_id, student_id, action_id, action_desc) VALUES (:user_id, :student_id, :action_id, :action_desc)';
                 $stmt_log = $pdo->prepare($sql_log);
                 $user_id = $_SESSION['coordinator_id'];
 
@@ -52,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 $action_id = ACTION_SET_STATUS_REQUIREMENT_STUDENT;
                 $stmt_log->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                $stmt_log->bindParam(':student_id', $student_id, PDO::PARAM_INT);
                 $stmt_log->bindParam(':action_id', $action_id, PDO::PARAM_INT);
                 $stmt_log->bindParam(':action_desc', $action_desc, PDO::PARAM_STR);
                 $stmt_log->execute();

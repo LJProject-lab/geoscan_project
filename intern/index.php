@@ -138,7 +138,6 @@ $currentDate = date('Y-m-d');
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-
             <h5 class="modal-title" id="ReqModalLabel" style="color:#198754;font-weight:bold;">Request for Adjustments
             </h5>
             <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
@@ -148,11 +147,17 @@ $currentDate = date('Y-m-d');
             <div id="message"></div>
             <h4>Dates with No Time-Out Entries</h4>
             <br>
-            <?php foreach ($dates as $date) {
-              echo "<li>{$date}</li>";
-            } ?>
+            <?php
+            if (isset($dates) && is_array($dates)) {
+              foreach ($dates as $date) {
+                echo "<li>{$date}</li>";
+              }
+            } else {
+              echo "<p>No missing time-out entries found.</p>";
+            }
+            ?>
             <br>
-            <input type="hidden" id="dates" value="<?php echo implode(',', $dates); ?>">
+            <input type="hidden" id="dates" value="<?php echo isset($dates) ? implode(',', $dates) : ''; ?>">
             <textarea name="reason" class="form-control" id="reason" placeholder="Enter Reason"></textarea>
           </div>
           <div class="modal-footer">
@@ -163,6 +168,7 @@ $currentDate = date('Y-m-d');
         </div>
       </div>
     </div>
+
 
   </div>
 

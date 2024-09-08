@@ -8,13 +8,12 @@ include "crypt_helper.php";
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
-
         <li class="nav-item">
             <a class="nav-link collapsed" href="index.php">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
-        </li><!-- End Profile Page Nav -->
+        </li>
 
         <li class="nav-heading">Configuration</li>
 
@@ -57,7 +56,7 @@ include "crypt_helper.php";
 
         <li class="nav-item">
             <a class="nav-link" href="intern_adjustments.php">
-            <i class='bx bxs-cog'></i>
+                <i class='bx bxs-cog'></i>
                 <span>Intern Adjustments</span>
             </a>
         </li>
@@ -103,20 +102,28 @@ include "crypt_helper.php";
         ?>
     <?php endif; ?>
 
-
-
     <div class="col-xl-12">
 
         <?php
+        // Fetch pending adjustments for coordinator's interns
         $stmt = $pdo->prepare("
-            SELECT a.*, u.firstname, u.lastname
-            FROM tbl_adjustments a
-            LEFT JOIN tbl_users u ON a.student_id = u.student_id
-            WHERE a.status = 'Pending'
-            AND u.coordinator_id = " . $_SESSION['coordinator_id'] . "
-        ");
-        $stmt->execute();
+    SELECT a.*, u.firstname, u.lastname
+    FROM tbl_adjustments a
+    LEFT JOIN tbl_users u ON a.student_id = u.student_id
+    WHERE a.status IN ('Pending', 'Approved', 'Adjusted')
+    AND u.coordinator_id = :coordinator_id
+");
+        $stmt->execute(['coordinator_id' => $_SESSION['coordinator_id']]);
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Check if there are any pending adjustments
+        $hasPending = false;
+        foreach ($users as $user) {
+            if ($user['status'] == 'Pending') {
+                $hasPending = true;
+                break;
+            }
+        }
         ?>
 
         <div class="card">
@@ -128,7 +135,10 @@ include "crypt_helper.php";
                             <th>Student Name</th>
                             <th>Date with no Time Out</th>
                             <th>Reason</th>
-                            <th>Action</th>
+                            <th>Status</th>
+                            <?php if ($hasPending): ?>
+                                <th>Action</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,11 +149,28 @@ include "crypt_helper.php";
                                 <td><?php echo htmlspecialchars($user['records']); ?></td>
                                 <td><?php echo htmlspecialchars($user['reason']); ?></td>
                                 <td>
-                                    <a href="view_intern.php?student_id=<?php echo urlencode(encryptData($user['student_id'])); ?>"
-                                        class="btn btn-success btn-sm"><i class="bi bi-eye"></i> Approve</a>
-                                    <!-- <a href="javascript:void(0);" onclick="confirmDelete('<?php echo $user['student_id']; ?>')"
-                    class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Remove</a> -->
+                                    <?php
+                                    // Display status
+                                    if ($user['status'] == 'Pending') {
+                                        echo "<span class='badge badge-warning' style='color:black;background-color:orange;'>Pending</span>";
+                                    } elseif ($user['status'] == 'Approved') {
+                                        echo "<span class='badge badge-warning' style='color:black;background-color:orange;'>Under Review</span>";
+                                    } else {
+                                        echo "<span class='badge badge-warning' style='color:white;background-color:#198754;'>Adjusted</span>";
+                                    }
+                                    ?>
                                 </td>
+                                <?php if ($hasPending): ?>
+                                    <td>
+                                        <?php if ($user['status'] == 'Pending'): ?>
+                                            <button class="btn btn-success me-md-2" data-toggle='modal' data-target='#ReqModal'
+                                                data-student_id="<?php echo $user['student_id']; ?>"
+                                                data-records="<?php echo htmlspecialchars($user['records']); ?>"
+                                                data-reason="<?php echo htmlspecialchars($user['reason']); ?>"
+                                                data-id="<?php echo $user['id']; ?>">Approve</button>
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -151,34 +178,48 @@ include "crypt_helper.php";
             </div>
         </div>
 
-
     </div>
 
 
 
+    <!-- Modal for requesting adjustment -->
+    <div class="modal fade" id="ReqModal" tabindex="-1" role="dialog" aria-labelledby="ReqModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ReqModalLabel" style="color:#198754;font-weight:bold;">Request for
+                        Adjustment</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+                <div class="modal-body">
+                    <h4>Missing Time-Out Entries</h4>
+                    <p>Please confirm your request for the following dates where the intern has missed logging their
+                        time-out:</p>
+                    <ul id="missing-dates"></ul>
+                    <h5><b>Intern's Reason:</b></h5>
+                    <p id="intern-reason"></p>
+                </div>
+                <div class="modal-footer">
+                    <form id="approveForm" method="POST">
+                        <input type="hidden" id="student_id" name="student_id">
+                        <input type="hidden" id="adjustment_id" name="adjustment_id">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main><!-- End #main -->
-
-<script>
-    function confirmDelete(studentId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, remove it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = 'remove_intern.php?student_id=' + studentId;
-            }
-        });
-    }
-</script>
-
 
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
     crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="functions/js/intern-adjustments.js"></script>
 
 <?php include "footer.php"; ?>
