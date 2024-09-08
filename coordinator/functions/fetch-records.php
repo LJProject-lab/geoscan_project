@@ -1,6 +1,5 @@
 <?php
-// Include the database connection file
-require_once 'config.php';
+
 
 
 // Initialize $logs as an empty array

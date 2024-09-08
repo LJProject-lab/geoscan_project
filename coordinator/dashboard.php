@@ -16,19 +16,10 @@ include "nav.php";
       </a>
     </li><!-- End Profile Page Nav -->
 
-    <li class="nav-heading">Configuration</li>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="add_intern.php">
-        <i class="bi bi-person-plus-fill"></i>
-        <span>Add Intern</span>
-      </a>
-    </li>
-
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="intern.php">
+      <a class="nav-link collapsed" href="register_intern.php">
         <i class="bi bi-people-fill"></i>
         <span>List of Intern</span>
       </a>
@@ -65,228 +56,90 @@ include "nav.php";
     <h1>Dashboard</h1>
     <nav>
       <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
         <li class="breadcrumb-item active">Dashboard</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
 
   <!-- Change from 'container' to 'container-fluid' -->
+  <div class="container-fluid">
+    <div class="row">
 
-  <section class="section dashboard">
-      <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-12">
-          <div class="row">
-
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Registered Interns</h5>
-
-                  <?php
-                  // Prepare the SQL query to count rows with the specific coordinator_id
-                  $stmt = $pdo->prepare("SELECT COUNT(*) FROM tbl_users WHERE coordinator_id = :coordinator_id");
-                  $stmt->bindParam(':coordinator_id', $_SESSION['coordinator_id'], PDO::PARAM_INT);
-
-                  // Execute the query
-                  $stmt->execute();
-
-                  // Fetch the count
-                  $count = $stmt->fetchColumn();
-                  ?>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-person-check"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6><?php echo $count; ?></h6>
-                        <span class="text-muted small pt-2 ps-1">
-                          <a href="intern.php">
-                            <i class="bi bi-arrow-right"></i> &nbsp;View All
-                          </a>
-                        </span>
-                    </div>
-                  </div>
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;--</h3>
+                  <span>Register Interns</span>
                 </div>
-
-              </div>
-            </div><!-- End Sales Card -->
-
-            <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Attendance <span>| Today</span></h5>
-
-                  <?php
-                   $today = date('Y-m-d');
-
-                   $stmt = $pdo->prepare("
-                   SELECT student_id
-                   FROM tbl_users
-                   WHERE coordinator_id = :coordinator_id
-               ");
-               $stmt->bindParam(':coordinator_id', $_SESSION['coordinator_id'], PDO::PARAM_INT);
-               $stmt->execute();
-               
-               // Fetch all student_id values
-               $student_ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
-           
-               if (empty($student_ids)) {
-                   $count = 0; // No students, so count is zero
-               } else {
-                   // Step 2: Prepare a query to count unique student_id for today
-                   $placeholders = implode(',', array_fill(0, count($student_ids), '?'));
-                   $stmt = $pdo->prepare("
-                       SELECT COUNT(DISTINCT student_id)
-                       FROM tbl_timelogs
-                       WHERE student_id IN ($placeholders) AND DATE(timestamp) = ?
-                   ");
-                   $params = array_merge($student_ids, [$today]);
-                   $stmt->execute($params);
-                   
-                   // Fetch the count
-                   $count = $stmt->fetchColumn();
-               }
-              ?>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-clock-history"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6><?php echo $count; ?></h6>
-                        <span class="text-muted small pt-2 ps-1">
-                          <a href="#">
-                            <i class="bi bi-arrow-right"></i> &nbsp;View All
-                          </a>
-                        </span>
-                    </div>
-                  </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
                 </div>
-
-              </div>
-            </div><!-- End Revenue Card -->
-
-            <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
-
-              <div class="card info-card customers-card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Requirements to Review</h5>
-
-                  <?php
-  // Fetch student IDs for the given coordinator_id
-  $stmt = $pdo->prepare("
-      SELECT student_id 
-      FROM tbl_users 
-      WHERE coordinator_id = :coordinator_id
-  ");
-  $stmt->execute(['coordinator_id' => $_SESSION['coordinator_id']]);
-  $student_ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-  if (!empty($student_ids)) { 
-      // Create a placeholder string for the SQL query
-      $placeholders = implode(',', array_fill(0, count($student_ids), '?'));
-
-      // Count records in tbl_requirements with status 'pending' for the fetched student_ids
-      $countStmt = $pdo->prepare("
-          SELECT COUNT(*) 
-          FROM tbl_requirements 
-          WHERE student_id IN ($placeholders) AND status = 'pending'
-      ");
-      $countStmt->execute($student_ids);
-
-      // Fetch the count
-      $pendingCount = $countStmt->fetchColumn();
-  }
-                  ?>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-clipboard-check"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6><?php echo htmlspecialchars($pendingCount); ?></h6>
-                        <span class="text-muted small pt-2 ps-1">
-                          <a href="requirements_to_review.php">
-                            <i class="bi bi-arrow-right"></i> &nbsp;View All
-                          </a>
-                        </span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
-
-            <div class="col-12">
-              <div class="card">
-
-                <div class="card-body">
-                  <h5 class="card-title">Reports <span>/Todays</span></h5>
-
-                  <?php
-                  $today = date('Y-m-d');
-
-                  $sql = "
-                      SELECT u.student_id, u.firstname, u.lastname, 
-                            MAX(CASE WHEN t.type = 'time_in' THEN t.timestamp ELSE NULL END) AS time_in,
-                            MAX(CASE WHEN t.type = 'time_out' THEN t.timestamp ELSE NULL END) AS time_out
-                      FROM tbl_users u
-                      LEFT JOIN tbl_timelogs t ON u.student_id = t.student_id 
-                      WHERE u.coordinator_id = :coordinator_id
-                      AND DATE(t.timestamp) = :today
-                      GROUP BY u.student_id, u.firstname, u.lastname
-                  ";
-
-                  $stmt = $pdo->prepare($sql);
-                  $stmt->bindParam(':coordinator_id', $_SESSION['coordinator_id'], PDO::PARAM_INT);
-                  $stmt->bindParam(':today', $today);
-                  $stmt->execute();
-
-                  $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                  ?>
-
-                  <table id="datatablesSimple" class="table">
-                      <thead>
-                          <tr>
-                              <th>Student ID</th>
-                              <th>Student Name</th>
-                              <th>Time In</th>
-                              <th>Time Out</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <?php foreach ($records as $record): ?>
-                          <tr>
-                              <td><?php echo htmlspecialchars($record['student_id']); ?></td>
-                              <td><?php echo htmlspecialchars($record['firstname'] . ' ' . $record['lastname']); ?></td>
-                              <td><?php echo $record['time_in'] ? date('H:i:s', strtotime($record['time_in'])) : '-'; ?></td>
-                              <td><?php echo $record['time_out'] ? date('H:i:s', strtotime($record['time_out'])) : '-'; ?></td>
-                          </tr>
-                          <?php endforeach; ?>
-                      </tbody>
-                  </table>
-                  
-
-                </div>
-
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
-    </section>  
+
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;--</h3>
+                  <span>Attendance Today</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;--</h3>
+                  <span>Review Requirements</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary"><i class="ri-line-chart-fill"></i>&nbsp;--</h3>
+                  <span>Register Fingerprints</span>
+                </div>
+                <div class="align-self-center">
+                  <i class="icon-support primary font-large-2 float-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </main><!-- End #main -->
 

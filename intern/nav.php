@@ -1,5 +1,5 @@
 <?php
-session_start();
+require '../config.php';
 if (!isset($_SESSION['student_id'])) {
   header("Location: ../login.php");
   exit();

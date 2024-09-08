@@ -2,6 +2,7 @@
 
 // Include database connection
 require_once '../../config.php';
+require_once 'action-ids.php';
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -43,9 +44,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':company_id', $company_id, PDO::PARAM_STR);
     $stmt->bindParam(':company_name', $company_name, PDO::PARAM_STR);
-    
-    if ($stmt->execute()) {       
-        // Return success message
+
+    if ($stmt->execute()) {
+        $sql_log = 'INSERT INTO tbl_actionlogs (user_id, action_id, action_desc) VALUES (:user_id, :action_id, :action_desc)';
+        $stmt_log = $pdo->prepare($sql_log);
+        $user_id = $_SESSION['admin_id'];
+        $action_desc = 'Company '. $company_name . ' created';
+        $action_id = ACTION_CREATE_COMPANY;
+        $stmt_log->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt_log->bindParam(':action_id', $action_id, PDO::PARAM_INT);
+        $stmt_log->bindParam(':action_desc', $action_desc, PDO::PARAM_STR);
+        $stmt_log->execute();
+
         $success = 'Company successfully created.';
         echo json_encode(['success' => $success]);
         exit();

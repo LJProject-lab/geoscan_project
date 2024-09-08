@@ -1,0 +1,7 @@
+<?php
+// action_ids.php
+
+
+define('ACTION_SET_STATUS_REQUIREMENT_STUDENT', 18);
+define('ACTION_SET_STATUS_ADJUSTMENT_STUDENT', 19);
+?>

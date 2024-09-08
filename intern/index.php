@@ -1,105 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include "nav.php";
+include "functions/fetch-forgot-timeout.php";
+$currentDate = date('Y-m-d');
+?>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+<link href="../assets/css/table.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
 
-  <title>PNC</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <ul class="sidebar-nav" id="sidebar-nav">
 
-  <!-- Favicons -->
-  <link href="assets/img/pnc-logo.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <li class="nav-item">
+      <a class="nav-link " href="dashboard.php">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Profile Page Nav -->
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <li class="nav-heading">Pages</li>
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="requirement_checklist.php">
+        <i class="bi bi-file-earmark-check-fill"></i>
+        <span>Requirements Checklist</span>
+      </a>
+    </li><!-- End Login Page Nav -->
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="progress_report.php">
+        <i class="ri-line-chart-fill"></i>
+        <span>Progress Report</span>
+      </a>
+    </li><!-- End Blank Page Nav -->
 
-</head>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="settings.php">
+        <i class='bx bxs-cog'></i>
+        <span>Settings</span>
+      </a>
+    </li><!-- End Blank Page Nav -->
 
-<body>
+  </ul>
 
-  <main>
-    <div class="container">
+</aside><!-- End Sidebar-->
 
-      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+<main id="main" class="main">
 
-              <div class="card mb-3">
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
 
-                <div class="card-body">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-body">
+          <?php
+          $student_id = $_SESSION['student_id'];
+          $stmt = $pdo->prepare("SELECT status FROM tbl_adjustments WHERE student_id = :student_id ORDER BY id DESC LIMIT 1");
+          $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
+          $stmt->execute();
+          $adjustment = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                <img src="assets/img/pnc.png" alt="Responsive Image" class="responsive-img">
+          if ($missingTimeOuts) {
+            $dates = array_column($missingTimeOuts, 'missing_date');
+            $today = date('Y-m-d');
 
-                  <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">I N T E R N</h5>
-                  </div>
+            if ($today) {
+              // Check if the current date is in the missing dates
+              if (in_array($today, $dates)) {
+                // Display message for the current day
+                echo "
+                <div class='reminder-alert'>
+                    <span style='color:#198754;'><h3><b>Pending Time Out</b></h3></span>
+                    <p>You have not logged your time out for today (<strong>{$today}</strong>).</p>
+                </div>";
+              } else {
+                // Display message for past missed time outs
+                echo "
+                <div class='reminder-alert'>
+                    <span style='color:#198754;'><h3><b>Time Out Reminder</b></h3></span>
+                    <p>It looks like you forgot to log your time out on the following dates:</p>
+                    <ul>";
+                foreach ($dates as $date) {
+                  echo "<li><strong>{$date}</strong></li>";
+                }
+                echo "
+                    </ul>
+                    <p>Please review your attendance records and enter the correct time out for these days. This ensures your attendance is accurately tracked.</p>
+                    <ul>
+                        <li>If you remember your time out, please contact your coordinator for assistance.</li>
+                    </ul>";
 
-                  <form class="row g-3 needs-validation" novalidate>
+                // Check the status and display either the button or the badge
+                if ($adjustment && $adjustment['status'] == 'Pending') {
+                  // If the status is Pending, show the badge
+                  echo "<div class='badge badge-warning' style='float:right; color:black; font-size:1rem; background-color:orange;'>Pending</div>";
+                } else {
+                  // If not Pending, show the button
+                  echo "
+                    <div class='button-wrapper' style='float:right;'>
+                        <a href='#'>
+                            <button class='btn-main' data-toggle='modal' data-target='#ReqModal'>Request for Adjustment</button>
+                        </a>
+                    </div>";
+                }
 
-                    <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
-                      <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please enter your username.</div>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <button class="btn btn-success w-100" type="submit">Login</button>
-                    </div>
-                    <br><br><br>
-                  </form>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
+                echo "</div>";
+              }
+            }
+          } else {
+            echo "<p>All time out records are up to date.</p>";
+          }
+          ?>
         </div>
 
-      </section>
-
+      </div>
     </div>
-  </main><!-- End #main -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.min.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+    <div class="col-xl-6">
+      <div class="card">
+        <div class="card-body">
+          Empty as of now.
+        </div>
+      </div>
+    </div>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+    <div class="modal fade" id="ReqModal" tabindex="-1" role="dialog" aria-labelledby="ReqModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ReqModalLabel" style="color:#198754;font-weight:bold;">Request for Adjustments
+            </h5>
+            <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+              aria-label="Close"></i>
+          </div>
+          <div class="modal-body">
+            <div id="message"></div>
+            <h4>Dates with No Time-Out Entries</h4>
+            <br>
+            <?php
+            if (isset($dates) && is_array($dates)) {
+              foreach ($dates as $date) {
+                echo "<li>{$date}</li>";
+              }
+            } else {
+              echo "<p>No missing time-out entries found.</p>";
+            }
+            ?>
+            <br>
+            <input type="hidden" id="dates" value="<?php echo isset($dates) ? implode(',', $dates) : ''; ?>">
+            <textarea name="reason" class="form-control" id="reason" placeholder="Enter Reason"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-main" style="background-color:#DC3545;"
+              data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn-del" id="confirmAdjustment">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-</body>
 
-</html>
+  </div>
+
+
+
+
+</main><!-- End #main -->
+<div id="preloader">
+  <div class="loader"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/datatables-simple-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+  crossorigin="anonymous"></script>
+<script src="functions/js/send-adjustments.js"></script>
+<script>
+  var studentId = "<?php echo $_SESSION['student_id']; ?>";
+</script>
+
+<?php include "footer.php"; ?>

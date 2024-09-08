@@ -38,7 +38,7 @@ foreach ($interns as $intern) {
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link collapsed" href="dashboard.php">
+            <a class="nav-link collapsed" href="index.php">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -47,10 +47,10 @@ foreach ($interns as $intern) {
         <li class="nav-heading">Configuration</li>
 
         <li class="nav-item">
-        <a class="nav-link collapsed" href="add_intern.php">
-            <i class="bi bi-person-plus-fill"></i>
-            <span>Add Intern</span>
-        </a>
+            <a class="nav-link collapsed" href="add_intern.php">
+                <i class="bi bi-person-plus-fill"></i>
+                <span>Add Intern</span>
+            </a>
         </li>
 
         <li class="nav-heading">Pages</li>
@@ -78,6 +78,18 @@ foreach ($interns as $intern) {
                 <span>Progress Report</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="intern_adjustments.php">
+                <i class='bx bxs-cog'></i>
+                <span>Intern Adjustments</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="action_logs.php">
+                <i class='bx bx-history'></i>
+                <span>Audit Trail</span>
+            </a>
+        </li>
     </ul>
 </aside><!-- End Sidebar-->
 
@@ -86,7 +98,7 @@ foreach ($interns as $intern) {
         <h1>Interns Progress Report</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                 <li class="breadcrumb-item active">Interns Progress Report</li>
             </ol>
         </nav>
@@ -108,6 +120,9 @@ foreach ($interns as $intern) {
             <div class="card">
                 <div class="card-body">
                     <h5><b><?php echo htmlspecialchars($data['name']); ?></b></h5>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button name="report" class="btn btn-success">Generate Report</button>
+                    </div>
                     <canvas id="progressChart-<?php echo $data['student_id']; ?>" class="small-chart"></canvas>
                 </div>
             </div>

@@ -22,7 +22,7 @@ $fingerprint_registered = $user && ($user['credential_id'] || $user['attestation
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="dashboard.php">
+            <a class="nav-link collapsed" href="index.php">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -62,7 +62,7 @@ $fingerprint_registered = $user && ($user['credential_id'] || $user['attestation
         <h1>Settings</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                 <li class="breadcrumb-item active">Settings</li>
             </ol>
         </nav>

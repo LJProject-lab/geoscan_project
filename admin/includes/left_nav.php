@@ -49,7 +49,7 @@
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2"
                     aria-expanded="false" aria-controls="collapsePages2">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Reports
+                    Audit Trail
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapsePages2" aria-labelledby="headingTwo"
@@ -59,13 +59,17 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Time Logs
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="action_logs.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-simple"></i></div>
-                            History
+                            Action Logs
                         </a>
                     </nav>
                 </div>
                 <div class="sb-sidenav-menu-heading">Extras</div>
+                <a class="nav-link" href="intern_adjustments.php">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
+                    Intern Adjustments
+                </a>
                 <a class="nav-link" href="#">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></div>
                     Account Settings

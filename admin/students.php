@@ -64,15 +64,20 @@ include 'includes/top_include.php';
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
+                                        <th>Student ID</th>
                                         <th>Email</th>
                                         <th>Firstname</th>
                                         <th>Lastname</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php foreach ($users as $user): ?>
                                         <tr>
+                                            <td>
+                                                <?php echo $user['student_id']; ?>
+                                            </td>
                                             <td>
                                                 <?php echo $user['email']; ?>
                                             </td>
@@ -83,6 +88,21 @@ include 'includes/top_include.php';
                                                 <?php echo $user['lastname']; ?>
                                             </td>
                                             <td>
+                                                <center>
+                                                    <?php
+                                                    if ($user['status'] == "Inactive"): ?>
+                                                        <span class="badge bg-danger">Inactive</span>
+                                                    <?php else: ?>
+                                                        <span class="badge bg-success">Active</span>
+                                                    <?php endif; ?>
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <button class="btn-get-main edit-btn" data-toggle="modal"
+                                                    data-target="#editAvailability"
+                                                    data-student-id="<?php echo $user['student_id'] ?>"><i
+                                                        class="fa-solid fa-pen-to-square"></i>
+                                                    Edit</button>
                                                 <button class="btn-get-del" data-toggle="modal" data-target="#DeleteModal"
                                                     data-student-id="<?php echo $user['student_id'] ?>"><i
                                                         class="fa-solid fa-trash"></i>
@@ -123,6 +143,39 @@ include 'includes/top_include.php';
     </div>
 
 
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editAvailability" tabindex="-1" role="dialog"
+        aria-labelledby="editAvailabilityModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAvailabilityModalLabel">Edit Availability</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+                <div class="modal-body">
+                    <div id="editMessage"></div>
+
+                    <!-- Edit form -->
+                    <div id="editPackageForm">
+
+                        <!-- Dropdown for availability -->
+                        <div class="form-group">
+                            <label for="edit_availability">Availability:</label>
+                            <select class="form-control" id="edit_availability" name="edit_availability">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-get-del" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn-get-main" id="saveChangesBtn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
@@ -139,9 +192,23 @@ include 'includes/top_include.php';
     <!-- Include jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <script>
 
+        document.getElementById('saveChangesBtn').addEventListener('click', function (event) {
+            // Get input values
+            var studentId = document.getElementById('edit_student_id').value;
+
+            // Check if any field has been modified
+            if (studentId === "") {
+                // If no changes, prevent form submission
+                event.preventDefault();
+                alert('Please make some changes before saving.');
+            }
+        });
+    </script>
     <script src="assets/js/datatables-simple-demo.js"></script>
     <script src="functions/js/delete-students.js"></script>
+    <script src="functions/js/edit-student.js"></script>
 </body>
 
 </html>

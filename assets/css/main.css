@@ -99,6 +99,10 @@ button:hover {
   color: red;
   font-weight: bold;
 }
+.officer_message {
+  color: red;
+  font-weight: bold;
+}
 .success {
   color: green;
   font-weight: bold;
