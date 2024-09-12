@@ -121,7 +121,6 @@ foreach ($interns as $intern) {
                 <div class="card-body">
                     <h5><b><?php echo htmlspecialchars($data['name']); ?></b></h5>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button name="report" class="btn btn-success">Generate Report</button>
                     </div>
                     <canvas id="progressChart-<?php echo $data['student_id']; ?>" class="small-chart"></canvas>
                 </div>

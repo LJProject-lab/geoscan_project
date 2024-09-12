@@ -1,5 +1,7 @@
 <?php
 include "nav.php";
+
+$interns = $pdo->query("SELECT student_id, firstname, lastname FROM tbl_users")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
@@ -19,14 +21,14 @@ include "nav.php";
     <li class="nav-heading">Configuration</li>
 
     <li class="nav-item">
-      <a class="nav-link " href="add_intern.php">
+      <a class="nav-link collapsed" href="add_intern.php">
         <i class="bi bi-person-plus-fill"></i>
         <span>Add Intern</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="generate_report.php">
+      <a class="nav-link " href="generate_report.php">
         <i class="ri-folder-download-line"></i>
         <span>Generate Intern Report</span>
       </a>
@@ -81,78 +83,54 @@ include "nav.php";
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Add Intern</h1>
+    <h1>Generate Intern Report</h1>
     <nav>
       <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-        <li class="breadcrumb-item active">Add Intern</li>
+        <li class="breadcrumb-item active">Generate Intern Report</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
 
   <section class="section">
-    <div class="row">
-      <div class="card">
-        <div class="card-body">
-        <form action="upload.php" method="post" enctype="multipart/form-data">
-        <div class="row mb-3">
-            <label for="formFile" class="col-sm-2 col-form-label">Upload Excel File</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="file" id="formFile" name="excel_file" required>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">Program</label>
-            <div class="col-sm-10">
-                <select class="form-select" name="program" aria-label="Default select example" required>
-                    <option selected disabled>Select Program</option>
-                    <?php
-                    // Fetching programs from the database
-                    $stmt = $pdo->query("SELECT program_id, program_name FROM tbl_programs");
-                    while ($row = $stmt->fetch()) {
-                        echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-        </div>
-        <input type="hidden" name="coordinator_id" value="<?php echo htmlspecialchars($coordinator_id); ?>">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="submit" name="process" class="btn btn-warning"><i class="ri-speed-mini-fill"> </i>Process</button>
-        </div>
-    </form>
+    
+  <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Generate Report</h5>
 
-        </div>
-      </div>
-    </div>
+              <!-- Vertical Form -->
+              <form class="row g-3" action="generate_data.php" method="post">
+                <div class="col-12">
+                  <label for="" class="form-label">Intern</label>
+                  <select id="student_id" class="form-select" id="student_id" name="student_id" required>
+                    <option value="" disabled selected>Select Intern</option>
+                        <?php foreach ($interns as $intern): ?>
+                            <option value="<?php echo htmlspecialchars($intern['student_id']); ?>">
+                                <?php echo htmlspecialchars($intern['lastname'] . ", " . $intern['firstname']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label for="" class="form-label">Start Date</label>
+                  <input type="date" class="form-control" id="start_date" name="start_date" required>
+                </div>
+                <div class="col-6">
+                  <label for="" class="form-label">End Date</label>
+                  <input type="date" class="form-control" id="end_date" name="end_date" required>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button type="submit" class="btn btn-warning"> <i class="ri-speed-mini-fill"></i> Process</button>
+                </div>
+              </form><!-- Vertical Form -->
+
+            </div>
+          </div>
+
 
   </section>
 
 </main><!-- End #main -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const duplicates = urlParams.get('duplicates');
-
-    if (status === 'success') {
-        Swal.fire({
-            title: 'Success!',
-            text: 'Interns successfully registered.',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        });
-    } else if (status === 'error') {
-        Swal.fire({
-            title: 'Error!',
-            text: 'Some student IDs already exist in the database: ' + decodeURIComponent(duplicates),
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    }
-});
-</script>
 
 
 

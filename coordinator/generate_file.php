@@ -12,7 +12,7 @@ $interns = $pdo->query("SELECT student_id, firstname, lastname FROM tbl_users")-
 
 <div class="container mt-4">
     <h1>Export Time Logs to Excel</h1>
-    <form action="export_excel.php" method="post">
+    <form action="review_data.php" method="post">
         <div class="mb-3">
             <label for="student_id" class="form-label">Select Intern</label>
             <select class="form-select" id="student_id" name="student_id" required>
@@ -32,7 +32,7 @@ $interns = $pdo->query("SELECT student_id, firstname, lastname FROM tbl_users")-
             <label for="end_date" class="form-label">End Date</label>
             <input type="date" class="form-control" id="end_date" name="end_date" required>
         </div>
-        <button type="submit" class="btn btn-primary">Export to Excel</button>
+        <button type="submit" class="btn btn-primary">Process Data</button>
     </form>
 </div>
 
