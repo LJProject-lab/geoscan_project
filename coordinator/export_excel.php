@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sheet->setCellValue('A3', 'Type');
         $sheet->setCellValue('B3', 'Date');
         $sheet->setCellValue('C3', 'Time');
-        $sheet->setCellValue('D3', 'Location');
+        $sheet->setCellValue('D3', 'Address');
 
         // Populate the spreadsheet with data
         $row = 4;

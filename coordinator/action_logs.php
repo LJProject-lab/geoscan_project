@@ -42,6 +42,12 @@ $action_logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </a>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="generate_report.php">
+        <i class="ri-folder-download-line"></i>
+        <span>Generate Intern Report</span>
+      </a>
+    </li>
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">

@@ -159,16 +159,11 @@ $adjustments = $detailsStmt->fetchAll(PDO::FETCH_ASSOC);
                 <span>My Profile</span>
               </a>
             </li>
+
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Change Password</span>
-              </a>
-            </li>
             <li>
               <hr class="dropdown-divider">
             </li>

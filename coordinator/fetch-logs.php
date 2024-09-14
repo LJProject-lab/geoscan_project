@@ -12,6 +12,7 @@ try {
     }
 
     $coordinator_id = $_SESSION['coordinator_id'];
+    
     $sql = "
         SELECT 
             tl.*, 
@@ -29,11 +30,20 @@ try {
     $stmt->execute();
     $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Adjust photo paths to be accessible from the web
+    foreach ($logs as &$log) {
+        if (isset($log['photo']) && !empty($log['photo'])) {
+            $log['photo'] = '../uploads/' . htmlspecialchars($log['photo']);
+        } else {
+            $log['photo'] = 'N/A';
+        }
+    }
+
     echo json_encode($logs);
 
 } catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
 } catch (Exception $e) {
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode(['error' => 'General error: ' . $e->getMessage()]);
 }
 ?>
