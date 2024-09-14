@@ -25,6 +25,13 @@ include "nav.php";
       </a>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="generate_report.php">
+        <i class="ri-folder-download-line"></i>
+        <span>Generate Intern Report</span>
+      </a>
+    </li>
+
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
@@ -77,7 +84,7 @@ include "nav.php";
     <h1>Add Intern</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Dashboard</li>
+      <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
         <li class="breadcrumb-item active">Add Intern</li>
       </ol>
     </nav>
@@ -87,42 +94,68 @@ include "nav.php";
     <div class="row">
       <div class="card">
         <div class="card-body">
-          <form action="upload.php" method="post" enctype="multipart/form-data">
-            <div class="row mb-3">
-              <label for="inputNumber" class="col-sm-2 col-form-label">Upload Excel File</label>
-              <div class="col-sm-10">
-                <input class="form-control" type="file" id="formFile" name="excel_file">
-              </div>
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+        <div class="row mb-3">
+            <label for="formFile" class="col-sm-2 col-form-label">Upload Excel File</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="file" id="formFile" name="excel_file" required>
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Program</label>
-              <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example">
-                  <option selected disabled>Select Program</option>
-                  <?php
-                  // Fetching programs from the database
-                  $stmt = $pdo->query("SELECT program_id, program_name FROM tbl_programs");
-
-                  // Looping through the result set and generating option elements
-                  while ($row = $stmt->fetch()) {
-                    echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
-                  }
-                  ?>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Program</label>
+            <div class="col-sm-10">
+                <select class="form-select" name="program" aria-label="Default select example" required>
+                    <option selected disabled>Select Program</option>
+                    <?php
+                    // Fetching programs from the database
+                    $stmt = $pdo->query("SELECT program_id, program_name FROM tbl_programs");
+                    while ($row = $stmt->fetch()) {
+                        echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
+                    }
+                    ?>
                 </select>
-              </div>
             </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button type="submit" name="process" class="btn btn-warning">Process</button>
-              <button type="button" class="btn btn-success">Save</button>
-            </div>
-          </form>
+        </div>
+        <input type="hidden" name="coordinator_id" value="<?php echo htmlspecialchars($coordinator_id); ?>">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" name="process" class="btn btn-warning"><i class="ri-speed-mini-fill"> </i>Process</button>
+        </div>
+    </form>
+
         </div>
       </div>
     </div>
+
   </section>
 
-
 </main><!-- End #main -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const duplicates = urlParams.get('duplicates');
+
+    if (status === 'success') {
+        Swal.fire({
+            title: 'Success!',
+            text: 'Interns successfully registered.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    } else if (status === 'error') {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Some student IDs already exist in the database: ' + decodeURIComponent(duplicates),
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+});
+</script>
+
+
+
 
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"

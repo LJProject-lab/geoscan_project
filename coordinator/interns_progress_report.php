@@ -53,6 +53,13 @@ foreach ($interns as $intern) {
             </a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="generate_report.php">
+                <i class="ri-folder-download-line"></i>
+                <span>Generate Intern Report</span>
+            </a>
+        </li>
+
         <li class="nav-heading">Pages</li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="intern.php">
@@ -120,6 +127,8 @@ foreach ($interns as $intern) {
             <div class="card">
                 <div class="card-body">
                     <h5><b><?php echo htmlspecialchars($data['name']); ?></b></h5>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    </div>
                     <canvas id="progressChart-<?php echo $data['student_id']; ?>" class="small-chart"></canvas>
                 </div>
             </div>

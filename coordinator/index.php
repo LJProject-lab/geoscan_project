@@ -12,7 +12,7 @@ $currentDate = date('Y-m-d');
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link " href="dashboard.php">
+      <a class="nav-link " href="index.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -24,6 +24,13 @@ $currentDate = date('Y-m-d');
       <a class="nav-link collapsed" href="add_intern.php">
         <i class="bi bi-person-plus-fill"></i>
         <span>Add Intern</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="generate_report.php">
+        <i class="ri-folder-download-line"></i>
+        <span>Generate Intern Report</span>
       </a>
     </li>
 
@@ -232,7 +239,7 @@ $currentDate = date('Y-m-d');
                   <div class="ps-3">
                     <h6><?php echo htmlspecialchars($pendingCount); ?></h6>
                     <span class="text-muted small pt-2 ps-1">
-                      <a href="requirement_checklist.php">
+                      <a href="requirements_to_review.php">
                         <i class="bi bi-arrow-right"></i> &nbsp;View All
                       </a>
                     </span>
@@ -245,7 +252,7 @@ $currentDate = date('Y-m-d');
           </div>
 
 
-          <div class="col-sm-12 col-xl-6">
+          <div class="col-sm-12 col-xl-8">
             <div class="card">
 
               <div class="card-body">
@@ -299,7 +306,9 @@ $currentDate = date('Y-m-d');
 
             </div>
           </div>
-          <div class="col-sm-12 col-xl-6">
+
+          
+          <div class="col-lg-4">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Interns <span>with No Time-Out Entries</span></h5>

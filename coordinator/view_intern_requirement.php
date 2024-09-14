@@ -21,7 +21,7 @@ include "crypt_helper.php";
     <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-    <a class="nav-link collapsed" href="dashboard.php">
+    <a class="nav-link collapsed" href="index.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
     </a>
@@ -224,73 +224,58 @@ include "crypt_helper.php";
                                             </tr>
 
                                             <!-- File Detail Modal -->
+                                            <!-- File Detail Modal -->
                                             <div class="modal fade" id="fileModal<?php echo $file['id']; ?>" tabindex="-1" aria-labelledby="fileModalLabel<?php echo $file['id']; ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="fileModalLabel<?php echo $file['id']; ?>">
-                                                                <?php echo htmlspecialchars($file['file_name']); ?>
-                                                            </h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <?php
-                                                            $filePath = '../Intern/requirements/' . htmlspecialchars($file['file_name']);
-                                                            $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
-                                                            ?>
-                                                            <?php if (file_exists($filePath)): ?>
-                                                                <?php if (in_array($fileExtension, ['pdf'])): ?>
-                                                                    <embed src="<?php echo $filePath; ?>" type="application/pdf" width="100%" height="500px" />
-                                                                <?php elseif (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
-                                                                    <img src="<?php echo $filePath; ?>" alt="Image preview" style="width: 100%; height: auto;" />
-                                                                <?php elseif (in_array($fileExtension, ['mp4', 'avi', 'mov'])): ?>
-                                                                    <video controls style="width: 100%; height: auto;">
-                                                                        <source src="<?php echo $filePath; ?>" type="video/<?php echo $fileExtension; ?>">
-                                                                        Your browser does not support the video tag.
-                                                                    </video>
-                                                                <?php elseif (in_array($fileExtension, ['doc', 'docx'])): ?>
-                                                                    <p>Microsoft Word Document: <a href="<?php echo $filePath; ?>" target="_blank">Dowwnload Document</a></p>
-                                                                <?php elseif (in_array($fileExtension, ['xls', 'xlsx'])): ?>
-                                                                    <p>Microsoft Excel Spreadsheet: <a href="<?php echo $filePath; ?>" target="_blank">Download Spreadsheet</a></p>
-                                                                <?php else: ?>
-                                                                    <p>Unsupported file type.</p>
-                                                                <?php endif; ?>
-                                                            <?php else: ?>
-                                                                <p>File not found.</p>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <?php if (isset($file['status']) && $file['status'] == "Cancelled"): ?>
-                                                            <form method="post" action="update_file_status.php" class="d-inline">
-                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
-                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
-                                                                <button type="submit" name="approve" class="btn btn-success">Approve</button>
-                                                            </form>
-                                                            <?php elseif (isset($file['status']) && $file['status'] == "Approved"): ?>
-                                                            <form method="post" action="update_file_status.php" class="d-inline">
-                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
-                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
-                                                                <button type="submit" name="cancel" class="btn btn-danger">Cancel</button>
-                                                            </form>
-                                                            <?php else: ?>
-                                                            <form method="post" action="update_file_status.php" class="d-inline">
-                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
-                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
-                                                                <button type="submit" name="approve" class="btn btn-success">Approve</button>
-                                                            </form>
-                                                            <form method="post" action="update_file_status.php" class="d-inline">
-                                                                <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
-                                                                <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
-                                                                <button type="submit" name="cancel" class="btn btn-danger">Cancel</button>
-                                                            </form>
-                                                            <?php endif; ?>
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        </div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fileModalLabel<?php echo $file['id']; ?>">
+                    <?php echo htmlspecialchars($file['file_name']); ?>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php
+                $filePath = '../Intern/requirements/' . htmlspecialchars($file['file_name']);
+                $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+                ?>
+                <?php if (file_exists($filePath)): ?>
+                    <?php if (in_array($fileExtension, ['pdf'])): ?>
+                        <embed src="<?php echo $filePath; ?>" type="application/pdf" width="100%" height="500px" />
+                    <?php elseif (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                        <img src="<?php echo $filePath; ?>" alt="Image preview" style="width: 100%; height: auto;" />
+                    <?php elseif (in_array($fileExtension, ['mp4', 'avi', 'mov'])): ?>
+                        <video controls style="width: 100%; height: auto;">
+                            <source src="<?php echo $filePath; ?>" type="video/<?php echo $fileExtension; ?>">
+                            Your browser does not support the video tag.
+                        </video>
+                    <?php elseif (in_array($fileExtension, ['doc', 'docx'])): ?>
+                        <p>Microsoft Word Document: <a href="<?php echo $filePath; ?>" target="_blank">Download Document</a></p>
+                    <?php elseif (in_array($fileExtension, ['xls', 'xlsx'])): ?>
+                        <p>Microsoft Excel Spreadsheet: <a href="<?php echo $filePath; ?>" target="_blank">Download Spreadsheet</a></p>
+                    <?php else: ?>
+                        <p>Unsupported file type.</p>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <p>File not found.</p>
+                <?php endif; ?>
+            </div>
+            <div class="modal-footer">
+                <?php if (isset($file['status']) && $file['status'] == "Pending"): ?>
+                    <form method="post" action="update_file_status.php" class="d-inline">
+                        <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
+                        <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
+                        <button type="submit" name="approve" class="btn btn-success">Approve</button>
+                    </form>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal<?php echo $file['id']; ?>">Cancel</button>
+                <?php endif; ?>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-                                                    </div>
-                                                </div>
-                                            </div>
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <tr>
@@ -305,8 +290,34 @@ include "crypt_helper.php";
             </div>
         </div>
     </section>
-</main><!-- End #main -->
 
+    <div class="modal fade" id="cancelModal<?php echo $file['id']; ?>" tabindex="-1" aria-labelledby="cancelModalLabel<?php echo $file['id']; ?>" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel<?php echo $file['id']; ?>">Cancellation Reason</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="cancelForm<?php echo $file['id']; ?>" method="post" action="update_file_status.php">
+                    <input type="hidden" name="file_id" value="<?php echo htmlspecialchars($file['id']); ?>">
+                    <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($student_id); ?>">
+                    <input type="hidden" name="cancel" value="Cancelled">
+                    <div class="mb-3">
+                        <label for="cancelReason<?php echo $file['id']; ?>" class="form-label">Reason for Cancellation</label>
+                        <textarea class="form-control" id="cancelReason<?php echo $file['id']; ?>" name="cancel_reason" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main><!-- End #main -->
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>

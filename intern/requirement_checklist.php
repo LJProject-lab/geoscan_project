@@ -254,6 +254,7 @@ function formatTimestamp($timestamp) {
                     }
                     ?>
                   </small><br>
+                  <small>Remarks: <?php echo htmlspecialchars($file['cancel_reason']); ?></small><br>
                   <small>Uploaded At: <?php echo formatTimestamp($file['uploaded_at']); ?></small>
                 </div>
                 <?php if ($file['status'] === 'Pending' || $file['status'] === 'Cancelled'): ?>

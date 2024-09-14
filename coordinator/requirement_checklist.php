@@ -26,6 +26,13 @@ include "crypt_helper.php";
       </a>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="generate_report.php">
+        <i class="ri-folder-download-line"></i>
+        <span>Generate Intern Report</span>
+      </a>
+    </li>
+
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
@@ -132,7 +139,7 @@ include "crypt_helper.php";
               <td>
                 <a href="view_intern_requirement.php?student_id=<?php echo urlencode(encryptData($user['student_id'])); ?>"
                   class="btn btn-success btn-sm">
-                  <i class="bi bi-eye"></i> View Requirements
+                  <i class="bi bi-eye"></i> View File
                 </a>
               </td>
             </tr>
