@@ -100,26 +100,6 @@ if (!isset($_SESSION['admin_id'])) {
                         </div>
                     </div>
                     <div class="row">
-                        <form method="GET" action="index.php" class="mb-4">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label for="start_date">Start Date:</label>
-                                    <input type="date" name="start_date" class="form-control"
-                                        value="<?php echo $startDate; ?>">
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="end_date">End Date:</label>
-                                    <input type="date" name="end_date" class="form-control"
-                                        value="<?php echo $endDate; ?>">
-                                </div>
-                                <div class="col-md-2 align-self-end">
-                                    <button type="submit" class="btn-get-main"><i class="fa-solid fa-filter"></i> &nbsp;
-                                        Filter</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="row">
                         <div class="col-xl-6">
                             <div class="card mb-4">
                                 <div class="card-header">

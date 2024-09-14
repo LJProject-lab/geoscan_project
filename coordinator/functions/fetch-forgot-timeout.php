@@ -1,10 +1,11 @@
-<?php 
+<?php
 
 require_once '../config.php';
 
-function checkMissingTimeOut_Intern($pdo, $coordinator_id) {
+function checkMissingTimeOut_Intern($pdo, $coordinator_id)
+{
     $today = date('Y-m-d');
-
+    $threeDaysAgo = date('Y-m-d', strtotime('-3 days', strtotime($today)));
     // SQL query to check for missing time_out entries for the given student
     $sql = "
         SELECT DATE(t1.timestamp) as missing_date, t3.firstname, t3.lastname, t3.coordinator_id, t4.status
@@ -18,17 +19,20 @@ function checkMissingTimeOut_Intern($pdo, $coordinator_id) {
         AND t2.type = 'time_out'
         WHERE t1.type = 'time_in' 
         AND t2.id IS NULL
-        AND DATE(t1.timestamp) < :today
-        AND t3.coordinator_id = :coordinator_id; 
+        AND DATE(t1.timestamp) >= :threedays
+        OR  DATE(t1.timestamp) <= :today
+        AND t3.coordinator_id = :coordinator_id
+        ORDER BY t1.timestamp DESC
+        LIMIT 1;  -- Only check for past dates
     ";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['today' => $today, 'coordinator_id' => $coordinator_id]);
-    
+    $stmt->execute(['today' => $today, 'coordinator_id' => $coordinator_id,  'threedays' => $threeDaysAgo]);
+
     // Fetch the result
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$coordinator_id = $_SESSION['coordinator_id']; 
+$coordinator_id = $_SESSION['coordinator_id'];
 $missingTimeOuts = checkMissingTimeOut_Intern($pdo, $coordinator_id);
 ?>

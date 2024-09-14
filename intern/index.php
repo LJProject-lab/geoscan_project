@@ -1,7 +1,7 @@
 <?php
 include "nav.php";
 include "functions/fetch-forgot-timeout.php";
-$currentDate = date('Y-m-d');
+echo $currentDate = date('Y-m-d');
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
@@ -63,7 +63,7 @@ $currentDate = date('Y-m-d');
         <div class="card-body">
           <?php
           $student_id = $_SESSION['student_id'];
-          $stmt = $pdo->prepare("SELECT status FROM tbl_adjustments WHERE student_id = :student_id ORDER BY id DESC LIMIT 1");
+          $stmt = $pdo->prepare("SELECT status, reject_reason FROM tbl_adjustments WHERE student_id = :student_id ORDER BY id DESC LIMIT 1");
           $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
           $stmt->execute();
           $adjustment = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -86,14 +86,14 @@ $currentDate = date('Y-m-d');
                 echo "
                 <div class='reminder-alert'>
                     <span style='color:#198754;'><h3><b>Time Out Reminder</b></h3></span>
-                    <p>It looks like you forgot to log your time out on the following dates:</p>
+                    <p>It looks like you forgot to log your time out on the following date:</p>
                     <ul>";
                 foreach ($dates as $date) {
                   echo "<li><strong>{$date}</strong></li>";
                 }
                 echo "
                     </ul>
-                    <p>Please review your attendance records and enter the correct time out for these days. This ensures your attendance is accurately tracked.</p>
+                    <p>Please review your attendance records and enter the correct time out for these day. This ensures your attendance is accurately tracked.</p>
                     <ul>
                         <li>If you remember your time out, please contact your coordinator for assistance.</li>
                     </ul>";
@@ -102,6 +102,14 @@ $currentDate = date('Y-m-d');
                 if ($adjustment && $adjustment['status'] == 'Pending') {
                   // If the status is Pending, show the badge
                   echo "<div class='badge badge-warning' style='float:right; color:black; font-size:1rem; background-color:orange;'>Pending</div>";
+                } else if ($adjustment && $adjustment['status'] == 'Rejected') {
+                  // If the status is Pending, show the badge
+                  echo "<div class='badge badge-warning' style='float:right; color:white; font-size:1rem; background-color:red;'>Rejected</div>";
+                  echo "</br>";
+                  echo "<b>Remarks: </b>" . $adjustment['reject_reason'];
+                } else if ($adjustment && $adjustment['status'] == 'Approved') {
+                  // If the status is Pending, show the badge
+                  echo "<div class='badge badge-warning' style='float:right; color:white; font-size:1rem; background-color:blue;'>Approved</div>";
                 } else {
                   // If not Pending, show the button
                   echo "

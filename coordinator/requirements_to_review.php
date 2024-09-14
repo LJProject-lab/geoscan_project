@@ -187,7 +187,7 @@ include "nav.php";
             <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($row['student_id']); ?>">
             <button type="submit" name="approve" class="btn btn-success">Approve</button>
           </form>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal<?php echo $row['id']; ?>">Cancel</button>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal<?php echo $row['id']; ?>">Reject</button>
         <?php endif; ?>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>

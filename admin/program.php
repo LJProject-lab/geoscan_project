@@ -109,63 +109,6 @@ include 'includes/top_include.php';
         </div>
     </div>
 
-    <!-- Add New Modal -->
-    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="AddNewModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between">
-                    <h5 class="modal-title" id="AddNewModalLabel">Add New Program</h5>
-                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
-                        aria-label="Close"></i>
-                </div>
-
-                <div class="modal-body">
-                    <div id="message"></div>
-
-                    <!-- Add form -->
-
-                    <div class="form-group">
-                        <label for="program_name">Program Name:</label>
-                        <input type="text" class="form-control" id="program_name" name="program_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="program_hour">Number of Hours:</label>
-                        <input type="number" class="form-control" id="program_hour" name="program_hour">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <input type="submit" class="btn-get-main  py-2" value="Add" style="width:100% !important;"
-                            id="AddProgram">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="DeleteModalLabel">Delete Confirmation</h5>
-                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
-                        aria-label="Close"></i>
-                </div>
-                <div class="modal-body">
-                    <div id="message"></div>
-                    Are you sure you want to delete this Program?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-get-main" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-get-del" id="confirmDeleteBtn">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
 
 
 

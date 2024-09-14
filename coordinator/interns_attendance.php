@@ -1,4 +1,3 @@
-<!-- interns_attendance.php -->
 <?php
 include "nav.php";
 include_once 'functions/fetch-records.php';
@@ -81,7 +80,6 @@ include_once '../includes/getAddress.php';
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
-
   <div class="pagetitle">
     <h1>Intern Attendance</h1>
     <nav>
@@ -91,6 +89,7 @@ include_once '../includes/getAddress.php';
       </ol>
     </nav>
   </div><!-- End Page Title -->
+
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-end mb-3">
@@ -108,28 +107,49 @@ include_once '../includes/getAddress.php';
             </tr>
           </thead>
           <tbody id="logsTableBody">
-
+            <!-- Rows will be dynamically inserted here -->
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-
+  <!-- Modal Structure -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Photo View</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImage" src="" alt="Photo" class="img-fluid">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </main><!-- End #main -->
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 
-<!-- Include DataTables library -->
-<script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js" crossorigin="anonymous"></script>
-<link href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css" rel="stylesheet" />
+<style>
+  /* Ensure the modal image fits well */
+  .modal-body {
+    text-align: center; /* Center the image in the modal */
+  }
 
+  #modalImage {
+    max-width: 100%; /* Ensure the image doesn't overflow the modal */
+    max-height: 80vh; /* Set a max height to avoid excessive height */
+    object-fit: contain; /* Maintain aspect ratio while fitting inside the modal */
+  }
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     function refreshCurrentPageAddresses() {
-      // Get all elements with the class 'address-container' that still display "Loading..."
       const addressContainers = document.querySelectorAll('.address-container');
 
       addressContainers.forEach(function (container) {
@@ -138,7 +158,6 @@ include_once '../includes/getAddress.php';
           const lat = addressSpan.getAttribute('data-lat');
           const lng = addressSpan.getAttribute('data-lng');
 
-          // Fetch address using AJAX
           fetch(`fetch-address.php?latitude=${lat}&longitude=${lng}`)
             .then(response => response.json())
             .then(data => {
@@ -156,15 +175,6 @@ include_once '../includes/getAddress.php';
       });
     }
 
-    // Load the data initially and run address conversion automatically
-    loadTableData();
-
-    // Add event listener for refresh button
-    document.getElementById('refreshTable').addEventListener('click', function () {
-      refreshCurrentPageAddresses();
-    });
-
-    // Load table data function (initial load)
     function loadTableData() {
       const tbodys = document.getElementById('logsTableBody');
       if (tbodys) {
@@ -175,29 +185,26 @@ include_once '../includes/getAddress.php';
             if (!response.ok) {
               throw new Error(`Network response was not ok: ${response.statusText}`);
             }
-            return response.text(); // Get raw text first
-          })
-          .then(text => {
-            try {
-              return JSON.parse(text); // Parse JSON manually
-            } catch (e) {
-              throw new Error('Error parsing JSON: ' + e.message);
-            }
+            return response.json(); // Directly parse JSON
           })
           .then(data => {
             data.forEach(log => {
               const row = document.createElement('tr');
               row.innerHTML = `
-                        <td>${log.firstname} ${log.lastname}</td>
-                        <td>${log.type === 'time_in' ? 'Time In' : 'Time Out'}</td>
-                        <td>${log.timestamp}</td>
-                        <td>${log.photo ? `<img src="${log.photo}" alt="Photo" width="100" height="100">` : 'N/A'}</td>
-                        <td>
-                            <span class="addresss" data-lat="${log.latitude}" data-lng="${log.longitude}">
-                                <div class="address-container">Converting...</div>
-                            </span>
-                        </td>
-                    `;
+                <td>${log.firstname} ${log.lastname}</td>
+                <td>${log.type === 'time_in' ? 'Time In' : 'Time Out'}</td>
+                <td>${log.timestamp}</td>
+                <td>
+                  ${log.photo !== 'N/A' ? `
+                    <img src="${log.photo}" alt="Photo" width="50" height="50" style="object-fit: cover; cursor: pointer;" onclick="openModal('${log.photo}')">
+                  ` : 'N/A'}
+                </td>
+                <td>
+                  <span class="addresss" data-lat="${log.latitude}" data-lng="${log.longitude}">
+                    <div class="address-container">Converting...</div>
+                  </span>
+                </td>
+              `;
               tbodys.appendChild(row);
             });
 
@@ -217,10 +224,30 @@ include_once '../includes/getAddress.php';
         console.error('Element with id "logsTableBody" not found');
       }
     }
+
+    // Load table data initially
+    loadTableData();
+
+    // Add event listener for refresh button
+    document.getElementById('refreshTable').addEventListener('click', function () {
+      loadTableData();
+    });
   });
 
+  // Function to open the modal with the clicked photo
+  function openModal(photoSrc) {
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = photoSrc; // Set the source of the image in the modal
+    const exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    exampleModal.show(); // Show the modal using Bootstrap
+  }
 </script>
 
-
+<!-- Include necessary scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js" crossorigin="anonymous"></script>
+<link href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css" rel="stylesheet" />
 
 <?php include "footer.php"; ?>

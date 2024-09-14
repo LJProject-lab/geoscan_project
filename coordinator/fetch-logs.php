@@ -29,6 +29,15 @@ try {
     $stmt->execute();
     $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Adjust photo paths to be accessible from the web
+    foreach ($logs as &$log) {
+        if (isset($log['photo']) && !empty($log['photo'])) {
+            $log['photo'] = '../uploads/' . htmlspecialchars($log['photo']);
+        } else {
+            $log['photo'] = 'N/A';
+        }
+    }
+
     echo json_encode($logs);
 
 } catch (PDOException $e) {

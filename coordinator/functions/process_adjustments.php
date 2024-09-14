@@ -1,6 +1,6 @@
 <?php
 require_once '../config.php';
-require_once '../action-ids.php'; // Make sure you include action IDs
+require_once '../action-ids.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if all necessary fields are set

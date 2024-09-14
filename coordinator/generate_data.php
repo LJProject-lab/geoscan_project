@@ -73,25 +73,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!$data) {
-            die('No data found for the given criteria.');
-        }
+            // No records found - set a JavaScript variable to trigger SweetAlert
+            $noRecordsFound = true;
+        } else {
+            // Prepare data for review
+            $rows = [];
+            foreach ($data as $record) {
+                // Format timestamp
+                $dateTime = new DateTime($record['timestamp']);
+                $formattedDate = $dateTime->format('F j, Y');
+                $formattedTime = $dateTime->format('g:iA');
+                
+                $address = convertCoordinates($record['latitude'], $record['longitude']);
 
-        // Prepare data for review
-        $rows = [];
-        foreach ($data as $record) {
-            // Format timestamp
-            $dateTime = new DateTime($record['timestamp']);
-            $formattedDate = $dateTime->format('F j, Y');
-            $formattedTime = $dateTime->format('g:iA');
-            
-            $address = convertCoordinates($record['latitude'], $record['longitude']);
-
-            $rows[] = [
-                'Type' => $record['type'],
-                'Date' => $formattedDate,
-                'Time' => $formattedTime,
-                'Address' => $address
-            ];
+                $rows[] = [
+                    'Type' => $record['type'],
+                    'Date' => $formattedDate,
+                    'Time' => $formattedTime,
+                    'Address' => $address
+                ];
+            }
         }
     } catch (Exception $e) {
         error_log('Error retrieving data: ' . $e->getMessage());
@@ -179,7 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
-
   <div class="pagetitle">
     <h1>Generate Intern Report</h1>
     <nav>
@@ -190,69 +190,65 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </ol>
     </nav>
   </div><!-- End Page Title -->
-
   <section class="section">
-    
-  <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Report Generated</h5>
-              <p><strong>Intern Name:</strong> <?php echo htmlspecialchars($intern_name); ?></p>
-              <p><strong>Program:</strong> <?php echo htmlspecialchars($intern_program); ?></p>
-              <p><strong>From:</strong> <?php echo $start_date; ?>&nbsp;&nbsp;&nbsp;
-              <strong>To:</strong> <?php echo $end_date; ?></p>
-
-              <?php if ($rows): ?>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Location</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($rows as $row): ?>
-                        <tr>
-                            <td><?php 
-                            
-                            if($row['Type'] == "time_in") {
-                                echo "Time In";
-                            } else {
-                                echo "Time Out";
-                            }
-                            
-                            ?></td>
-                            <td><?php echo htmlspecialchars($row['Date']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Time']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Address']); ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <form action="export_excel.php" method="post">
-                    <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($intern_id); ?>">
-                    <input type="hidden" name="start_date" value="<?php echo htmlspecialchars($start_date); ?>">
-                    <input type="hidden" name="end_date" value="<?php echo htmlspecialchars($end_date); ?>">
-                    <input type="hidden" name="intern_name" value="<?php echo htmlspecialchars($intern_name); ?>">
-                    <input type="hidden" name="intern_program" value="<?php echo htmlspecialchars($intern_program); ?>">
-                    <button type="submit" class="btn btn-primary">Export to Excel</button>
-                </form>
-                <?php else: ?>
-                <p>No records found for the given criteria.</p>
-                <?php endif; ?>
-
-            </div>
-          </div>
-
-
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Report Generated</h5>
+        <p><strong>Intern Name:</strong> <?php echo htmlspecialchars($intern_name); ?></p>
+        <p><strong>Program:</strong> <?php echo htmlspecialchars($intern_program); ?></p>
+        <p><strong>From:</strong> <?php echo $start_date; ?>&nbsp;&nbsp;&nbsp;
+        <strong>To:</strong> <?php echo $end_date; ?></p>
+        <?php if (!empty($rows)): ?>
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Type</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Location</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <?php foreach ($rows as $row): ?>
+                  <tr>
+                      <td><?php echo htmlspecialchars($row['Type']); ?></td>
+                      <td><?php echo htmlspecialchars($row['Date']); ?></td>
+                      <td><?php echo htmlspecialchars($row['Time']); ?></td>
+                      <td><?php echo htmlspecialchars($row['Address']); ?></td>
+                  </tr>
+                  <?php endforeach; ?>
+              </tbody>
+          </table>
+          <form action="export_excel.php" method="post">
+              <input type="hidden" name="student_id" value="<?php echo htmlspecialchars($intern_id); ?>">
+              <input type="hidden" name="start_date" value="<?php echo htmlspecialchars($start_date); ?>">
+              <input type="hidden" name="end_date" value="<?php echo htmlspecialchars($end_date); ?>">
+              <input type="hidden" name="intern_name" value="<?php echo htmlspecialchars($intern_name); ?>">
+              <input type="hidden" name="intern_program" value="<?php echo htmlspecialchars($intern_program); ?>">
+              <button type="submit" class="btn btn-success"><i class="ri-file-excel-2-line"> </i>&nbsp;Export to Excel</button>
+          </form>
+        <?php else: ?>
+          <!-- Trigger SweetAlert if no records are found -->
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              Swal.fire({
+                title: 'No Records Found',
+                text: 'No records found for the given criteria.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+              }).then(function() {
+                window.location.href = 'generate_report.php';
+              });
+            });
+          </script>
+        <?php  endif; 
+        ?>
+      </div>
+    </div>
   </section>
+</main>
 
-</main><!-- End #main -->
-
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>
