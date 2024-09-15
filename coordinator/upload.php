@@ -8,10 +8,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['excel_file']) && isset($_POST['program']) && isset($_POST['coordinator_id'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['excel_file']) && isset($_POST['program']) && isset($_POST['coordinator_id']) && isset($_POST['status'])) {
     $file = $_FILES['excel_file']['tmp_name'];
     $programId = $_POST['program'];
     $coordinatorId = $_POST['coordinator_id'];
+    $status = $_POST['status'];
 
     if ($file) {
         try {
@@ -25,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['excel_file']) && iss
             $_SESSION['import_data'] = [
                 'program_id' => $programId,
                 'coordinator_id' => $coordinatorId,
+                'status' => $status,
                 'data' => $data
             ];
 

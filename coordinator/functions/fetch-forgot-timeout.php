@@ -20,7 +20,7 @@ function checkMissingTimeOut_Intern($pdo, $coordinator_id)
         WHERE t1.type = 'time_in' 
         AND t2.id IS NULL
         AND DATE(t1.timestamp) >= :threedays
-        OR  DATE(t1.timestamp) <= :today
+        AND  DATE(t1.timestamp) <= :today
         AND t3.coordinator_id = :coordinator_id
         ORDER BY t1.timestamp DESC
         LIMIT 1;  -- Only check for past dates

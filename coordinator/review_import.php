@@ -99,6 +99,7 @@ include "nav.php";
         $importData = $_SESSION['import_data'];
         $programId = $importData['program_id'];
         $coordinatorId = $importData['coordinator_id'];
+        $status = $importData['status'];
         $data = $importData['data'];
 
         $sql = "SELECT program_name FROM tbl_programs WHERE program_id = :program_id";
@@ -113,6 +114,7 @@ include "nav.php";
             
         <input type="hidden" name="program_id" value="<?php echo htmlspecialchars($programId); ?>">
         <input type="hidden" name="coordinator_id" value="<?php echo htmlspecialchars($coordinatorId); ?>">
+        <input type="hidden" name="status" value="<?php echo htmlspecialchars($status); ?>">
         <table class="table">
             <h5 class="card-title">Program : <?php echo htmlspecialchars($program['program_name']); ?></h5>
           <thead>

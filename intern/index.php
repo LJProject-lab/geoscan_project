@@ -57,6 +57,7 @@ echo $currentDate = date('Y-m-d');
     </nav>
   </div><!-- End Page Title -->
 
+  <section class="section dashboard">
   <div class="row">
     <div class="col-xl-6">
       <div class="card">
@@ -131,12 +132,46 @@ echo $currentDate = date('Y-m-d');
 
       </div>
     </div>
-
-
-    <div class="col-xl-6">
-      <div class="card">
+    <div class="col-xl-3">
+    <div class="card info-card revenue-card">
         <div class="card-body">
-          Empty as of now.
+          <h5 class="card-title">Logs Rendered</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i class="bi bi-clock-history" style="color:green !important;"></i>
+            </div>
+            <div class="ps-3">
+              <h5>0</h5>
+              <span class="text-muted small pt-2 ps-1">
+                <a href="requirements_to_review.php">
+                  <i class="bi bi-arrow-right"></i> &nbsp;View All
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3">
+      <div class="card info-card customers-card">
+        <div class="card-body">
+          <h5 class="card-title">Requirements Uploaded</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i class="bi bi-clipboard-check" style="color:orange !important;"></i>
+            </div>
+            <div class="ps-3">
+              <h5>0</h5>
+              <span class="text-muted small pt-2 ps-1">
+                <a href="requirements_to_review.php">
+                  <i class="bi bi-arrow-right"></i> &nbsp;View All
+                </a>
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -175,6 +210,7 @@ echo $currentDate = date('Y-m-d');
           </div>
         </div>
       </div>
+    </div>
     </div>
 
 

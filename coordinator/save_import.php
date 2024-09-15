@@ -20,7 +20,9 @@ if (!isset($_SESSION['import_data'])) {
 $importData = $_SESSION['import_data'];
 $programId = $_POST['program_id'];
 $coordinatorId = $_POST['coordinator_id'];
+$status = $_POST['status'];
 $data = $importData['data'];
+
 
 // Gather all student IDs from the data
 $studentIds = array_column($data, 0);
@@ -40,7 +42,7 @@ if (!empty($existingStudentIds)) {
 }
 
 // No duplicates found, proceed with insertion
-$stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, firstname, lastname, email, phone, address, program_id, coordinator_id, pin) VALUES (:student_id, :firstname, :lastname, :email, :phone, :address, :program_id, :coordinator_id, :pin)");
+$stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, firstname, lastname, email, phone, address, program_id, coordinator_id, pin, status) VALUES (:student_id, :firstname, :lastname, :email, :phone, :address, :program_id, :coordinator_id, :pin, :status)");
 
 foreach ($data as $row) {
     // Extract last 4 digits of the student_id
@@ -59,7 +61,8 @@ foreach ($data as $row) {
         ':address' => $row[5],
         ':program_id' => $programId,
         ':coordinator_id' => $coordinatorId,
-        ':pin' => $encryptedPin
+        ':pin' => $encryptedPin,
+        ':status' => $status
     ]);
 }
 

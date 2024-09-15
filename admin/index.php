@@ -99,7 +99,7 @@ if (!isset($_SESSION['admin_id'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-xl-6">
                             <div class="card mb-4">
                                 <div class="card-header">
@@ -148,7 +148,7 @@ if (!isset($_SESSION['admin_id'])) {
                         </div>
 
 
-                    </div>
+                    </div> -->
                 </div>
             </main>
             <?php require_once 'includes/footer.php'; ?>

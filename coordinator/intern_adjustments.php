@@ -232,7 +232,7 @@ include "crypt_helper.php";
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="RejectModalLabel" style="color:#dc3545;font-weight:bold;">Reject
+                    <h5 class="modal-title" id="RejectModalLabel" style="color:#198754;font-weight:bold;">Reject
                         Adjustment</h5>
                     <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
                         aria-label="Close"></i>
@@ -246,8 +246,8 @@ include "crypt_helper.php";
                     <form id="rejectForm" method="POST">
                         <input type="hidden" id="reject_student_id" name="student_id">
                         <input type="hidden" id="reject_adjustment_id" name="adjustment_id">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger">Submit Rejection</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit Rejection</button>
                     </form>
                 </div>
             </div>
