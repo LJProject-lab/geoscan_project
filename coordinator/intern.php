@@ -187,6 +187,10 @@ include "crypt_helper.php";
               <input type="text" class="form-control"
                 value="<?php echo htmlspecialchars($_SESSION['coordinator_id']); ?>" name="coordinator_id"
                 id="floatingName" placeholder="" hidden>
+              <!---------    STATUS         ---------------->
+                <input type="text" class="form-control"
+                value="Active" name="status"
+                id="floatingName" placeholder="" hidden>
 
               <div class="text-center">
                 <button type="submit" class="btn btn-success"><i class="ri-send-plane-fill"></i>&nbsp;Submit</button>

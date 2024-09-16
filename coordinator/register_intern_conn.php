@@ -31,9 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phone = $_POST['phone'];
         $address = $_POST['address'];
         $coordinator_id = $_POST['coordinator_id'];
+        $status = $_POST['status'];
 
-        $stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, pin, firstname, lastname, email, phone, address, program_id, coordinator_id) 
-        VALUES (:student_id, :pin, :firstname, :lastname, :email, :phone, :address, :program_id, :coordinator_id)");
+        $stmt = $pdo->prepare("INSERT INTO tbl_users (student_id, pin, firstname, lastname, email, phone, address, program_id, coordinator_id, status) 
+        VALUES (:student_id, :pin, :firstname, :lastname, :email, :phone, :address, :program_id, :coordinator_id, :status)");
         $stmt->bindParam(':student_id', $student_id);
         $stmt->bindParam(':program_id', $program_id);
         $stmt->bindParam(':pin', $hashedPin);
@@ -43,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':address', $address);
         $stmt->bindParam(':coordinator_id', $coordinator_id);
+        $stmt->bindParam(':status', $status);
 
         if ($stmt->execute()) {
             $_SESSION['alert_type'] = "success";

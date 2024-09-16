@@ -92,6 +92,11 @@ include 'includes/top_include.php';
                                                 <?php echo $program['createdAt']; ?>
                                             </td>
                                             <td>
+                                                <button class="btn-get-main edit-btn" data-toggle="modal"
+                                                    data-target="#editProgram"
+                                                    data-program-id="<?php echo $program['program_id'] ?>"><i
+                                                        class="fa-solid fa-pen-to-square"></i>
+                                                    Edit</button>
                                                 <button class="btn-get-del" data-toggle="modal" data-target="#DeleteModal"
                                                     data-program-id="<?php echo $program['program_id'] ?>"><i
                                                         class="fa-solid fa-trash"></i>
@@ -110,6 +115,91 @@ include 'includes/top_include.php';
     </div>
 
 
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editProgram" tabindex="-1" role="dialog" aria-labelledby="editProgramLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProgramLabel">Edit Program</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+                <div class="modal-body">
+                    <div id="editMessage"></div>
+
+                    <!-- Edit form -->
+                    <div class="form-group">
+                        <label for="edit_program_name">Program Name:</label>
+                        <input type="text" class="form-control" id="edit_program_name" name="edit_program_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_program_hour">Program Hour:</label>
+                        <input type="number" class="form-control" id="edit_program_hour" name="edit_program_hour"></input>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-get-main" id="saveChangesBtn">Save changes</button>
+                    <button type="button" class="btn-get-del" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Modal -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="AddNewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                    <h5 class="modal-title" id="AddNewModalLabel">Add New Program</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+
+                <div class="modal-body">
+                    <div id="message"></div>
+
+                    <!-- Add form -->
+
+                    <div class="form-group">
+                        <label for="program_name">Program Name:</label>
+                        <input type="text" class="form-control" id="program_name" name="program_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="program_hour">Number of Hours:</label>
+                        <input type="number" class="form-control" id="program_hour" name="program_hour">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" class="btn-get-main  py-2" value="Add" style="width:100% !important;"
+                            id="AddProgram">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DeleteModalLabel">Delete Confirmation</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+                <div class="modal-body">
+                    <div id="message"></div>
+                    Are you sure you want to delete this Program?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-get-main" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn-get-del" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -128,6 +218,7 @@ include 'includes/top_include.php';
     <script src="assets/js/datatables-simple-demo.js"></script>
     <script src="functions/js/add-program.js"></script>
     <script src="functions/js/delete-program.js"></script>
+    <script src="functions/js/edit-program.js"></script>
 </body>
 
 </html>

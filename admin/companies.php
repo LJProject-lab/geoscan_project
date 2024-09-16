@@ -88,6 +88,11 @@ include 'includes/top_include.php';
                                                 <?php echo $company['createdAt']; ?>
                                             </td>
                                             <td>
+                                                <button class="btn-get-main edit-btn" data-toggle="modal"
+                                                    data-target="#editCompany"
+                                                    data-company-id="<?php echo $company['company_id'] ?>"><i
+                                                        class="fa-solid fa-pen-to-square"></i>
+                                                    Edit</button>
                                                 <button class="btn-get-del" data-toggle="modal" data-target="#DeleteModal"
                                                     data-company-id="<?php echo $company['company_id'] ?>"><i
                                                         class="fa-solid fa-trash"></i>
@@ -102,6 +107,32 @@ include 'includes/top_include.php';
                 </div>
             </main>
             <?php require_once 'includes/footer.php'; ?>
+        </div>
+    </div>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editCompany" tabindex="-1" role="dialog" aria-labelledby="editCompanyLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCompanyLabel">Edit Company</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+                <div class="modal-body">
+                    <div id="editMessage"></div>
+
+                    <!-- Edit form -->
+                    <div class="form-group">
+                        <label for="edit_company_name">Company Name:</label>
+                        <input type="text" class="form-control" id="edit_company_name" name="edit_company_name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-get-main" id="saveChangesBtn">Save changes</button>
+                    <button type="button" class="btn-get-del" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -177,6 +208,7 @@ include 'includes/top_include.php';
     <script src="assets/js/datatables-simple-demo.js"></script>
     <script src="functions/js/add-company.js"></script>
     <script src="functions/js/delete-company.js"></script>
+    <script src="functions/js/edit-company.js"></script>
 </body>
 
 </html>

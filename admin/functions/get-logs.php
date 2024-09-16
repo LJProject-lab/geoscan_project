@@ -24,7 +24,7 @@ if (isset($_POST['student_id'])) {
             AND DATE(t1.timestamp) >= :threedays
             OR  DATE(t1.timestamp) <= :today
             AND t1.student_id = :student_id
-            ORDER BY t1.timestamp DESC
+            ORDER BY t1.timestamp ASC
             LIMIT 1;
         ";
 
