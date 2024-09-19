@@ -58,6 +58,11 @@ include 'includes/top_include.php';
                             <div class="form-group">
                                 <i class="fa-solid fa-cube"></i>&nbsp;
                                 <b>List of Actions</b>
+
+                                &nbsp; | &nbsp;
+                                <button type="button" class="btn-get-main" id="exportButton">
+                                    <i class="fa-solid fa-paperclip"></i> Export to Excel
+                                </button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -139,6 +144,25 @@ include 'includes/top_include.php';
 
     <script src="assets/js/datatables-simple-demo.js"></script>
     <script src="functions/js/delete-students.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+
+    <script>
+        document.getElementById('exportButton').addEventListener('click', function () {
+            // Get table data
+            var table = document.getElementById('datatablesSimple');
+            var sheet = XLSX.utils.table_to_sheet(table);
+
+            // Convert sheet to Excel file
+            var workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, sheet, 'List of Actions Logs');
+
+            // Save the Excel file
+            var today = new Date().toISOString().slice(0, 10); // Get today's date
+            var filename = 'action_logs' + today + '.xlsx';
+            XLSX.writeFile(workbook, filename);
+        });
+    </script>
 </body>
 
 </html>

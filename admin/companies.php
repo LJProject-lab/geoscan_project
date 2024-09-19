@@ -63,6 +63,10 @@ include 'includes/top_include.php';
                                     data-target="#AddNewModal">
                                     <i class="fa-solid fa-plus"></i> Add New
                                 </button>
+                                &nbsp; | &nbsp;
+                                <button type="button" class="btn-get-main" id="exportButton">
+                                    <i class="fa-solid fa-paperclip"></i> Export to Excel
+                                </button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -209,6 +213,41 @@ include 'includes/top_include.php';
     <script src="functions/js/add-company.js"></script>
     <script src="functions/js/delete-company.js"></script>
     <script src="functions/js/edit-company.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+
+    <script>
+        document.getElementById('exportButton').addEventListener('click', function () {
+            // Get table data
+            var table = document.getElementById('datatablesSimple');
+            var sheet = XLSX.utils.table_to_sheet(table, {
+                raw: true,
+                skipHidden: true
+            });
+
+            // Remove the "Action" column (which is the last column in this case)
+            const range = XLSX.utils.decode_range(sheet['!ref']);
+
+            // Iterate over each row and remove the last column
+            for (let R = range.s.r; R <= range.e.r; ++R) {
+                const cellAddress = XLSX.utils.encode_cell({ r: R, c: range.e.c }); // Last column
+                delete sheet[cellAddress];
+            }
+
+            // Adjust the range to exclude the last column
+            range.e.c--;
+            sheet['!ref'] = XLSX.utils.encode_range(range);
+
+            // Convert sheet to Excel file
+            var workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, sheet, 'List of Companies');
+
+            // Save the Excel file
+            var today = new Date().toISOString().slice(0, 10); // Get today's date
+            var filename = 'companies_report' + today + '.xlsx';
+            XLSX.writeFile(workbook, filename);
+        });
+    </script>
 </body>
 
 </html>
