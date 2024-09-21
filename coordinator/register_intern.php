@@ -159,7 +159,7 @@ include "nav.php";
               </div>
               <div class="col-md-12">
                 <div class="form-floating">
-                  <input type="text" class="form-control" name="email" id="floatingName" placeholder="" required>
+                  <input type="email" class="form-control" name="email" id="floatingName" placeholder="" required>
                   <label for="floatingName">Email</label>
                 </div>
               </div>

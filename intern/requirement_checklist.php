@@ -6,50 +6,54 @@ $uploadedFilePath = isset($_SESSION['uploadedFilePath']) ? $_SESSION['uploadedFi
 unset($_SESSION['uploadedFilePath']);
 
 
-function formatTimestamp($timestamp) {
+function formatTimestamp($timestamp)
+{
   $dateTime = new DateTime($timestamp);
   return $dateTime->format('F j, Y g:i a');
 }
 ?>
 
 <style>
-        .file-card {
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .file-card:hover {
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-        .file-info {
-            flex: 1;
-        }
-        .form-check-input {
-            margin-right: 1rem;
-        }
-    </style>
+  .file-card {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .file-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .file-info {
+    flex: 1;
+  }
+
+  .form-check-input {
+    margin-right: 1rem;
+  }
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <?php if (isset($_SESSION['alert_type']) && isset($_SESSION['alert_message'])): ?>
-        <script>
-            Swal.fire({
-                icon: '<?php echo $_SESSION['alert_type']; ?>',
-                title: '<?php echo $_SESSION['alert_message']; ?>',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
-        <?php
-        // Clear the session data after showing the alert
-        unset($_SESSION['alert_type']);
-        unset($_SESSION['alert_message']);
-        ?>
-    <?php endif; ?>
+<?php if (isset($_SESSION['alert_type']) && isset($_SESSION['alert_message'])): ?>
+  <script>
+    Swal.fire({
+      icon: '<?php echo $_SESSION['alert_type']; ?>',
+      title: '<?php echo $_SESSION['alert_message']; ?>',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  </script>
+  <?php
+  // Clear the session data after showing the alert
+  unset($_SESSION['alert_type']);
+  unset($_SESSION['alert_message']);
+?>
+<?php endif; ?>
 
 <link href="../assets/css/table.css" rel="stylesheet">
 <!-- ======= Sidebar ======= -->
@@ -65,6 +69,13 @@ function formatTimestamp($timestamp) {
     </li><!-- End Profile Page Nav -->
 
     <li class="nav-heading">Pages</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="my_attendance.php">
+        <i class="ri-fingerprint-line"></i>
+        <span>My Attendance</span>
+      </a>
+    </li>
 
     <li class="nav-item">
       <a class="nav-link " href="requirement_checklist.php">
@@ -120,7 +131,8 @@ function formatTimestamp($timestamp) {
           <!-- File Upload Form -->
           <form action="upload_file.php" method="post" enctype="multipart/form-data">
             <!-- Hidden Fields -->
-            <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['student_id']); ?>" name="student_id" required hidden>
+            <input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION['student_id']); ?>"
+              name="student_id" required hidden>
             <input type="text" class="form-control" value="Pending" name="status" required hidden>
 
             <!-- Dropdown for Forms -->
@@ -128,9 +140,12 @@ function formatTimestamp($timestamp) {
               <label for="validationCustom04" class="form-label">List of Forms</label>
               <select class="form-select" id="validationCustom04" name="form_type" required>
                 <option selected disabled value="">Choose...</option>
-                <option value="PNC:AA-FO-20">PNC:AA-FO-20 Annual Report in the Implementation of Student Internship Program in the Philippines (SIPP)</option>
-                <option value="PNC:AA-FO-21">PNC:AA-FO-21 Report on the List of Host Training Establishments (HTES) and Student Interns Participants Student Internship Program in the Philippines</option>
-                <option value="PNC:AA-FO-22">PNC:AA-FO-22 Internship Host Training Establishment Evaluation Form</option>
+                <option value="PNC:AA-FO-20">PNC:AA-FO-20 Annual Report in the Implementation of Student Internship
+                  Program in the Philippines (SIPP)</option>
+                <option value="PNC:AA-FO-21">PNC:AA-FO-21 Report on the List of Host Training Establishments (HTES) and
+                  Student Interns Participants Student Internship Program in the Philippines</option>
+                <option value="PNC:AA-FO-22">PNC:AA-FO-22 Internship Host Training Establishment Evaluation Form
+                </option>
                 <option value="PNC:AA-FO-23">PNC:AA-FO-23 Internship Program Evaluation Form</option>
                 <option value="PNC:AA-FO-24">PNC:AA-FO-24 Student Intern Performance Evaluation Form</option>
                 <option value="PNC:AA-FO-25">PNC:AA-FO-25 Student Internship Training Plan Form</option>
@@ -169,16 +184,18 @@ function formatTimestamp($timestamp) {
   $stmt->execute();
   $files = $stmt->fetchAll(PDO::FETCH_ASSOC);
   ?>
-  
+
   <div class="col-xl-12">
     <div class="card">
       <div class="card-body">
-        <h5 class="d-flex justify-content-between align-items-center">
+        <h5 class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
           Requirement Forms Checklist
-          <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#largeModal">
+          <button type="button" class="btn btn-warning btn-sm mt-2 mt-md-0" data-bs-toggle="modal"
+            data-bs-target="#largeModal">
             <i class="ri-folders-line" style="color: #000;"></i> List of Forms need to comply
           </button>
         </h5>
+
         <br>
 
         <?php
@@ -236,9 +253,10 @@ function formatTimestamp($timestamp) {
         <?php if (count($files) > 0): ?>
           <?php foreach ($files as $file): ?>
             <div class="mb-4">
-              <div class="file-card">
+              <div
+                class="file-card p-3 mb-3 border rounded d-flex flex-column flex-md-row justify-content-between align-items-start">
                 <div class="file-info">
-                  <input class="form-check-input" type="checkbox" id="form<?php echo $file['id']; ?>" <?php echo $file['status'] === 'Approved' ? 'checked' : ''; ?> disabled>
+                  <input class="form-check-input me-2" type="checkbox" id="form<?php echo $file['id']; ?>" <?php echo $file['status'] === 'Approved' ? 'checked' : ''; ?> disabled>
                   <strong><?php echo htmlspecialchars($file['form_type']); ?></strong><br>
                   <small>File Name: <?php echo htmlspecialchars($file['file_name']); ?></small><br>
                   <small>Status:
@@ -254,25 +272,32 @@ function formatTimestamp($timestamp) {
                     }
                     ?>
                   </small><br>
-                  <small>Remarks: <?php
+                  <?php
                   $file['cancel_reason'] = '';
-                  
-                  echo htmlspecialchars($file['cancel_reason']); ?></small><br>
+                  ?>
+                  <small>Remarks: <?php echo htmlspecialchars($file['cancel_reason']); ?></small><br>
                   <small>Uploaded At: <?php echo formatTimestamp($file['uploaded_at']); ?></small>
                 </div>
-                <?php if ($file['status'] === 'Pending' || $file['status'] === 'Cancelled'): ?>
-                    <button type="button" class="btn btn-danger btn-sm delete-btn" data-file-id="<?php echo $file['id']; ?>">
-                        <i class="ri-delete-bin-5-line" style="color: #fff;"></i> Delete
+
+                <div class="mt-3 mt-md-0">
+                  <?php if ($file['status'] === 'Pending' || $file['status'] === 'Cancelled'): ?>
+                    <button type="button" class="btn btn-danger btn-sm me-2 delete-btn"
+                      data-file-id="<?php echo $file['id']; ?>">
+                      <i class="ri-delete-bin-5-line" style="color: #fff;"></i> Delete
                     </button>
-                <?php endif; ?>&nbsp;   
-                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#fileModal<?php echo $file['id']; ?>">
-                  <i class="ri-folder-open-line" style="color: #fff;"></i> View File
-                </button>
+                  <?php endif; ?>
+                  <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#fileModal<?php echo $file['id']; ?>">
+                    <i class="ri-folder-open-line" style="color: #fff;"></i> View File
+                  </button>
+                </div>
               </div>
+
             </div>
 
             <!-- File Modal -->
-            <div class="modal fade" id="fileModal<?php echo $file['id']; ?>" tabindex="-1" aria-labelledby="fileModalLabel<?php echo $file['id']; ?>" aria-hidden="true">
+            <div class="modal fade" id="fileModal<?php echo $file['id']; ?>" tabindex="-1"
+              aria-labelledby="fileModalLabel<?php echo $file['id']; ?>" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -323,9 +348,9 @@ function formatTimestamp($timestamp) {
 <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
 <script src="../assets/js/main.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.delete-btn').forEach(function(button) {
-      button.addEventListener('click', function() {
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.delete-btn').forEach(function (button) {
+      button.addEventListener('click', function () {
         const fileId = this.getAttribute('data-file-id');
 
         Swal.fire({
@@ -355,35 +380,35 @@ function formatTimestamp($timestamp) {
               method: 'POST',
               body: new FormData(form)
             })
-            .then(response => response.json())
-            .then(data => {
-              if (data.status === 'success') {
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Deleted!',
-                  text: data.message,
-                  timer: 1500
-                }).then(() => {
-                  // Optionally, reload the page or remove the deleted file element from the DOM
-                  location.reload(); // Reloads the page to reflect changes
-                });
-              } else {
+              .then(response => response.json())
+              .then(data => {
+                if (data.status === 'success') {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: data.message,
+                    timer: 1500
+                  }).then(() => {
+                    // Optionally, reload the page or remove the deleted file element from the DOM
+                    location.reload(); // Reloads the page to reflect changes
+                  });
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: data.message,
+                    confirmButtonColor: '#3085d6',
+                  });
+                }
+              })
+              .catch(error => {
                 Swal.fire({
                   icon: 'error',
                   title: 'Error!',
-                  text: data.message,
+                  text: 'An unexpected error occurred.',
                   confirmButtonColor: '#3085d6',
                 });
-              }
-            })
-            .catch(error => {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'An unexpected error occurred.',
-                confirmButtonColor: '#3085d6',
               });
-            });
           }
         });
       });

@@ -117,6 +117,7 @@ include "nav.php";
             </div>
         </div>
         <input type="hidden" name="coordinator_id" value="<?php echo htmlspecialchars($coordinator_id); ?>">
+        <input type="hidden" name="status" value="Active">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button type="submit" name="process" class="btn btn-warning"><i class="ri-speed-mini-fill"> </i>Process</button>
         </div>

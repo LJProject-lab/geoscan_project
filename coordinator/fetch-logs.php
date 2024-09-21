@@ -12,7 +12,6 @@ try {
     }
 
     $coordinator_id = $_SESSION['coordinator_id'];
-    
     $sql = "
         SELECT 
             tl.*, 
@@ -42,8 +41,8 @@ try {
     echo json_encode($logs);
 
 } catch (PDOException $e) {
-    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+    echo json_encode(['error' => $e->getMessage()]);
 } catch (Exception $e) {
-    echo json_encode(['error' => 'General error: ' . $e->getMessage()]);
+    echo json_encode(['error' => $e->getMessage()]);
 }
 ?>

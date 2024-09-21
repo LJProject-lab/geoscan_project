@@ -1,12 +1,16 @@
 <?php
 include "nav.php";
 include "functions/fetch-forgot-timeout.php";
-$currentDate = date('Y-m-d');
+echo $currentDate = date('Y-m-d');
+
+
+include_once 'functions/fetch-records.php';
+$progress = getInternProgress($student_id, $program_id, $pdo);
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
@@ -20,6 +24,13 @@ $currentDate = date('Y-m-d');
     </li><!-- End Profile Page Nav -->
 
     <li class="nav-heading">Pages</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="my_attendance.php">
+        <i class="ri-fingerprint-line"></i>
+        <span>My Attendance</span>
+      </a>
+    </li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="requirement_checklist.php">
@@ -57,13 +68,29 @@ $currentDate = date('Y-m-d');
     </nav>
   </div><!-- End Page Title -->
 
+  <section class="section dashboard">
+
+  <div class="col-xl-12">
+
+    <div class="card">
+      <style>
+
+      </style>
+
+      <div class="card-body">
+        <canvas id="progressChart" class="small-chart"></canvas> <!-- Apply the CSS class -->
+      </div>
+
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-xl-6">
       <div class="card">
         <div class="card-body">
           <?php
           $student_id = $_SESSION['student_id'];
-          $stmt = $pdo->prepare("SELECT status FROM tbl_adjustments WHERE student_id = :student_id ORDER BY id DESC LIMIT 1");
+          $stmt = $pdo->prepare("SELECT status, reject_reason FROM tbl_adjustments WHERE student_id = :student_id ORDER BY id DESC LIMIT 1");
           $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
           $stmt->execute();
           $adjustment = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -86,14 +113,14 @@ $currentDate = date('Y-m-d');
                 echo "
                 <div class='reminder-alert'>
                     <span style='color:#198754;'><h3><b>Time Out Reminder</b></h3></span>
-                    <p>It looks like you forgot to log your time out on the following dates:</p>
+                    <p>It looks like you forgot to log your time out on the following date:</p>
                     <ul>";
                 foreach ($dates as $date) {
                   echo "<li><strong>{$date}</strong></li>";
                 }
                 echo "
                     </ul>
-                    <p>Please review your attendance records and enter the correct time out for these days. This ensures your attendance is accurately tracked.</p>
+                    <p>Please review your attendance records and enter the correct time out for these day. This ensures your attendance is accurately tracked.</p>
                     <ul>
                         <li>If you remember your time out, please contact your coordinator for assistance.</li>
                     </ul>";
@@ -102,6 +129,14 @@ $currentDate = date('Y-m-d');
                 if ($adjustment && $adjustment['status'] == 'Pending') {
                   // If the status is Pending, show the badge
                   echo "<div class='badge badge-warning' style='float:right; color:black; font-size:1rem; background-color:orange;'>Pending</div>";
+                } else if ($adjustment && $adjustment['status'] == 'Rejected') {
+                  // If the status is Pending, show the badge
+                  echo "<div class='badge badge-warning' style='float:right; color:white; font-size:1rem; background-color:red;'>Rejected</div>";
+                  echo "</br>";
+                  echo "<b>Remarks: </b>" . $adjustment['reject_reason'];
+                } else if ($adjustment && $adjustment['status'] == 'Approved') {
+                  // If the status is Pending, show the badge
+                  echo "<div class='badge badge-warning' style='float:right; color:white; font-size:1rem; background-color:blue;'>Approved</div>";
                 } else {
                   // If not Pending, show the button
                   echo "
@@ -123,12 +158,46 @@ $currentDate = date('Y-m-d');
 
       </div>
     </div>
-
-
-    <div class="col-xl-6">
-      <div class="card">
+    <div class="col-xl-3">
+    <div class="card info-card revenue-card">
         <div class="card-body">
-          Empty as of now.
+          <h5 class="card-title">Logs Rendered</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i class="bi bi-clock-history" style="color:green !important;"></i>
+            </div>
+            <div class="ps-3">
+              <h5>0</h5>
+              <span class="text-muted small pt-2 ps-1">
+                <a href="requirements_to_review.php">
+                  <i class="bi bi-arrow-right"></i> &nbsp;View All
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3">
+      <div class="card info-card customers-card">
+        <div class="card-body">
+          <h5 class="card-title">Requirements Uploaded</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i class="bi bi-clipboard-check" style="color:orange !important;"></i>
+            </div>
+            <div class="ps-3">
+              <h5>0</h5>
+              <span class="text-muted small pt-2 ps-1">
+                <a href="requirements_to_review.php">
+                  <i class="bi bi-arrow-right"></i> &nbsp;View All
+                </a>
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -168,6 +237,7 @@ $currentDate = date('Y-m-d');
         </div>
       </div>
     </div>
+    </div>
 
 
   </div>
@@ -189,6 +259,56 @@ $currentDate = date('Y-m-d');
 <script src="functions/js/send-adjustments.js"></script>
 <script>
   var studentId = "<?php echo $_SESSION['student_id']; ?>";
+</script>
+
+<script>
+  // Fetch progress data from PHP
+  const progressData = <?php echo json_encode($progress); ?>;
+
+  // Render the horizontal bar chart using Chart.js
+  const ctx = document.getElementById('progressChart').getContext('2d');
+  const progressChart = new Chart(ctx, {
+    type: 'bar', // Bar chart type
+    data: {
+      labels: ['Progress'],
+      datasets: [
+        {
+          label: 'Hours Rendered',
+          data: [progressData.total_hours],
+          backgroundColor: '#198754',
+        },
+        {
+          label: 'Hours Remaining',
+          data: [progressData.hours_remaining],
+          backgroundColor: '#f68c09',
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y', // Makes the bar horizontal
+      responsive: true,
+      maintainAspectRatio: false, // Allows resizing
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Internship Progress'
+        }
+      },
+      scales: {
+        x: {
+          stacked: true, // Stacks the bars on the x-axis
+          beginAtZero: true,
+          max: progressData.required_hours // Set the max value to required hours
+        },
+        y: {
+          stacked: true // Stacks the bars on the y-axis
+        }
+      }
+    }
+  });
 </script>
 
 <?php include "footer.php"; ?>

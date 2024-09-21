@@ -307,7 +307,7 @@ $currentDate = date('Y-m-d');
             </div>
           </div>
 
-          
+
           <div class="col-lg-4">
             <div class="card">
               <div class="card-body">
@@ -349,12 +349,22 @@ $currentDate = date('Y-m-d');
 
                   foreach ($interns as $intern => $details) {
                     $dates = implode(', ', $details['dates']);
-                    $statusBadge = $details['status'] == 'Approved' ?
-                      "<span class='badge badge-warning' style='color:black;background-color:orange;'>Under Review</span>" :
-                      '';
 
+                    // Status badge logic
+                    if ($details['status'] == 'Approved') {
+                      $statusBadge = "<span class='badge badge-warning' style='color:black;background-color:orange;'>Under Review</span>";
+                    } elseif ($details['status'] == 'Pending') {
+                      $statusBadge = "<span class='badge badge-warning' style='color:black;background-color:orange;'>Pending</span>";
+                    } elseif ($details['status'] == 'Rejected') {
+                      $statusBadge = "<span class='badge badge-warning' style='color:white;background-color:red;'>Rejected</span>";
+                    } else {
+                      $statusBadge = ''; // For any other status, no badge will be displayed
+                    }
+
+                    // Output each intern's details
                     echo "<li><strong>{$intern}:</strong> {$dates} {$statusBadge}</li>";
                   }
+
 
                   echo "</ul>
                     </div>

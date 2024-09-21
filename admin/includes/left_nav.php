@@ -55,10 +55,6 @@
                 <div class="collapse" id="collapsePages2" aria-labelledby="headingTwo"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link" href="#">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Time Logs
-                        </a>
                         <a class="nav-link" href="action_logs.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-simple"></i></div>
                             Action Logs
@@ -70,7 +66,7 @@
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
                     Intern Adjustments
                 </a>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="profile.php">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></div>
                     Account Settings
                 </a>

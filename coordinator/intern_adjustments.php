@@ -116,7 +116,7 @@ include "crypt_helper.php";
     SELECT a.*, u.firstname, u.lastname
     FROM tbl_adjustments a
     LEFT JOIN tbl_users u ON a.student_id = u.student_id
-    WHERE a.status IN ('Pending', 'Approved', 'Adjusted')
+    WHERE a.status IN ('Pending', 'Approved', 'Adjusted', 'Rejected')
     AND u.coordinator_id = :coordinator_id
 ");
         $stmt->execute(['coordinator_id' => $_SESSION['coordinator_id']]);
@@ -161,6 +161,8 @@ include "crypt_helper.php";
                                         echo "<span class='badge badge-warning' style='color:black;background-color:orange;'>Pending</span>";
                                     } elseif ($user['status'] == 'Approved') {
                                         echo "<span class='badge badge-warning' style='color:black;background-color:orange;'>Under Review</span>";
+                                    } elseif ($user['status'] == 'Rejected') {
+                                        echo "<span class='badge badge-warning' style='color:white;background-color:red;'>Rejected</span>";
                                     } else {
                                         echo "<span class='badge badge-warning' style='color:white;background-color:#198754;'>Adjusted</span>";
                                     }
@@ -174,8 +176,13 @@ include "crypt_helper.php";
                                                 data-records="<?php echo htmlspecialchars($user['records']); ?>"
                                                 data-reason="<?php echo htmlspecialchars($user['reason']); ?>"
                                                 data-id="<?php echo $user['id']; ?>">Approve</button>
+
+                                            <button class="btn btn-danger me-md-2" data-toggle='modal' data-target='#RejectModal'
+                                                data-student_id="<?php echo $user['student_id']; ?>"
+                                                data-id="<?php echo $user['id']; ?>">Reject</button>
                                         <?php endif; ?>
                                     </td>
+
                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
@@ -219,6 +226,34 @@ include "crypt_helper.php";
         </div>
     </div>
 
+    <!-- Modal for rejecting adjustment -->
+    <div class="modal fade" id="RejectModal" tabindex="-1" role="dialog" aria-labelledby="RejectModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="RejectModalLabel" style="color:#198754;font-weight:bold;">Reject
+                        Adjustment</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+                <div class="modal-body">
+                    <h4>Provide a reason for rejection:</h4>
+                    <textarea id="reject-reason" class="form-control" rows="4"
+                        placeholder="Enter rejection reason"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <form id="rejectForm" method="POST">
+                        <input type="hidden" id="reject_student_id" name="student_id">
+                        <input type="hidden" id="reject_adjustment_id" name="adjustment_id">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit Rejection</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main><!-- End #main -->
 
 <script src="../assets/js/datatables-simple-demo.js"></script>
@@ -227,5 +262,5 @@ include "crypt_helper.php";
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="functions/js/intern-adjustments.js"></script>
-
+<script src="functions/js/reject-adjustments.js"></script>
 <?php include "footer.php"; ?>
