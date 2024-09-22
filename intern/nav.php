@@ -78,16 +78,9 @@ if (!isset($_SESSION['student_id'])) {
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="settings.php">
+              <a class="dropdown-item d-flex align-items-center" href="profile.php">
                 <i class="bi bi-person"></i>
                 <span>Account Profile</span>
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="settings.php">
-                <i class="bi bi-gear"></i>
-                <span>Change Pin</span>
               </a>
             </li>
 

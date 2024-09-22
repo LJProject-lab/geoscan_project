@@ -71,7 +71,7 @@ include_once '../includes/getAddress.php';
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-end mb-3">
-        <button id="refreshTable" class="btn btn-success me-md-2"><i class='bx bx-loader' ></i> &nbsp;Reload</button>
+        <button id="refreshTable" class="btn btn-success me-md-2"><i class='bx bx-loader' style="color:#fff;"></i> &nbsp;Reload</button>
       </div>
       <div class="table-responsive">
         <table id="datatablesSimple" class="table table-striped table-hover table-bordered">
@@ -91,11 +91,41 @@ include_once '../includes/getAddress.php';
     </div>
   </div>
 
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Photo View</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImage" src="" alt="Photo" class="img-fluid">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   </section>
 
 
 
 </main><!-- End #main -->
+
+<style>
+  /* Ensure the modal image fits well */
+  .modal-body {
+    text-align: center; /* Center the image in the modal */
+  }
+
+  #modalImage {
+    max-width: 100%; /* Ensure the image doesn't overflow the modal */
+    max-height: 80vh; /* Set a max height to avoid excessive height */
+    object-fit: contain; /* Maintain aspect ratio while fitting inside the modal */
+  }
+</style>
 
 <div id="preloader">
   <div class="loader"></div>
@@ -170,7 +200,11 @@ include_once '../includes/getAddress.php';
                         row.innerHTML = `
                         <td>${log.type === 'time_in' ? 'Time In' : 'Time Out'}</td>
                         <td>${log.timestamp}</td>
-                        <td>${log.photo ? `<img src="${log.photo}" alt="Photo" width="100" height="100">` : 'N/A'}</td>
+                        <td>
+                          ${log.photo !== 'N/A' ? `
+                            <img src="${log.photo}" alt="Photo" width="50" height="50" style="object-fit: cover; cursor: pointer;" onclick="openModal('${log.photo}')">
+                          ` : 'N/A'}
+                        </td>
                         <td>
                             <span class="addresss" data-lat="${log.latitude}" data-lng="${log.longitude}">
                                 <div class="address-container">Converting...</div>
@@ -197,6 +231,13 @@ include_once '../includes/getAddress.php';
         }
     }
 });
+
+function openModal(photoSrc) {
+    const modalImage = document.getElementById('modalImage');
+    modalImage.src = photoSrc; // Set the source of the image in the modal
+    const exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    exampleModal.show(); // Show the modal using Bootstrap
+  }
 </script>
 
 <?php include "footer.php"; ?>

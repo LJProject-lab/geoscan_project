@@ -70,20 +70,6 @@ $progress = getInternProgress($student_id, $program_id, $pdo);
 
   <section class="section dashboard">
 
-  <div class="col-xl-12">
-
-    <div class="card">
-      <style>
-
-      </style>
-
-      <div class="card-body">
-        <canvas id="progressChart" class="small-chart"></canvas> <!-- Apply the CSS class -->
-      </div>
-
-    </div>
-  </div>
-
   <div class="row">
     <div class="col-xl-6">
       <div class="card">
@@ -259,56 +245,6 @@ $progress = getInternProgress($student_id, $program_id, $pdo);
 <script src="functions/js/send-adjustments.js"></script>
 <script>
   var studentId = "<?php echo $_SESSION['student_id']; ?>";
-</script>
-
-<script>
-  // Fetch progress data from PHP
-  const progressData = <?php echo json_encode($progress); ?>;
-
-  // Render the horizontal bar chart using Chart.js
-  const ctx = document.getElementById('progressChart').getContext('2d');
-  const progressChart = new Chart(ctx, {
-    type: 'bar', // Bar chart type
-    data: {
-      labels: ['Progress'],
-      datasets: [
-        {
-          label: 'Hours Rendered',
-          data: [progressData.total_hours],
-          backgroundColor: '#198754',
-        },
-        {
-          label: 'Hours Remaining',
-          data: [progressData.hours_remaining],
-          backgroundColor: '#f68c09',
-        }
-      ]
-    },
-    options: {
-      indexAxis: 'y', // Makes the bar horizontal
-      responsive: true,
-      maintainAspectRatio: false, // Allows resizing
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Internship Progress'
-        }
-      },
-      scales: {
-        x: {
-          stacked: true, // Stacks the bars on the x-axis
-          beginAtZero: true,
-          max: progressData.required_hours // Set the max value to required hours
-        },
-        y: {
-          stacked: true // Stacks the bars on the y-axis
-        }
-      }
-    }
-  });
 </script>
 
 <?php include "footer.php"; ?>

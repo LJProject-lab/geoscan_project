@@ -329,6 +329,8 @@ include "nav.php";
                 text: 'Password changed successfully.',
                 icon: 'success',
                 confirmButtonText: 'Ok'
+              }).then(() => {
+                window.location.reload();
             });
         } else {
             Swal.fire({

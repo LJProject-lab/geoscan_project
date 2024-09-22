@@ -117,28 +117,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </a>
     </li><!-- End Profile Page Nav -->
 
-    <li class="nav-heading">Configuration</li>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="add_intern.php">
-        <i class="bi bi-person-plus-fill"></i>
-        <span>Add Intern</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link " href="generate_report.php">
-        <i class="ri-folder-download-line"></i>
-        <span>Generate Intern Report</span>
-      </a>
-    </li>
-
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="intern.php">
-        <i class="bi bi-people-fill"></i>
-        <span>List of Intern</span>
+      <a class="nav-link collapsed" href="my_attendance.php">
+        <i class="ri-fingerprint-line"></i>
+        <span>My Attendance</span>
       </a>
     </li>
 
@@ -147,37 +131,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <i class="bi bi-file-earmark-check-fill"></i>
         <span>Requirements Checklist</span>
       </a>
-    </li>
+    </li><!-- End Login Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="interns_attendance.php">
-        <i class="bx bxs-user-detail"></i>
-        <span>Interns Attendance</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="interns_progress_report.php">
+      <a class="nav-link " href="progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
-    </li>
+    </li><!-- End Blank Page Nav -->
+
     <li class="nav-item">
-      <a class="nav-link collapsed" href="intern_adjustments.php">
+      <a class="nav-link collapsed" href="settings.php">
         <i class='bx bxs-cog'></i>
-        <span>Intern Adjustments</span>
+        <span>Settings</span>
       </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="action_logs.php">
-        <i class='bx bx-history'></i>
-        <span>Audit Trail</span>
-      </a>
-    </li>
+    </li><!-- End Blank Page Nav -->
 
   </ul>
 
-</aside><!-- End Sidebar-->
+</aside>
 
 <main id="main" class="main">
   <div class="pagetitle">
