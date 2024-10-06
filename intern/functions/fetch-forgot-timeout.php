@@ -18,7 +18,7 @@ function checkMissingTimeOut($pdo, $student_id) {
         AND t1.type = 'time_in' 
         AND t2.id IS NULL
         AND DATE(t1.timestamp) >= :threedays
-        AND  DATE(t1.timestamp) <= :today
+        OR  DATE(t1.timestamp) <= :today
         ORDER BY t1.timestamp DESC
         LIMIT 1;  -- Only check for past dates
     ";

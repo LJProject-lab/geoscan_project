@@ -328,23 +328,12 @@ $currentDate = date('Y-m-d');
                     $interns[$key]['dates'][] = $entry['missing_date'];
                   }
 
-                  // Get today's date
-                  $today = date('Y-m-d');
-
-                  // Display today's missing time-out message
-                  if (in_array($today, array_merge(...array_column($interns, 'dates')))) {
-                    echo "
-                    <div class='reminder-alert'>
-                        <span style='color:#198754;'><h3><b>Pending Time Out</b></h3></span>
-                        <p>You have not logged your time out for today (<strong>{$today}</strong>).</p>
-                    </div>";
-                  }
 
                   // Display past missed time-outs
                   echo "
                 <div class='out-container'>
                     <div class='reminder-alert'>
-                        <p>Some of your interns have not logged their time out on the following dates:</p>
+                        <p>Some of your interns have not yet logged their time out on the following dates:</p>
                         <ul>";
 
                   foreach ($interns as $intern => $details) {

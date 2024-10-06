@@ -236,6 +236,7 @@ include "crypt_helper.php";
                 <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
                 <td><?php echo htmlspecialchars($user['program_name']); ?></td>
                 <td><?php echo htmlspecialchars($user['program_hour']); ?></td>
+                
                 <td>
                   <a href="view_intern.php?student_id=<?php echo urlencode(encryptData($user['student_id'])); ?>"
                     class="btn btn-success btn-sm"><i class="bi bi-eye"></i> View</a>

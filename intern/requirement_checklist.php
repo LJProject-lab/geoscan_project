@@ -71,6 +71,13 @@ function formatTimestamp($timestamp)
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
+      <a class="nav-link collapsed" href="my_attendance.php">
+        <i class="ri-fingerprint-line"></i>
+        <span>My Attendance</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link " href="requirement_checklist.php">
         <i class="bi bi-file-earmark-check-fill"></i>
         <span>Requirements Checklist</span>
@@ -265,6 +272,9 @@ function formatTimestamp($timestamp)
                     }
                     ?>
                   </small><br>
+                  <?php
+                  $file['cancel_reason'] = '';
+                  ?>
                   <small>Remarks: <?php echo htmlspecialchars($file['cancel_reason']); ?></small><br>
                   <small>Uploaded At: <?php echo formatTimestamp($file['uploaded_at']); ?></small>
                 </div>

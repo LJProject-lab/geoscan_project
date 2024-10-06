@@ -1,9 +1,6 @@
 <?php
 include "nav.php";
-include_once 'functions/fetch-records.php';
 
-// Call the function to calculate the intern's progress
-$progress = getInternProgress($student_id, $program_id, $pdo);
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
@@ -58,32 +55,47 @@ $progress = getInternProgress($student_id, $program_id, $pdo);
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Progress Report</h1>
+    <h1>Generate Report</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item active">Progress Report</li>
+        <li class="breadcrumb-item"><a href="progress_report.php">Progress Report</a></li>
+        <li class="breadcrumb-item active">Generate Report</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
-  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button class="btn btn-success me-md-2" type="button">
-      <a href="generate_report.php" style="color:white;"><i class="ri-folder-download-line" style="color: #fff;"></i> Generate Report</a>
-    </button>
-  </div><br>
-  <div class="col-xl-12">
 
-    <div class="card">
-      <style>
+  <section class="section">
+    
+  <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Generate Report</h5>
 
-      </style>
+              <!-- Vertical Form -->
+              <form class="row g-3" action="generate_data.php" method="post">
+                <div class="col-12">
+                  <label for="" class="form-label">Intern</label>
+                  <input type="text" class="form-control" id="student_id" name="student_id" value="<?php echo htmlspecialchars($_SESSION['student_id']); ?>" required>
+                </div>
+                <div class="col-6">
+                  <label for="" class="form-label">Start Date</label>
+                  <input type="date" class="form-control" id="start_date" name="start_date" required>
+                </div>
+                <div class="col-6">
+                  <label for="" class="form-label">End Date</label>
+                  <input type="date" class="form-control" id="end_date" name="end_date" required>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button type="submit" class="btn btn-warning"> <i class="ri-speed-mini-fill"></i> Process</button>
+                </div>
+              </form><!-- Vertical Form -->
 
-      <div class="card-body">
-        <canvas id="progressChart" class="small-chart"></canvas> <!-- Apply the CSS class -->
-      </div>
+            </div>
+          </div>
 
-    </div>
-  </div>
+
+  </section>
+
 
 </main><!-- End #main -->
 
@@ -96,53 +108,4 @@ $progress = getInternProgress($student_id, $program_id, $pdo);
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
   crossorigin="anonymous"></script>
 
-<script>
-  // Fetch progress data from PHP
-  const progressData = <?php echo json_encode($progress); ?>;
-
-  // Render the horizontal bar chart using Chart.js
-  const ctx = document.getElementById('progressChart').getContext('2d');
-  const progressChart = new Chart(ctx, {
-    type: 'bar', // Bar chart type
-    data: {
-      labels: ['Progress'],
-      datasets: [
-        {
-          label: 'Hours Rendered',
-          data: [progressData.total_hours],
-          backgroundColor: '#198754',
-        },
-        {
-          label: 'Hours Remaining',
-          data: [progressData.hours_remaining],
-          backgroundColor: '#f68c09',
-        }
-      ]
-    },
-    options: {
-      indexAxis: 'y', // Makes the bar horizontal
-      responsive: true,
-      maintainAspectRatio: false, // Allows resizing
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Internship Progress'
-        }
-      },
-      scales: {
-        x: {
-          stacked: true, // Stacks the bars on the x-axis
-          beginAtZero: true,
-          max: progressData.required_hours // Set the max value to required hours
-        },
-        y: {
-          stacked: true // Stacks the bars on the y-axis
-        }
-      }
-    }
-  });
-</script>
 <?php include "footer.php"; ?>

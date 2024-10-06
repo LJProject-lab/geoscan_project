@@ -1,6 +1,6 @@
 <?php
 
-require 'phpspreadsheet/vendor/autoload.php'; // Path to PhpSpreadsheet autoload
+require '../coordinator/phpspreadsheet/vendor/autoload.php'; // Path to PhpSpreadsheet autoload
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;

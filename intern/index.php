@@ -2,11 +2,15 @@
 include "nav.php";
 include "functions/fetch-forgot-timeout.php";
 echo $currentDate = date('Y-m-d');
+
+
+include_once 'functions/fetch-records.php';
+$progress = getInternProgress($student_id, $program_id, $pdo);
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
@@ -20,6 +24,13 @@ echo $currentDate = date('Y-m-d');
     </li><!-- End Profile Page Nav -->
 
     <li class="nav-heading">Pages</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="my_attendance.php">
+        <i class="ri-fingerprint-line"></i>
+        <span>My Attendance</span>
+      </a>
+    </li>
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="requirement_checklist.php">
@@ -58,6 +69,7 @@ echo $currentDate = date('Y-m-d');
   </div><!-- End Page Title -->
 
   <section class="section dashboard">
+
   <div class="row">
     <div class="col-xl-6">
       <div class="card">
