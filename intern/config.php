@@ -1,9 +1,9 @@
 <?php
 // Database configuration
-$host = 'localhost';
-$db   = 'pnc';
-$user = 'root';
-$pass = '';
+$host = '127.0.0.1:3306';
+$db   = 'u682755333_ims';
+$user = 'u682755333_ITA4';
+$pass = 'z&3N|?wN3|'; //Password
 $charset = 'utf8mb4';
 
 date_default_timezone_set('Asia/Manila');

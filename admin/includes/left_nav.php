@@ -70,6 +70,10 @@
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></div>
                     Account Settings
                 </a>
+                <a class="nav-link" href="backup-restore.php">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-download"></i></div>
+                    Backup and Restore
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
