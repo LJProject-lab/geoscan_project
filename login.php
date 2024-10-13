@@ -57,12 +57,15 @@ if (isset($_SESSION['student_id'])) {
                         <button class="btn-main" style="border-radius: 5px;" type="submit">Login</button>
                     </div>
                     <div class="text-center">
-                        <a class="backbtn" href="./">Back</a>
+                        <a class="backbtn" href="forgot_password.php">Forgot Password?</a>
                     </div>
                 </form>
                 <center>
                     <div id="message" class="message"></div>
                 </center>
+                <div class="text-center">
+                    <button type="button" class="btn btn-light rounded-pill"><a class="backbtn" href="./">Back</a></button>
+                </div>
             </div>
         </div>
 
