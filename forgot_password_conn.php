@@ -7,6 +7,8 @@ require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
+$msg = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'])) {
     $email = $_POST['email'];
 
@@ -57,12 +59,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'])) {
             $mail->AltBody = "Copy and paste the following link into your browser to reset your password: $reset_link";
 
             $mail->send();
-            echo 'Password reset link has been sent to your email.';
+            
+            if ($mail->send()) {
+                $msg = "Password reset link has been sent to your email.";
+            } else {
+                $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
-        echo 'No account found with that email address.';
+        $msg = "No account found with that email address.";
     }
+
+    header("Location: forgot_password.php?msg=" . urlencode($msg));
+    exit;
 }
 ?>

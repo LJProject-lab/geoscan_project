@@ -19,15 +19,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['token'], $_POST['pin']
             'token' => $token
         ]);
 
-        echo 'Your password has been reset successfully.';
+        $msg = 'Your password has been reset successfully.';
     } else {
-        echo 'Invalid or expired token.';
+        $msg = 'Invalid or expired token.';
     }
+    header("Location: reset_password.php?token=" . urlencode($token) . "&msg=" . urlencode($msg));
+    exit;
 } elseif (isset($_GET['token'])) {
     $token = $_GET['token'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+<?php
+$msg = isset($_GET['msg']) ? $_GET['msg'] : '';
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -42,6 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['token'], $_POST['pin']
 <style>
     body {
         background-color: #f6f9ff;
+    }
+    .msg{
+        color: green;
+        font-weight: bold;
+        text-align: center;
     }
 </style>
     <body>
@@ -60,6 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['token'], $_POST['pin']
                         <input type="password" name="pin" minlength="4" maxlength="4" min="1000" max="9999" required>
                             <div class="d-grid gap-2 mt-3">
                                 <button class="btn-main" style="border-radius: 5px;" type="submit">Reset Password</button>
+                            </div><br>
+                            <?php if (!empty($msg)): ?>
+                                <div class="msg">
+                                    <?php echo htmlspecialchars($msg); ?>
+                                </div>
+                            <?php endif; ?>
+                            <br>
+                            <div class="text-center">
+                                <a class="backbtn" href="login.php">Back to Login</a>
                             </div>
                     </form>
                     </div>

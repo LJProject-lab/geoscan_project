@@ -36,6 +36,10 @@
                 <div class="collapse" id="collapsePages_ctrl" aria-labelledby="headingTwo"
                     data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                        <a class="nav-link" href="department.php">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+                            Department
+                        </a>
                         <a class="nav-link" href="program.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
                             Programs

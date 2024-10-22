@@ -1,5 +1,7 @@
 <?php
 require 'config.php';
+
+$msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +20,11 @@ require 'config.php';
 <style>
     body {
         background-color: #f6f9ff;
+    }
+    .msg{
+        color: red;
+        font-weight: bold;
+        text-align: center;
     }
 </style>
 
@@ -38,7 +45,13 @@ require 'config.php';
                         <label for="inputNanme4" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email">
                     </div>
-                    <br><br>
+                    <br>
+                    <?php if (!empty($msg)): ?>
+                        <div class="msg">
+                            <?php echo htmlspecialchars($msg); ?>
+                        </div>
+                    <?php endif; ?>
+                    <br>
                     <div class="d-grid gap-2 mt-3">
                         <button class="btn-main" style="border-radius: 5px;" type="submit">Request Reset Pin</button>
                     </div>
