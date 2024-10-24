@@ -1,5 +1,29 @@
 <?php
 include "nav.php";
+
+$student_id = $_SESSION['student_id'];
+
+// Check if student_id is set
+if (isset($student_id)) {
+    // Query to fetch the profile picture filename from the database
+    $sql = "SELECT profile_pic FROM tbl_users WHERE student_id = :student_id";
+    $stmt = $pdo->prepare($sql);
+    
+    // Bind the student_id parameter
+    $stmt->bindParam(':student_id', $student_id);
+    
+    // Execute the query
+    $stmt->execute();
+    
+    // Fetch the result as an associative array
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // If profile_pic exists in the database, use it. Otherwise, fall back to a default image
+    $profile_pic = !empty($user['profile_pic']) ? $user['profile_pic'] : 'profile.png';
+} else {
+    echo "User is not logged in.";
+    exit;
+}
 ?>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="../assets/css/table.css" rel="stylesheet">
@@ -129,13 +153,46 @@ include "nav.php";
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="assets/img/profile.png" alt="Profile" class="rounded-circle">
+            <img src="uploads/profile_pics/<?php echo htmlspecialchars($profile_pic, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile Picture" class="rounded-circle">
+              <!--<img src="uploads/<?php echo $newFileName; ?>" alt="Profile" class="rounded-circle">-->
               <h2><?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?></h2>
               <h3>Intern</h3>
+
+              <div class="center-text">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                  <i class="ri-image-2-fill" style="color: #fff;"></i> Upload Profile</button>
+              </div>
+
+              <form method="POST" action="upload.php" enctype="multipart/form-data">
+                <div class="modal fade" id="verticalycentered" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Change Profile Picture</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row mb-3">
+                          <div class="col-sm-12">
+                            <input class="form-control" type="file" name="profile_image" id="formFile">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+              </form>
+
+                </div>
+
             </div>
           </div>
 
         </div>
+
 
         <div class="col-xl-8">
 

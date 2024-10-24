@@ -98,12 +98,12 @@ include 'includes/top_include.php';
                                             </td>
                                             <td>
                                                 <button class="btn-get-main edit-btn" data-toggle="modal"
-                                                    data-target="#editProgram"
-                                                    data-program-id="<?php echo $program['department_id'] ?>"><i
+                                                    data-target="#editDepartment"
+                                                    data-program-id="<?php echo $department['department_id'] ?>"><i
                                                         class="fa-solid fa-pen-to-square"></i>
                                                     Edit</button>
                                                 <button class="btn-get-del" data-toggle="modal" data-target="#DeleteModal"
-                                                    data-program-id="<?php echo $program['department_id'] ?>"><i
+                                                    data-program-id="<?php echo $department['department_id'] ?>"><i
                                                         class="fa-solid fa-trash"></i>
                                                     Delete</button>
                                             </td>
@@ -120,37 +120,7 @@ include 'includes/top_include.php';
     </div>
 
 
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editProgram" tabindex="-1" role="dialog" aria-labelledby="editProgramLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProgramLabel">Edit Department</h5>
-                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
-                        aria-label="Close"></i>
-                </div>
-                <div class="modal-body">
-                    <div id="editMessage"></div>
-
-                    <!-- Edit form -->
-                    <div class="form-group">
-                        <label for="edit_program_name">Program Name:</label>
-                        <input type="text" class="form-control" id="edit_program_name" name="edit_program_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_program_hour">Program Hour:</label>
-                        <input type="number" class="form-control" id="edit_program_hour"
-                            name="edit_program_hour"></input>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-get-main" id="saveChangesBtn">Save changes</button>
-                    <button type="button" class="btn-get-del" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Add New Modal -->
     <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="AddNewModalLabel"
@@ -223,8 +193,8 @@ include 'includes/top_include.php';
 
     <script src="assets/js/datatables-simple-demo.js"></script>
     <script src="functions/js/add-department.js"></script>
-    <script src="functions/js/delete-program.js"></script>
-    <script src="functions/js/edit-program.js"></script>
+    <script src="functions/js/delete-department.js"></script>
+    <script src="functions/js/edit-department.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
