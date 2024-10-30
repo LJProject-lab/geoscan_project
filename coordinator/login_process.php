@@ -24,6 +24,7 @@ try {
             $_SESSION['firstname'] = $user['firstname'];
             $_SESSION['lastname'] = $user['lastname'];
             $_SESSION['coordinator_id'] = $user['coordinator_id'];
+            $_SESSION['department_id'] = $user['department_id'];
 
             echo json_encode(['success' => true]);
         } else {

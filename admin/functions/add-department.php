@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $department_id = mt_rand(10000, 99999);
 
     // Prepare and execute the first SQL statement
-    $sql = 'INSERT INTO tbl_department (department_id, department_name, department_code) VALUES (:department_id, :department_name, :department_code)';
+    $sql = 'INSERT INTO tbl_departments (department_id, department_name, department_code) VALUES (:department_id, :department_name, :department_code)';
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':department_id', $department_id, PDO::PARAM_STR);
     $stmt->bindParam(':department_name', $department_name, PDO::PARAM_STR);

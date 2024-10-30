@@ -8,6 +8,7 @@ require_once 'action-ids.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Retrieve form data
+    $department_id = $_POST['department_id'];
     $program_name = $_POST['program_name'];
     $program_hour = $_POST['program_hour'];
 
@@ -31,6 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    if (empty(trim($department_id))) {
+        $msg = 'Please select Department.';
+        echo json_encode(['msg' => $msg]);
+        exit();
+    }
+
     if (empty(trim($program_name))) {
         $msg = 'Please enter a Program Name.';
         echo json_encode(['msg' => $msg]);
@@ -47,9 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $program_id = mt_rand(10000, 99999);
 
     // Prepare and execute the first SQL statement
-    $sql = 'INSERT INTO tbl_programs (program_id, program_name, program_hour) VALUES (:program_id, :program_name, :program_hour)';
+    $sql = 'INSERT INTO tbl_programs (program_id, department_id, program_name, program_hour) VALUES (:program_id, :department_id, :program_name, :program_hour)';
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':program_id', $program_id, PDO::PARAM_STR);
+    $stmt->bindParam(':department_id', $department_id, PDO::PARAM_STR);
     $stmt->bindParam(':program_name', $program_name, PDO::PARAM_STR);
     $stmt->bindParam(':program_hour', $program_hour, PDO::PARAM_STR);
 

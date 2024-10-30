@@ -107,12 +107,24 @@ include "nav.php";
                 <select class="form-select" name="program" aria-label="Default select example" required>
                     <option selected disabled>Select Program</option>
                     <?php
-                    // Fetching programs from the database
-                    $stmt = $pdo->query("SELECT program_id, program_name FROM tbl_programs");
-                    while ($row = $stmt->fetch()) {
-                        echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
-                    }
-                    ?>
+                      // Ensure the department_id is set in the session
+                      if (isset($_SESSION['department_id'])) {
+                          // Fetching programs from the database using a prepared statement
+                          $query = "SELECT program_id, program_name FROM tbl_programs WHERE department_id = :department_id";
+                          $stmt = $pdo->prepare($query);
+                          $stmt->bindParam(':department_id', $_SESSION['department_id'], PDO::PARAM_INT);
+                          $stmt->execute();
+                          
+                          // Fetch results and populate the options
+                          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                              echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
+                          }
+                      } else {
+                          // Handle the case where department_id is not set
+                          echo '<option value="" disabled>No Programs Available</option>';
+                      }
+                      ?>
+
                 </select>
             </div>
         </div>

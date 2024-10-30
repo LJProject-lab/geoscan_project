@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    $("#AddDepartment").click(function () {
+    $("#AddDepartment").click(function (e) {
+      e.preventDefault();
       var department_name = $("#department_name").val();
       var department_code = $("#department_code").val();
   
-      var coordinator_id = coordinator_id;
   
       // Make sure all fields are filled
       if (department_name != "" && department_code != "" ) {

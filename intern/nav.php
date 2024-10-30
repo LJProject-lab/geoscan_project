@@ -4,6 +4,30 @@ if (!isset($_SESSION['student_id'])) {
   header("Location: ../login.php");
   exit();
 }
+
+$student_id = $_SESSION['student_id'];
+
+// Check if student_id is set
+if (isset($student_id)) {
+    // Query to fetch the profile picture filename from the database
+    $sql = "SELECT profile_pic FROM tbl_users WHERE student_id = :student_id";
+    $stmt = $pdo->prepare($sql);
+    
+    // Bind the student_id parameter
+    $stmt->bindParam(':student_id', $student_id);
+    
+    // Execute the query
+    $stmt->execute();
+    
+    // Fetch the result as an associative array
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // If profile_pic exists in the database, use it. Otherwise, fall back to a default image
+    $profile_pic = !empty($user['profile_pic']) ? $user['profile_pic'] : 'profile.png';
+} else {
+    echo "User is not logged in.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +84,7 @@ if (!isset($_SESSION['student_id'])) {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/user.png" alt="Profile" class="rounded-circle">
+            <img src="uploads/profile_pics/<?php echo htmlspecialchars($profile_pic, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile" class="rounded-circle">
             <span
               class="d-none d-md-block dropdown-toggle ps-2"><?php echo htmlspecialchars($_SESSION['firstname']); ?>&nbsp;</span>
           </a><!-- End Profile Iamge Icon -->

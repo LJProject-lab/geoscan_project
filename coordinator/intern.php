@@ -208,7 +208,7 @@ include "crypt_helper.php";
 
     <?php
     $stmt = $pdo->prepare("
-            SELECT u.student_id, u.firstname, u.lastname, c.program_name , c.program_hour
+            SELECT u.student_id, u.firstname, u.lastname, u.profile_pic, c.program_name , c.program_hour
             FROM tbl_users u
             JOIN tbl_programs c ON u.program_id = c.program_id
             WHERE u.coordinator_id = " . $_SESSION['coordinator_id'] . "
@@ -222,6 +222,7 @@ include "crypt_helper.php";
         <table id="datatablesSimple" class="table">
           <thead>
             <tr>
+              <th>Profile</th>
               <th>Student ID</th>
               <th>Student Name</th>
               <th>Program</th>
@@ -232,6 +233,7 @@ include "crypt_helper.php";
           <tbody>
             <?php foreach ($users as $user): ?>
               <tr>
+                <td><?php echo htmlspecialchars($user['profile_pic']); ?></td>
                 <td><?php echo htmlspecialchars($user['student_id']); ?></td>
                 <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
                 <td><?php echo htmlspecialchars($user['program_name']); ?></td>

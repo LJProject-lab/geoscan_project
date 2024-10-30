@@ -4,6 +4,7 @@ require_once '../../config.php';
 require_once 'action-ids.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $department_id = $_POST['department_id'];
     $username = $_POST['username'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -26,6 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo json_encode(['msg' => $msg]);
             exit();
         }
+    }
+
+    if (empty(trim($department_id))) {
+        $msg = 'Please select Department.';
+        echo json_encode(['msg' => $msg]);
+        exit();
     }
 
     if (empty(trim($firstname))) {
@@ -60,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $coordinator_id = mt_rand(10000, 99999);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = 'INSERT INTO tbl_coordinators (coordinator_id, username, firstname, lastname, email, password) VALUES (:coordinator_id, :username, :firstname, :lastname, :email, :password)';
+    $sql = 'INSERT INTO tbl_coordinators (coordinator_id, username, firstname, lastname, email, department_id, password) VALUES (:coordinator_id, :username, :firstname, :lastname, :email, :department_id, :password)';
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':coordinator_id', $coordinator_id, PDO::PARAM_STR);
     $stmt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -68,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bindParam(':lastname', $lastname, PDO::PARAM_STR);
     $stmt->bindParam(':password', $hashed_password, PDO::PARAM_STR);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':department_id', $department_id, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
         $sql_log = 'INSERT INTO tbl_actionlogs (user_id, action_id, action_desc) VALUES (:user_id, :action_id, :action_desc)';

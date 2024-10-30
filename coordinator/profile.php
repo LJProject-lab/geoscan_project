@@ -207,6 +207,25 @@ include "nav.php";
                   </div>
 
                   <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Department</div>
+                    <div class="col-lg-9 col-md-8"><?php 
+                    $department_id = $_SESSION['department_id'];
+
+                    // Query to fetch department name based on the session department_id
+                    $query = "SELECT department_name FROM tbl_departments WHERE department_id = :department_id";
+                    $stmt = $pdo->prepare($query);
+                    $stmt->bindParam(':department_id', $department_id, PDO::PARAM_INT);
+                    $stmt->execute();
+                    
+                    // Fetch the department name
+                    $department = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $department_name = $department ? $department['department_name'] : 'N/A';
+
+                    echo $department_name;
+                    ?></div>
+                  </div>
+
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Account ID</div>
                     <div class="col-lg-9 col-md-8"><?php echo $_SESSION['coordinator_id']; ?></div>
                   </div>

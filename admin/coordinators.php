@@ -74,6 +74,7 @@ include 'includes/top_include.php';
                                 <thead>
                                     <tr>
                                         <th>Coordinator ID</th>
+                                        <th>Department</th>
                                         <th>Username</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
@@ -87,6 +88,9 @@ include 'includes/top_include.php';
                                         <tr>
                                             <td>
                                                 <?php echo $coordinator['coordinator_id']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $coordinator['department_name']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $coordinator['username']; ?>
@@ -136,7 +140,22 @@ include 'includes/top_include.php';
                     <div id="message"></div>
 
                     <!-- Add form -->
+                    <div class="form-group">
+                        <label for="department_id">Department:</label>
+                        <select class="form-control" id="department_id" name="department_id">
+                            <option selected disabled>Select a Department</option>
+                            <?php
+                            $query = "SELECT department_id, department_name FROM tbl_departments";
+                            $stmt = $pdo->prepare($query);
+                            $stmt->execute();
+                            $departments = $stmt->fetchAll();
 
+                            foreach ($departments as $department) {
+                                echo '<option value="' . $department['department_id'] . '">' . $department['department_name'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="username">Username:</label>
                         <input type="text" class="form-control" id="username" name="username">

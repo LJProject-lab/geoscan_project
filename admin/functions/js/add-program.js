@@ -1,16 +1,17 @@
 $(document).ready(function () {
-    $("#AddProgram").click(function () {
+    $("#AddProgram").click(function (e) {
+      e.preventDefault();
+      var department_id = $("#department_id").val();
       var program_name = $("#program_name").val();
       var program_hour = $("#program_hour").val();
   
-      var coordinator_id = coordinator_id;
-  
       // Make sure all fields are filled
-      if (program_name != "" && program_hour != "" ) {
+      if (department_id != "" && program_name != "" && program_hour != ""  ) {
         $.ajax({
           url: "functions/add-program.php",
           method: "POST",
           data: {
+            department_id:department_id,
             program_name: program_name,
             program_hour: program_hour
           },
