@@ -36,7 +36,7 @@ $(document).ready(function () {
             }).showToast();
   
             setTimeout(function () {
-              window.location.href = "program.php";
+              window.location.href = "department.php";
             }, 1000);
           }
         },

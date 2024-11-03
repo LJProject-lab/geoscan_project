@@ -24,6 +24,7 @@ if (isset($_SESSION['student_id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"
         integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <style>
@@ -110,12 +111,43 @@ if (isset($_SESSION['student_id'])) {
                         <button class="btn-main" style="border-radius: 5px;" type="submit"> Login</button>
                     </div>
                     <div class="text-center">
-                        <a class="backbtn" href="./">Back</a>
+                        <a class="backbtn" href="" data-bs-toggle="modal" data-bs-target="#verticalycentered">Forgot Password?</a>
                     </div>
+                    
                 </form>
+
                 <center>
                     <div id="officer_message" class="officer_message"></div>
                 </center>
+                <div class="text-center">
+                    <button type="button" class="btn btn-light rounded-pill"><a class="backbtn" href="./">Back</a></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Forgot Password?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                        <div class="modal-body">
+                            Select Role:
+                            <div class="text-center">
+                                <a class="backbtn" href="forgot_password_coor.php">Coordinator</a>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <a class="backbtn" href="admin_forgot_password.php">Admin</a>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-light rounded-pill"><a class="backbtn" href="login.php">Back</a></button>
+                        </div>
+                        </div>
+                </div>
             </div>
         </div>
 
@@ -215,6 +247,7 @@ if (isset($_SESSION['student_id'])) {
             }
         });
     </script>
+    
 
 </body>
 

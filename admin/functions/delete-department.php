@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $department_id = isset($_POST['department_id']) ? $_POST['department_id'] : null;
 
     if (!$department_id) {
-        $msg = 'Program ID is missing.';
+        $msg = 'Department ID is missing.';
         echo json_encode(['msg' => $msg]);
         exit;
     }
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt_delete_department->execute()) {
             $action_id = ACTION_DELETE_DEPARTMENT;
 
-            $sql_log = 'INSERT INTO tbl_departments (user_id, action_id, action_desc) VALUES (:user_id, :action_id, :action_desc)';
+            $sql_log = 'INSERT INTO tbl_actionlogs (user_id, action_id, action_desc) VALUES (:user_id, :action_id, :action_desc)';
             $stmt_log = $pdo->prepare($sql_log);
             $user_id = $_SESSION['admin_id']; 
             $action_desc = 'Deleted DEPARTMENT ' . $department_name;
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt_log->execute();
 
             $pdo->commit();
-            echo json_encode(['success' => 'Program deleted successfully']);
+            echo json_encode(['success' => 'Department deleted successfully']);
             exit;
 
         } else {

@@ -134,14 +134,23 @@ include "crypt_helper.php";
                   <select class="form-select" name="program_id" id="floatingSelect" aria-label="State">
                     <option selected disabled>Select Program</option>
                     <?php
-                    // Fetching programs from the database
-                    $stmt = $pdo->query("SELECT program_id, program_name FROM tbl_programs");
-
-                    // Looping through the result set and generating option elements
-                    while ($row = $stmt->fetch()) {
-                      echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
-                    }
-                    ?>
+                      // Ensure the department_id is set in the session
+                      if (isset($_SESSION['department_id'])) {
+                          // Fetching programs from the database using a prepared statement
+                          $query = "SELECT program_id, program_name FROM tbl_programs WHERE department_id = :department_id";
+                          $stmt = $pdo->prepare($query);
+                          $stmt->bindParam(':department_id', $_SESSION['department_id'], PDO::PARAM_INT);
+                          $stmt->execute();
+                          
+                          // Fetch results and populate the options
+                          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                              echo '<option value="' . htmlspecialchars($row['program_id']) . '">' . htmlspecialchars($row['program_name']) . '</option>';
+                          }
+                      } else {
+                          // Handle the case where department_id is not set
+                          echo '<option value="" disabled>No Programs Available</option>';
+                      }
+                      ?>
                   </select>
                   <label for="floatingSelect">Program</label>
                 </div>
@@ -233,7 +242,11 @@ include "crypt_helper.php";
           <tbody>
             <?php foreach ($users as $user): ?>
               <tr>
-                <td><?php echo htmlspecialchars($user['profile_pic']); ?></td>
+                <td><img src="../intern/uploads/profile_pics/<?php echo $user['profile_pic'] ? htmlspecialchars($user['profile_pic'], ENT_QUOTES, 'UTF-8') : 'profile.png'; ?>" 
+                  alt="Profile Picture" 
+                  width="40" 
+                  height="40">
+                </td>
                 <td><?php echo htmlspecialchars($user['student_id']); ?></td>
                 <td><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></td>
                 <td><?php echo htmlspecialchars($user['program_name']); ?></td>

@@ -16,7 +16,7 @@ include "crypt_helper.php";
 
   <ul class="sidebar-nav" id="sidebar-nav">
 
-    <li class="nav-item">
+  <li class="nav-item">
       <a class="nav-link collapsed" href="index.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
@@ -32,10 +32,17 @@ include "crypt_helper.php";
       </a>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="generate_report.php">
+        <i class="ri-folder-download-line"></i>
+        <span>Generate Intern Report</span>
+      </a>
+    </li>
+
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a class="nav-link " href="register_intern.php">
+      <a class="nav-link " href="intern.php">
         <i class="bi bi-people-fill"></i>
         <span>List of Intern</span>
       </a>
@@ -54,8 +61,9 @@ include "crypt_helper.php";
         <span>Interns Attendance</span>
       </a>
     </li>
+
     <li class="nav-item">
-      <a class="nav-link collapsed" href="progress_report.php">
+      <a class="nav-link collapsed" href="interns_progress_report.php">
         <i class="ri-line-chart-fill"></i>
         <span>Progress Report</span>
       </a>
@@ -95,7 +103,7 @@ include "crypt_helper.php";
 
     // Fetch the user's details using the decrypted $student_id
     $stmt = $pdo->prepare("
-      SELECT u.student_id, u.firstname, u.lastname, u.email, u.phone, u.address, u.coordinator_id, u.credential_id, 
+      SELECT u.student_id, u.firstname, u.lastname, u.email, u.phone, u.address, u.coordinator_id, u.credential_id, u.profile_pic,
           c.program_id, c.program_name, 
           co.firstname AS coordinator_firstname, co.lastname AS coordinator_lastname
       FROM tbl_users u
@@ -120,7 +128,8 @@ include "crypt_helper.php";
             <div class="card">
               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                <img src="assets/img/intern.png" alt="Profile" class="rounded-circle">
+              <img src="../intern/uploads/profile_pics/<?php echo $user['profile_pic'] ? htmlspecialchars($user['profile_pic'], ENT_QUOTES, 'UTF-8') : 'profile.png'; ?>" width="100" height="100">
+
                 <h2><?php echo htmlspecialchars($user['firstname'] . " " . $user['lastname']); ?></h2>
                 <h3>Intern</h3>
               </div>

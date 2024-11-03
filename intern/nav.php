@@ -84,7 +84,7 @@ if (isset($student_id)) {
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="uploads/profile_pics/<?php echo htmlspecialchars($profile_pic, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile" class="rounded-circle">
+            <img src="uploads/profile_pics/<?php echo htmlspecialchars($profile_pic, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile" width="50px" height="50px" class="rounded-circle">
             <span
               class="d-none d-md-block dropdown-toggle ps-2"><?php echo htmlspecialchars($_SESSION['firstname']); ?>&nbsp;</span>
           </a><!-- End Profile Iamge Icon -->

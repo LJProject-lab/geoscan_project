@@ -153,7 +153,7 @@ if (isset($student_id)) {
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-            <img src="uploads/profile_pics/<?php echo htmlspecialchars($profile_pic, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile Picture" class="rounded-circle">
+            <img src="uploads/profile_pics/<?php echo htmlspecialchars($profile_pic, ENT_QUOTES, 'UTF-8'); ?>" alt="Profile Picture" style="border-radius: 5px;" >
               <!--<img src="uploads/<?php echo $newFileName; ?>" alt="Profile" class="rounded-circle">-->
               <h2><?php echo htmlspecialchars($_SESSION['firstname'] . ' ' . $_SESSION['lastname']); ?></h2>
               <h3>Intern</h3>

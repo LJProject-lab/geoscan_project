@@ -99,11 +99,11 @@ include 'includes/top_include.php';
                                             <td>
                                                 <button class="btn-get-main edit-btn" data-toggle="modal"
                                                     data-target="#editDepartment"
-                                                    data-program-id="<?php echo $department['department_id'] ?>"><i
+                                                    data-department-id="<?php echo $department['department_id'] ?>"><i
                                                         class="fa-solid fa-pen-to-square"></i>
                                                     Edit</button>
                                                 <button class="btn-get-del" data-toggle="modal" data-target="#DeleteModal"
-                                                    data-program-id="<?php echo $department['department_id'] ?>"><i
+                                                    data-department-id="<?php echo $department['department_id'] ?>"><i
                                                         class="fa-solid fa-trash"></i>
                                                     Delete</button>
                                             </td>
@@ -151,6 +151,37 @@ include 'includes/top_include.php';
                         <input type="submit" class="btn-get-main  py-2" value="Add" style="width:100% !important;"
                             id="AddDepartment">
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editDepartment" tabindex="-1" role="dialog" aria-labelledby="editDepartmentLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDepartmentLabel">Edit Department</h5>
+                    <i class="fa-solid fa-xmark" style="font-size:20px; cursor:pointer;" data-dismiss="modal"
+                        aria-label="Close"></i>
+                </div>
+                <div class="modal-body">
+                    <div id="editMessage"></div>
+
+                    <!-- Edit form -->
+                    <div class="form-group">
+                        <label for="edit_department_name">Department Name:</label>
+                        <input type="text" class="form-control" id="edit_department_name" name="edit_department_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_department_code">Department Code:</label>
+                        <input type="text" class="form-control" id="edit_department_code"
+                            name="edit_department_code"></input>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-get-main" id="saveChangesBtn">Save changes</button>
+                    <button type="button" class="btn-get-del" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
